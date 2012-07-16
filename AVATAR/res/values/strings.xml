@@ -6,5 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">AVATAR</string>
+    <string name="map_view">MAP VIEW HERE</string>
+    <string name="ar_view">AR VIEW HERE</string>
 
 </resources>

@@ -91,7 +91,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             TextView textView = new TextView(getActivity());
             textView.setGravity(Gravity.CENTER);
             Bundle args = getArguments();
-            textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
+            if(args.getInt(ARG_SECTION_NUMBER) == 1)
+            {
+            	textView.setText(R.string.map_view);
+            }
+            else
+            {
+            	textView.setText(R.string.ar_view);
+            }
             return textView;
         }
     }
