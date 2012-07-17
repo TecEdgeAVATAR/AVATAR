@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="360dp"
+    android:orientation="horizontal" >
+
+
+
+        <Button
+            android:id="@+id/Button1"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Update Position" />
+
+        <org.mapsforge.android.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:text="@string/hello" />
+        <!-- /org.mapsforge.android.maps.MapView> -->
+
+</LinearLayout>

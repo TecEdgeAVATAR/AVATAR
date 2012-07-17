@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MapsForgeMapViewer!</string>
+    <string name="app_name">AVATAR_MapsForgeMapViewer</string>
+    <string name="UpdatePosition">UpdatePosition</string>
+    <string name="FindPosition">Find Position</string>
+    <string name="find_position">Find Position</string>
+    <string name="Exit">Exit</string>
+    <string name="Update_Coordinates">Update Coordinates</string>
+    <string name="Clear_Points_Button">Clear Points</string>
+
+</resources>
