@@ -3,15 +3,16 @@ package com.SATE2012.MapsForgeMapViewer;
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.OverlayItem;
 
-public class DataObjectItem extends OverlayItem {
-    
+public class DataObjectItem extends OverlayItem 
+{ 
     private DataObject data;
     private GeoPoint point;
     
-    public DataObjectItem(GeoPoint p, DataObject dataIn) {
-	super(p, dataIn.getText(), dataIn.getText());
-	this.point = p;
-	this.data = dataIn;
+    public DataObjectItem(GeoPoint p, DataObject dataIn) 
+    {
+		super(p, dataIn.getText(), dataIn.getText());
+		this.point = p;
+		this.data = dataIn;
     }
     
     public DataObject getData()
@@ -30,7 +31,4 @@ public class DataObjectItem extends OverlayItem {
     {
         this.point = point;
     }
-    
-    
-
 }

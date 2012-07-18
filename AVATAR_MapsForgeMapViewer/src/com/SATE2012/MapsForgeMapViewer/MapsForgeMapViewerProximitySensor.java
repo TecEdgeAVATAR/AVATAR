@@ -8,12 +8,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 
-public class MapsForgeMapViewerProximitySensor extends Activity implements SensorEventListener {
+public class MapsForgeMapViewerProximitySensor extends Activity implements SensorEventListener 
+{
     private SensorManager mSensorManager;
     private Sensor mProximity;
 
     @Override
-    public final void onCreate(Bundle savedInstanceState) {
+    public final void onCreate(Bundle savedInstanceState) 
+    {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.main);
 
@@ -24,27 +26,31 @@ public class MapsForgeMapViewerProximitySensor extends Activity implements Senso
     }
 
     @Override
-    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
+    public final void onAccuracyChanged(Sensor sensor, int accuracy) 
+    {
       // Do something here if sensor accuracy changes.
     }
 
     @Override
-    public final void onSensorChanged(SensorEvent event) {
+    public final void onSensorChanged(SensorEvent event) 
+    {
       float distance = event.values[0];
       // Do something with this sensor data.
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume() 
+    {
       // Register a listener for the sensor.
       super.onResume();
       mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause() 
+    {
       // Be sure to unregister the sensor when the activity pauses.
       super.onPause();
       mSensorManager.unregisterListener(this);
     }
-  }
+}

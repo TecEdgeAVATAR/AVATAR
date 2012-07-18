@@ -50,6 +50,4 @@ public class DataObject
     {
         this.lon = lon;
     }
-
-    
 }
