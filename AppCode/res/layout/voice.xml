@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background" >
+
+    <!-- LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"> <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Sound Recording" /> <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/startRecording" android:text="Start Recording" /> <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/stopRecording" android:text="Stop Recording" /> <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/playRecording" android:text="Play Recording" /> <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/returnToForm" android:text="Return to Form" /> </LinearLayout -->
+
+    <TextView
+        android:id="@+id/media_record_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Media Recorder"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/media_clock_ui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@id/media_record_text"
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/button_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/media_clock_ui"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/Play"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/media_clock_ui"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/playRecordingBtn"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/buttonbackground"
+                android:contentDescription="@string/play_recording"
+                android:src="@drawable/green_play_button" />
+
+            <TextView
+                android:id="@+id/text_button_Play"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_horizontal"
+                android:text="Play Recording"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Rec"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/media_clock_ui"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/bgnBtn"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/buttonbackground"
+                android:contentDescription="@string/start_recording"
+                android:src="@drawable/red_record_button" />
+
+            <TextView
+                android:id="@+id/text_button_Rec"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_horizontal"
+                android:text="Record"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Upld"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/media_clock_ui"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/returnToForm"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/buttonbackground"
+                android:contentDescription="@string/return_to_form"
+                android:src="@drawable/blue_up_arrow"
+                android:text="Upload" />
+
+            <TextView
+                android:id="@+id/text_button_Upld"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_horizontal"
+                android:text="Upload"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

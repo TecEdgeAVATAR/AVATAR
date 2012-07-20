@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">AVATAR Main Menu</string>
+    <string name="app_name">Blueprint_3</string>
+    
+		<string-array name="spinnerTestArray">
+		    <item>Choose Media Type</item>
+		    <item>Comment</item>
+		    <item>Picture</item>
+		    <item>Video</item>
+		</string-array>
+		<string name="play_recording">Play Recording</string>
+		<string name="start_recording">Start Recording</string>
+		<string name="return_to_form">Return to Form</string>
+		
+		
+	    <string name="item_separator">_***_</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_email">EmailActivity</string>
+    <string name="title_mail_activity">MailActivity</string>
+    <string name="title_mail_sender_activity">MailSenderActivity</string>
+    <string name="et_subject">Subject</string>
+    <string name="et_body">Email Body</string>
+    <string name="et_addl_address">Additional Email Addresses</string>
+    <string name="thank_submission">Thank you for your submission.</string>
+    <string name="send_failed">Send failed. Please try again.</string>
+    <string name="send">Send</string>
+    
+    
+    <string name="type_picture">Photo</string>
+    <string name="type_video">Video</string>
+    <string name="type_audio">Audio</string>
+    <string name="type_comment">Comment</string>
+    <string name="type_android">Android</string>
+		
+</resources>
