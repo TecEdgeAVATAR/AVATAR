@@ -9,5 +9,10 @@
     <string name="Exit">Exit</string>
     <string name="Update_Coordinates">Update Coordinates</string>
     <string name="Clear_Points_Button">Clear Points</string>
+    <string name="video_button_description">Record a video to upload.</string>
+    <string name="camera_button_description">Take a picture to upload.</string>
+    <string name="microphone_button_description">Record audio to upload.</string>
+    <string name="comment_button_description">Write a comment to upload.</string>
+    <string name="cancel_button_description">Cancel the upload process.</string>
 
 </resources>
