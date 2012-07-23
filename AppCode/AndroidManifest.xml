@@ -69,7 +69,8 @@
         </activity>
         <activity
             android:name="sate2012.avatar.android.MailSenderActivity"
-            android:label="Upload Data Point" >
+            android:label="Upload Data Point"
+            android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAILSENDERACTIVITY" />
 
