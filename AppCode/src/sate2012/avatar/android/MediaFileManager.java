@@ -1,39 +1,30 @@
 package sate2012.avatar.android;
 
 import java.io.File;
-
 import android.os.Environment;
 
 public class MediaFileManager {
-
 	private File sd;
 	private File camFolder;
 	private File mediaFolder;
-
 	File image;
 	File video;
 	File recording;
 
 	public MediaFileManager() {
-
 		sd = Environment.getExternalStorageDirectory();
 		camFolder = new File(sd, BlueprintConstants.STORAGE_DIRECTORY);
-
 		if (sd.canWrite()) {
-			if (!camFolder.exists()) {
+			if (!camFolder.exists())
 				camFolder.mkdir();
-			}
-
 			mediaFolder = new File(sd, BlueprintConstants.STORAGE_DIRECTORY
 					+ BlueprintConstants.MEDIA_DIRECTORY);
-			if (!mediaFolder.exists()) {
+			if (!mediaFolder.exists())
 				mediaFolder.mkdir();
-			}
 		}
 	}
 
 	public File createImageFile() {
-
 		image = new File(mediaFolder, "image_" + System.currentTimeMillis()
 				+ ".jpg");
 		this.setImage(image);

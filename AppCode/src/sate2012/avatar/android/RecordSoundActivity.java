@@ -1,10 +1,9 @@
 package sate2012.avatar.android;
 
+import gupta.ashutosh.avatar.R;
+
 import java.io.File;
 import java.io.IOException;
-
-import sate2012.avatar.android.GPSActivity.MyLocationListener;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -32,55 +31,40 @@ public class RecordSoundActivity extends Activity {
 	public double ptLng = -84.117682;
 	private MediaRecorder recorder;
 	private MediaPlayer player;
-
 	private ImageButton startRecording = null;
 	private ImageButton playRecording = null;
 	private ImageButton returnToSubmission;
-
 	private String OUTPUT_FILE = "recording_" + System.currentTimeMillis()
 			+ ".mp4";
 	public static final String VOICE = "VOICE";
-
 	private static File voiceRecording;
-
 	private boolean media = false;
 	private boolean playing = false;
 	private boolean recording = false;
-
 	Context conn;
 	LocationManager mlocManager;
 	LocationListener mlocListener;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		conn = super.getApplicationContext();
-
 		/* Use the LocationManager class to obtain GPS locations */
-
 		mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		mlocListener = new MyLocationListener();
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				mlocListener);
-
-		// Remove title bar
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.voice);
-		this.recorder = new MediaRecorder();
-
+		recorder = new MediaRecorder();
 		startRecording = (ImageButton) findViewById(R.id.bgnBtn);
 		playRecording = (ImageButton) findViewById(R.id.playRecordingBtn);
 		returnToSubmission = (ImageButton) findViewById(R.id.returnToForm);
-
 		startRecording.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				startRecording();
 			}
 		});
-
 		playRecording.setOnClickListener(new View.OnClickListener() {
-
 			public void onClick(View v) {
 				if (!RecordSoundActivity.this.media) {
 					Toast.makeText(RecordSoundActivity.this,
@@ -88,6 +72,7 @@ public class RecordSoundActivity extends Activity {
 							Toast.LENGTH_LONG).show();
 				} else {
 					player = new MediaPlayer();
+					playRecording.setImageResource(R.drawable.blue_play_button);
 					try {
 						player.setDataSource(voiceRecording.getAbsolutePath());
 						player.prepare();
@@ -142,11 +127,14 @@ public class RecordSoundActivity extends Activity {
 				&& !RecordSoundActivity.this.playing) {
 			playing = false;
 			recording = true;
-			startRecording.setImageResource(R.drawable.stop_recording_video);
+			startRecording.setImageResource(R.drawable.stop_recording_video_large);
 			this.recorder = new MediaRecorder();
 			this.recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			this.recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-			this.recorder.setAudioEncoder(3);	// Eclipse does not recognize MediaRecorder.AudioEncoder.AAC, but using its value (3) does work.
+			this.recorder.setAudioEncoder(3); // Eclipse does not recognize
+												// MediaRecorder.AudioEncoder.AAC,
+												// but using its value (3) does
+												// work.
 			this.recorder.setOutputFile(voiceRecording.getAbsolutePath());
 			try {
 				this.recorder.prepare();
@@ -172,11 +160,11 @@ public class RecordSoundActivity extends Activity {
 		this.recorder.stop();
 		this.recorder.release();
 		setVoiceRecording(voiceRecording);
-		startRecording.setImageResource(R.drawable.record_video);
+		startRecording.setImageResource(R.drawable.red_record_button);
 		playRecording.setEnabled(true);
-		playRecording.setImageResource(R.drawable.play_video);
+		playRecording.setImageResource(R.drawable.green_play_button);
 		startRecording.setEnabled(false);
-		startRecording.setImageResource(R.drawable.record_video_greyscale);
+		startRecording.setImageResource(R.drawable.stop_recording_video_grey);
 		this.media = true;
 	}
 
@@ -184,30 +172,25 @@ public class RecordSoundActivity extends Activity {
 	 * @return the voiceRecording
 	 */
 	public File getVoiceRecording() {
-		return this.voiceRecording;
+		return voiceRecording;
 	}
 
 	/**
 	 * @param voiceRecording
 	 *            the voiceRecording to set
 	 */
-	public void setVoiceRecording(File voiceRecording) {
-		this.voiceRecording = voiceRecording;
+	public void setVoiceRecording(File v) {
+		voiceRecording = v;
 	}
 
-	/* Class My Location Listener */
+	/**
+	 * Class My Location Listener
+	 */
 	public class MyLocationListener implements LocationListener {
 		public void onLocationChanged(Location loc) {
-
 			ptLat = loc.getLatitude();
 			ptLng = loc.getLongitude();
 			String LatLong = loc.getLatitude() + " --- " + loc.getLongitude();
-			// String LatLong = loc.getLatitude() + " --- " + loc.getLongitude()
-			// + ";~~40.12345 --- -85.12345;~~41.54321 --- -83.54321";
-			// Toast.makeText( getApplicationContext(), LatLong,
-			// Toast.LENGTH_SHORT).show();
-			// httpPost(LatLong);
-
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -222,15 +205,12 @@ public class RecordSoundActivity extends Activity {
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
-
-	}/* End of Class MyLocationListener */
+	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
 		mlocManager.removeUpdates(mlocListener);
 		finish();
-
 	}
-
 }

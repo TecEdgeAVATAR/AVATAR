@@ -1,17 +1,14 @@
 package sate2012.avatar.android;
 
+import gupta.ashutosh.avatar.R;
 import java.io.File;
-
 import android.app.Activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-//import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-//import android.media.MediaRecorder.AudioEncoder;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,68 +26,44 @@ import android.widget.VideoView;
 
 public class VideoCamActivity extends Activity implements
 		SurfaceHolder.Callback {
-	
+
 	public double ptLat = 39.780937;
 	public double ptLng = -84.117682;
-
 	private MediaRecorder recorder;
 	public Camera mCameraDevice;
-
 	private VideoView videoView = null;
 	private ImageButton startBtn = null;
 	private ImageButton playRecordingBtn = null;
 	private ImageButton returnToSubmission;
-
 	private String OUTPUT_FILE = "video_" + System.currentTimeMillis() + ".mp4";
 	public static final String VIDEO = "VIDEO";
 	private static File videoRecording;
-	
-
 	private Boolean playing = false;
 	private Boolean recording = false;
-
-	// /////////////////////////////
 	private TextView mVideoClockUI;
 	private Handler mHandler;
 	private int mVideoClockTime;
 	private Runnable mClockTask;
 	private SurfaceHolder mHolder;
-	
-
-	// //////////////////////////
-	
-	
 	Context conn;
-    LocationManager mlocManager;
-    LocationListener mlocListener;
-	
+	LocationManager mlocManager;
+	LocationListener mlocListener;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-        conn = super.getApplicationContext();
-        //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        
-       
-        
-        /* Use the LocationManager class to obtain GPS locations */ 
-
-        mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
-        mlocListener = new MyLocationListener(); 
-        mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener); 
-
-        
-        Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG).show();
-
-		// Remove title bar
+		conn = super.getApplicationContext();
+		/* Use the LocationManager class to obtain GPS locations */
+		mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		mlocListener = new MyLocationListener();
+		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				mlocListener);
+		Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG)
+				.show();
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		setContentView(R.layout.video);
-
-		// /////////////////
 		mVideoClockTime = 0;
 		mHandler = new Handler();
 		mClockTask = new Runnable() {
-
 			public void run() {
 				mVideoClockTime++;
 				int minutes = mVideoClockTime / 60;
@@ -101,25 +74,16 @@ public class VideoCamActivity extends Activity implements
 			}
 		};
 		mVideoClockUI = (TextView) findViewById(R.id.video_clock_ui);
-		// //////////////////
-
 		startBtn = (ImageButton) findViewById(R.id.bgnBtn);
-
 		playRecordingBtn = (ImageButton) findViewById(R.id.playRecordingBtn);
 		playRecordingBtn.setEnabled(false);
-
 		videoView = (VideoView) this.findViewById(R.id.videoView);
-
 		returnToSubmission = (ImageButton) findViewById(R.id.returnToForm);
-
 		final SurfaceHolder holder = videoView.getHolder();
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
 		startBtn.setOnClickListener(new OnClickListener() {
-
 			public void onClick(View view) {
-
 				if (!VideoCamActivity.this.recording
 						& !VideoCamActivity.this.playing) {
 					try {
@@ -158,7 +122,6 @@ public class VideoCamActivity extends Activity implements
 		});
 
 		playRecordingBtn.setOnClickListener(new OnClickListener() {
-
 			public void onClick(View view) {
 				if (!VideoCamActivity.this.playing
 						& !VideoCamActivity.this.recording) {
@@ -181,7 +144,6 @@ public class VideoCamActivity extends Activity implements
 						Log.e("ERROR", "Exception caught stopping play.", e);
 					}
 				}
-
 			}
 		});
 
@@ -198,32 +160,25 @@ public class VideoCamActivity extends Activity implements
 				finish();
 			}
 		});
-
 	}
-	
+
 	public static String getPath() {
 		return videoRecording.getAbsolutePath();
 	}
-	
+
 	public void surfaceCreated(SurfaceHolder holder) {
 		startBtn.setEnabled(true);
-		//holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		//holder.addCallback(this);
 		mCameraDevice = Camera.open();
-		//mCameraDevice.unlock();
-		
 		try {
-		mCameraDevice.setPreviewDisplay(holder);
-		} catch( Exception e) {
+			mCameraDevice.setPreviewDisplay(holder);
+		} catch (Exception e) {
 			Log.e("INFO", "Error in setPreviewDisplay:  ", e);
-		} 
+		}
 		try {
 			mCameraDevice.startPreview();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Log.e("INFO", "Error in startPreview:  ", e);
 		}
-		
-		
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
@@ -233,24 +188,18 @@ public class VideoCamActivity extends Activity implements
 			int height) {
 		try {
 			Log.i("INFO", "Width x Height = " + width + "x" + height);
-			//Camera.Parameters camParams = mCameraDevice.getParameters();
-			//Log.i("INFO", "got camParams");
-
-			//camParams.setPreviewSize(width, height);
-			//mCameraDevice.setParameters(camParams);
-			//mCameraDevice.startPreview();
-			//Log.i("INFO", "started preview");
 		} catch (Exception e) {
 			Log.e("INFO", "Error in surfaceChanged:  ", e);
 		}
-		
 	}
 
 	private void playRecording() {
 		MediaController mc = new MediaController(this);
 		videoView.setMediaController(mc);
 		videoView.setVideoPath(videoRecording.getAbsolutePath());
-		Toast.makeText(getApplicationContext(), "AbsolutePath: '"+videoRecording.getAbsolutePath()+"'", Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(),
+				"AbsolutePath: '" + videoRecording.getAbsolutePath() + "'",
+				Toast.LENGTH_LONG).show();
 		videoView.start();
 	}
 
@@ -263,49 +212,37 @@ public class VideoCamActivity extends Activity implements
 			recorder.stop();
 			mCameraDevice.release();
 			setVideoRecording(videoRecording);
-			
+
 		}
 	}
 
 	protected void onDestroy() {
 		super.onDestroy();
-		if (recorder != null) {
+		if (recorder != null)
 			recorder.release();
-		}
-		
 		mHandler.removeCallbacks(mClockTask);
 	}
 
 	private void beginRecording(SurfaceHolder holder) throws Exception {
 		mCameraDevice.stopPreview();
-		
 		mCameraDevice.unlock();
-		if (recorder != null) {
-			recorder.stop();
-			recorder.release();
-		}
-
 		videoRecording = new File(Environment.getExternalStorageDirectory(),
 				BlueprintConstants.STORAGE_DIRECTORY
 						+ BlueprintConstants.MEDIA_DIRECTORY + OUTPUT_FILE);
-		if (videoRecording.exists()) {
+		if (videoRecording.exists())
 			videoRecording.delete();
-		}
-
 		try {
 			recorder = new MediaRecorder();
-			
 			recorder.reset();
-			
 			recorder.setCamera(mCameraDevice);
 			recorder.setPreviewDisplay(holder.getSurface());
 			recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			//recorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-			recorder.setMaxDuration(20000);
-			
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-			recorder.setAudioEncoder(3);	// Eclipse does not recognize MediaRecorder.AudioEncoder.AAC, but using its value (3) does work.
+			recorder.setAudioEncoder(3); // Eclipse does not recognize
+											// MediaRecorder.AudioEncoder.AAC,
+											// but using its value (3) does
+											// work.
 			recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 			recorder.setVideoSize(720, 432);
 			recorder.setOutputFile(videoRecording.getAbsolutePath());
@@ -313,8 +250,9 @@ public class VideoCamActivity extends Activity implements
 			recorder.prepare();
 			recorder.start();
 		} catch (Exception e) {
-			Log.e("ERROR", "Exception caught creating media recorder."+e.getStackTrace(), e);
-			//String ISE = IllegalStateException("");
+			Log.e("ERROR",
+					"Exception caught creating media recorder."
+							+ e.getStackTrace(), e);
 		}
 	}
 
@@ -333,55 +271,34 @@ public class VideoCamActivity extends Activity implements
 		this.videoRecording = videoRecording;
 	}
 
-	
-
-	
-	
-	
-	
-	/* Class My Location Listener */ 
-	public class MyLocationListener implements LocationListener 
-	{ 	
-		public void onLocationChanged(Location loc) 
-		{ 
-			
+	/**
+	 * Class My Location Listener
+	 */
+	public class MyLocationListener implements LocationListener {
+		public void onLocationChanged(Location loc) {
 			ptLat = loc.getLatitude();
 			ptLng = loc.getLongitude();
-			String LatLong = loc.getLatitude() +  " --- " + loc.getLongitude();
-			//String LatLong = loc.getLatitude() +  " --- " + loc.getLongitude() + ";~~40.12345 --- -85.12345;~~41.54321 --- -83.54321";
-			//Toast.makeText( getApplicationContext(), LatLong, Toast.LENGTH_SHORT).show(); 
-			//httpPost(LatLong);
-			
-		} 
+			String LatLong = loc.getLatitude() + " --- " + loc.getLongitude();
+		}
 
+		public void onProviderDisabled(String provider) {
+			Toast.makeText(getApplicationContext(), "GPS Disabled",
+					Toast.LENGTH_SHORT).show();
+		}
 
+		public void onProviderEnabled(String provider) {
+			Toast.makeText(getApplicationContext(), "GPS Enabled",
+					Toast.LENGTH_SHORT).show();
+		}
 
-	public void onProviderDisabled(String provider) 
-		{ 
-			Toast.makeText( getApplicationContext(), "GPS Disabled", Toast.LENGTH_SHORT ).show(); 
-		} 
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
+	}
 
-	public void onProviderEnabled(String provider) 
-		{ 
-			Toast.makeText( getApplicationContext(), "GPS Enabled",	Toast.LENGTH_SHORT).show(); 
-		} 
-
-	public void onStatusChanged(String provider, int status, Bundle extras) 
-		{ 
-		} 
-
-	}/* End of Class MyLocationListener */ 
-	
-    @Override
+	@Override
 	protected void onStop() {
-    	super.onStop();
-    	mlocManager.removeUpdates(mlocListener);
-    	finish();
-		
-	    
-    }
-
-	
-} 
-
-
+		super.onStop();
+		mlocManager.removeUpdates(mlocListener);
+		finish();
+	}
+}
