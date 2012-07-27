@@ -80,6 +80,9 @@ public class RecordSoundActivity extends Activity {
 					} catch (IOException e) {
 						Log.e("ERROR", "error playing recording", e);
 					}
+					Toast.makeText(RecordSoundActivity.this,
+							"Playing back.  Press Upload when done.",
+							Toast.LENGTH_LONG).show();
 				}
 			}
 		});
@@ -127,7 +130,7 @@ public class RecordSoundActivity extends Activity {
 				&& !RecordSoundActivity.this.playing) {
 			playing = false;
 			recording = true;
-			startRecording.setImageResource(R.drawable.stop_recording_video_large);
+			startRecording.setImageResource(R.drawable.stop_recording_video);
 			this.recorder = new MediaRecorder();
 			this.recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			this.recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);

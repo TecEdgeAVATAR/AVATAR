@@ -3,11 +3,11 @@ package sate2012.avatar.android;
 import gupta.ashutosh.avatar.R;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * The main menu of the AVATAR Application. This menu navigates users to
@@ -15,26 +15,27 @@ import android.widget.Toast;
  */
 public class AVATARMainMenuActivity extends Activity implements OnClickListener {
 	private Button uploadB; // Button that switches to a menu that lets the user upload different types of media
-	private Button mapB; // Button that switches to map view
+	/*private Button mapB; // Button that switches to map view
 	private Button naoB; // Button that switches to NAO Robot Control
 	private Button arB; // Button that switches to Augmented Reality
 	private Button settingB; // Button that switches to the Settings Menu
-
+*/
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.main);
 		uploadB = (Button) findViewById(R.id.uploadB);
 		uploadB.setOnClickListener(this);
-		mapB = (Button) findViewById(R.id.mapB);
+		/*mapB = (Button) findViewById(R.id.mapB);
 		mapB.setOnClickListener(this);
 		naoB = (Button) findViewById(R.id.naoB);
 		naoB.setOnClickListener(this);
 		arB = (Button) findViewById(R.id.arB);
 		arB.setOnClickListener(this);
 		settingB = (Button) findViewById(R.id.settingB);
-		settingB.setOnClickListener(this);
+		settingB.setOnClickListener(this);*/
 	}
 
 	/**
@@ -46,12 +47,13 @@ public class AVATARMainMenuActivity extends Activity implements OnClickListener 
 	 */
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case (R.id.uploadB):
+			//case (R.id.uploadB):
+			default:
 				Intent intent = new Intent(AVATARMainMenuActivity.this,
 						BlueprintActivity.class);
 				startActivity(intent);
-				break;
-			case (R.id.mapB):
+				//break;
+			/*case (R.id.mapB):
 				Toast.makeText(getApplicationContext(),
 						"These are not the maps you're looking for...",
 						Toast.LENGTH_LONG).show();
@@ -79,7 +81,7 @@ public class AVATARMainMenuActivity extends Activity implements OnClickListener 
 						"There are no settings. You WILL like it the way we made it.",
 						Toast.LENGTH_LONG).show();
 				// Create/call intent to settings activity here
-				break;
+				break;*/
 		}
 	}
 }

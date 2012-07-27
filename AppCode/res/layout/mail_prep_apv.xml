@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Name of Location of Item of Interest"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="32dp"/>
 
         <EditText
             android:id="@+id/pointName"
@@ -32,7 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="URL of uploaded media"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="32dp" />
 
         <EditText
             android:id="@+id/pointDesc"
@@ -49,9 +51,10 @@
 
         <Button
             android:id="@+id/Send"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
+            android:layout_gravity="center"
             android:background="@drawable/buttonbackground"
             android:text="Send Email"
             android:textColor="@android:color/white" />

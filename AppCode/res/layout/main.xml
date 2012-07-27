@@ -10,15 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text=" "
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="50dp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="82dp"
-        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:background="@drawable/logo"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
@@ -35,21 +27,23 @@
 
     <Button
         android:id="@+id/uploadB"
-        android:layout_width="250dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
         android:layout_gravity="center"
         android:background="@drawable/buttonbackground"
-        android:text="Upload to VDC"
-        android:textColor="@android:color/white" />
-
-    <Button
+        android:text="Start uploading information"
+        android:textColor="@android:color/white"
+        android:textSize="32dp"/>
+ 
+    <!-- <Button
         android:id="@+id/mapB"
         android:layout_width="250dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:background="@drawable/buttonbackground"
         android:text="View Map"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/naoB"
@@ -58,7 +52,8 @@
         android:layout_gravity="center"
         android:background="@drawable/buttonbackground"
         android:text="NAO Robot Control"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/arB"
@@ -67,7 +62,8 @@
         android:layout_gravity="center"
         android:background="@drawable/buttonbackground"
         android:text="Augmented Reality"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/settingB"
@@ -76,6 +72,7 @@
         android:layout_gravity="center"
         android:background="@drawable/buttonbackground"
         android:text="Settings"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:visibility="gone"/> -->
 
 </LinearLayout>

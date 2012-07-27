@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background" >
+    android:background="@drawable/background"
+    android:gravity="center_vertical" >
 
     <VideoView
         android:id="@+id/videoView"
@@ -31,24 +32,34 @@
 
         <ImageButton
             android:id="@+id/playRecordingBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/play_video_greyscale" />
+            android:layout_width="80dp"
+            android:layout_height="78dp"
+            android:layout_margin="5dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/green_play_button" />
+
         <!-- android:contentDescription="@string/play_recording" -->
 
         <ImageButton
             android:id="@+id/bgnBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="78dp"
+            android:layout_margin="5dp"
+            android:background="@null"
             android:contentDescription="@string/start_recording"
-            android:src="@drawable/record_video" />
+            android:scaleType="fitXY"
+            android:src="@drawable/red_record_button" />
 
         <ImageButton
             android:id="@+id/returnToForm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="82dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:background="@null"
             android:contentDescription="@string/return_to_form"
-            android:src="@drawable/return_icon" />
+            android:scaleType="fitXY"
+            android:src="@drawable/blue_up_arrow" />
     </LinearLayout>
 
 </RelativeLayout>

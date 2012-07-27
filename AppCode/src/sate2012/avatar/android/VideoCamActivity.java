@@ -26,7 +26,6 @@ import android.widget.VideoView;
 
 public class VideoCamActivity extends Activity implements
 		SurfaceHolder.Callback {
-
 	public double ptLat = 39.780937;
 	public double ptLng = -84.117682;
 	private MediaRecorder recorder;
@@ -57,8 +56,6 @@ public class VideoCamActivity extends Activity implements
 		mlocListener = new MyLocationListener();
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				mlocListener);
-		Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_LONG)
-				.show();
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.video);
 		mVideoClockTime = 0;
@@ -106,11 +103,11 @@ public class VideoCamActivity extends Activity implements
 						startBtn.setImageResource(R.drawable.record_video);
 						playRecordingBtn.setEnabled(true);
 						playRecordingBtn
-								.setImageResource(R.drawable.play_video);
+								.setImageResource(R.drawable.green_play_button);
 						startBtn.setEnabled(false); // Don't allow any more
 													// recording in this
 													// session.
-						startBtn.setImageResource(R.drawable.record_video_greyscale);
+						startBtn.setImageResource(R.drawable.stop_recording_video_grey);
 						mHandler.removeCallbacks(mClockTask);
 						mVideoClockUI.setVisibility(View.INVISIBLE);
 					} catch (Exception e) {
@@ -131,7 +128,7 @@ public class VideoCamActivity extends Activity implements
 						VideoCamActivity.this.recording = false;
 						playRecordingBtn.setEnabled(false);
 						playRecordingBtn
-								.setImageResource(R.drawable.play_video_greyscale);
+								.setImageResource(R.drawable.blue_play_button);
 					} catch (Exception e) {
 						Log.e("ERROR", "Exception caught playing video.", e);
 					}
@@ -155,7 +152,6 @@ public class VideoCamActivity extends Activity implements
 					setResult(Activity.RESULT_OK, data);
 				} else {
 					setResult(Activity.RESULT_CANCELED);
-
 				}
 				finish();
 			}
@@ -197,9 +193,6 @@ public class VideoCamActivity extends Activity implements
 		MediaController mc = new MediaController(this);
 		videoView.setMediaController(mc);
 		videoView.setVideoPath(videoRecording.getAbsolutePath());
-		Toast.makeText(getApplicationContext(),
-				"AbsolutePath: '" + videoRecording.getAbsolutePath() + "'",
-				Toast.LENGTH_LONG).show();
 		videoView.start();
 	}
 

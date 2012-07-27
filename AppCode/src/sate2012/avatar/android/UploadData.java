@@ -25,8 +25,6 @@ public class UploadData extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Toast.makeText(getApplicationContext(), "Created UploadData Activity",
-				Toast.LENGTH_LONG).show();
 	}
 
 	public static void post(String url, List<NameValuePair> nameValuePairs) {

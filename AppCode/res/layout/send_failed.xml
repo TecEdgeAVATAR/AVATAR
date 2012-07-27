@@ -6,17 +6,20 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/send_failed"
+        android:layout_gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="40dp" />
+        android:textSize="32dp" />
 
     <Button
         android:id="@+id/Return"
-        android:layout_width="320dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
+        android:layout_gravity="center"
         android:background="@drawable/buttonbackground"
         android:text="Return to main screen"
         android:textColor="@android:color/white" />

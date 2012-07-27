@@ -47,7 +47,7 @@ public class BlueprintActivity extends Activity implements OnClickListener {
 		Log.i("INFO", "created blueprint activity");
 		setContentView(R.layout.upload_menu);
 		Log.i("INFO", "set content view");
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		createStorageDirectory();
 		Log.i("INFO", "created storage directory");
 		Button pictureB = (Button) findViewById(R.id.cameraButton);
@@ -115,17 +115,19 @@ public class BlueprintActivity extends Activity implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.i("INFO", "OnActivityResult: result = " + resultCode);
-		if ((resultCode == Activity.RESULT_OK)
-				&& (requestCode == BlueprintConstants.VIDEO_REQUEST))
-			// TODO: do something with video
-		if ((resultCode == Activity.RESULT_OK)
-				&& (requestCode == BlueprintConstants.VOICE_REQUEST))
-			// TODO: do something with audio
-		if (requestCode == BlueprintConstants.VIDEO_REQUEST
-				|| requestCode == BlueprintConstants.CAMERA_REQUEST
-				|| requestCode == BlueprintConstants.VOICE_REQUEST) {
-			// TODO: do something with picture
+		Log.i("INFO", "OnActivityResult: result = " + resultCode + "  request code: " + requestCode);
+		if (resultCode == Activity.RESULT_OK){
+			if (requestCode == BlueprintConstants.VIDEO_REQUEST)
+				// TODO: do something with video
+				Toast.makeText(BlueprintActivity.this, "Video Data Stored", Toast.LENGTH_SHORT).show();
+			if (requestCode == BlueprintConstants.VOICE_REQUEST)
+				// TODO: do something with audio
+				Toast.makeText(BlueprintActivity.this, "Voice Data Stored", Toast.LENGTH_SHORT).show();
+			if (requestCode == BlueprintConstants.CAMERA_REQUEST)
+				// TODO: do something with picture
+				Toast.makeText(BlueprintActivity.this, "Photo Data Stored", Toast.LENGTH_SHORT).show();
+		}
+		//if (requestCode == BlueprintConstants.VIDEO_REQUEST || requestCode == BlueprintConstants.CAMERA_REQUEST || requestCode == BlueprintConstants.VOICE_REQUEST) {
 			Toast.makeText(getApplicationContext(), dataType, Toast.LENGTH_LONG).show();
 			if (requestCode == BlueprintConstants.VIDEO_REQUEST) {
 				media_filepath = VideoCamActivity.getPath();
@@ -141,13 +143,14 @@ public class BlueprintActivity extends Activity implements OnClickListener {
 				Log.i("INFO", "blueprint: picture filepath: " + media_filepath);
 				media_extension = "_P.png";
 			}
-			media_filename = UploadFTP.FTPUpload(media_filepath,
-					media_extension, thisContext);
+			Toast.makeText(BlueprintActivity.this, "Ready To Upload Data", Toast.LENGTH_SHORT).show();
+			media_filename = UploadFTP.FTPUpload(media_filepath, media_extension, thisContext);
+			Toast.makeText(BlueprintActivity.this, "Uploaded Data to VDC", Toast.LENGTH_SHORT).show();
 			Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
 			MailIntent.putExtra("Type", dataType);
 			MailIntent.putExtra("Filename", media_filename);
 			startActivity(MailIntent);
-		}
+		//}
 	}
 
 	public static void setImage_filepath(String fp) { image_filepath = fp; }

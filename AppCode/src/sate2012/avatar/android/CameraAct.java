@@ -21,7 +21,7 @@ public class CameraAct extends Activity implements View.OnClickListener {
 
 	File pic;
 	ImageView iv;
-	ImageButton ib;
+	Button ib;
 	Intent i;
 	final static int cameraData = 0;
 	Bitmap bmp;
@@ -38,7 +38,7 @@ public class CameraAct extends Activity implements View.OnClickListener {
 
 	private void initialize() {
 		iv = (ImageView) findViewById(R.id.ivReturnedPicture);
-		ib = (ImageButton) findViewById(R.id.ibTakePic);
+		ib = (Button) findViewById(R.id.ibTakePic);
 		ib.setOnClickListener(this);
 	}
 
@@ -70,7 +70,6 @@ public class CameraAct extends Activity implements View.OnClickListener {
 					BlueprintConstants.STORAGE_DIRECTORY
 							+ BlueprintConstants.MEDIA_DIRECTORY
 							+ System.currentTimeMillis() + OUTPUT_FILE);
-
 			FileOutputStream stream = null;
 			try {
 				stream = new FileOutputStream(pic);
@@ -78,10 +77,7 @@ public class CameraAct extends Activity implements View.OnClickListener {
 				e.printStackTrace();
 			}
 			bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
 			Uri uri = Uri.fromFile(pic);
-			Toast.makeText(getApplicationContext(), "URI is: " + uri,
-					Toast.LENGTH_LONG).show();
 			Log.i("INFO", "image uri: " + uri);
 			Log.i("INFO", "image filepath: " + pic.getAbsolutePath());
 
