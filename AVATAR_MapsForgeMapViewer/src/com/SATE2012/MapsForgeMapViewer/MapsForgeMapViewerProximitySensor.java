@@ -17,7 +17,7 @@ public class MapsForgeMapViewerProximitySensor extends Activity implements Senso
     public final void onCreate(Bundle savedInstanceState) 
     {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.main);
+      setContentView(R.layout.map_view);
 
       // Get an instance of the sensor service, and use that to get an instance of
       // a particular sensor.

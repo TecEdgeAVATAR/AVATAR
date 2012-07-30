@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Choose the media"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:textSize="32dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="that you wish"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:textSize="32dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="to share"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:textSize="32dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"  >
+
+        <Button
+            android:id="@+id/videoButton"
+            android:layout_width="105dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/videocambuttonbackground" />
+
+        <Button
+            android:id="@+id/cameraButton"
+            android:layout_width="105dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/camerabuttonbackground" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/audioButton"
+            android:layout_width="105dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/audiobuttonbackground" />
+
+        <Button
+            android:id="@+id/commentButton"
+            android:layout_width="105dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/textnotebuttonbackground" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/gpsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonbackground"
+        android:text="Send GPS Location"
+        android:textColor="@android:color/white"
+        android:textSize="32dp" />
+</LinearLayout>

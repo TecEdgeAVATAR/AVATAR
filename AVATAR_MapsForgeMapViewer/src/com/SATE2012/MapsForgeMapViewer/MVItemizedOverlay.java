@@ -43,6 +43,12 @@ public class MVItemizedOverlay extends ItemizedOverlay<DataObjectItem>
 		populate();
     }
 
+    public void clear() 
+    {
+	mOverlays.clear();
+	populate();
+    }
+    
     @Override
     protected DataObjectItem createItem(int i)
     {

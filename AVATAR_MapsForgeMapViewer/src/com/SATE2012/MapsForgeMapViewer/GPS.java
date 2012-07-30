@@ -28,7 +28,7 @@ public class GPS extends Activity
     {
 		super.onCreate(savedInstanceState);
 	
-		setContentView(R.layout.main);
+		setContentView(R.layout.map_view);
 		// httpPost("hi");
 		conn = super.getApplicationContext();
 	

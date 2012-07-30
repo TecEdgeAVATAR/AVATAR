@@ -17,7 +17,7 @@ public class MapViewerCompass extends Activity implements SensorEventListener
     public void onCreate(Bundle savedInstanceState)
     {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.map_view);
 	
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		mOrientation = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
