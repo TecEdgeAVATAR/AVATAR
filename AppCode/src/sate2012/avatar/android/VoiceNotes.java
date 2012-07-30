@@ -22,7 +22,7 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class VoiceNotes extends Activity implements OnClickListener{
+public class VoiceNotes extends Activity implements OnClickListener {
 	private MediaRecorder recorder;
 	private MediaPlayer player;
 	private ImageButton startRecording;
@@ -52,34 +52,40 @@ public class VoiceNotes extends Activity implements OnClickListener{
 	}
 
 	public void onClick(View v) {
-		switch(v.getId()){
-			case(R.id.bgnBtn):
-				startRecording();
-				break;
-			case(R.id.playRecordingBtn):
-				if (media){
-					player = new MediaPlayer();
-					playRecording.setImageResource(R.drawable.start_play_button);
-					try {
-						player.setDataSource(voiceRecording.getAbsolutePath());
-						player.prepare();
-						player.start();
-					} catch (IOException e) { Log.e("ERROR", "error playing recording", e); }
-					Toast.makeText(VoiceNotes.this, "Playing back.  Press Upload when done.", Toast.LENGTH_LONG).show();
+		switch (v.getId()) {
+		case (R.id.bgnBtn):
+			startRecording();
+			break;
+		case (R.id.playRecordingBtn):
+			if (media) {
+				player = new MediaPlayer();
+				playRecording.setImageResource(R.drawable.start_play_button);
+				try {
+					player.setDataSource(voiceRecording.getAbsolutePath());
+					player.prepare();
+					player.start();
+				} catch (IOException e) {
+					Log.e("ERROR", "error playing recording", e);
 				}
-				else Toast.makeText(VoiceNotes.this, "You haven't recorded any audio to play yet.", Toast.LENGTH_LONG).show();
-				break;
-			case(R.id.returnToForm):
-				Intent data = new Intent();
-				data.putExtra(VOICE, getVoiceRecording());
-				if (getVoiceRecording() != null) setResult(Activity.RESULT_OK, data);
-				else setResult(Activity.RESULT_CANCELED);
-				finish();
-				break;
+				Toast.makeText(VoiceNotes.this, "Playing back.  Press Upload when done.", Toast.LENGTH_LONG).show();
+			} else
+				Toast.makeText(VoiceNotes.this, "You haven't recorded any audio to play yet.", Toast.LENGTH_LONG).show();
+			break;
+		case (R.id.returnToForm):
+			Intent data = new Intent();
+			data.putExtra(VOICE, getVoiceRecording());
+			if (getVoiceRecording() != null)
+				setResult(Activity.RESULT_OK, data);
+			else
+				setResult(Activity.RESULT_CANCELED);
+			finish();
+			break;
 		}
 	}
-	
-	public static String getPath() { return voiceRecording.getAbsolutePath(); }
+
+	public static String getPath() {
+		return voiceRecording.getAbsolutePath();
+	}
 
 	protected void addToDB() {
 		ContentValues values = new ContentValues(3);
@@ -95,18 +101,25 @@ public class VoiceNotes extends Activity implements OnClickListener{
 	}
 
 	protected void startRecording() {
-		voiceRecording = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY+ Constants.MEDIA_DIRECTORY + OUTPUT_FILE);
+		voiceRecording = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY + OUTPUT_FILE);
 		if (!recording && !playing) {
 			recording = true;
 			startRecording.setImageResource(R.drawable.stop_recording_video);
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-			recorder.setAudioEncoder(3); // Eclipse does not recognize MediaRecorder.AudioEncoder.AAC, but using its value (3) does work.
+			recorder.setAudioEncoder(3); // Eclipse does not recognize
+											// MediaRecorder.AudioEncoder.AAC,
+											// but using its value (3) does
+											// work.
 			recorder.setOutputFile(voiceRecording.getAbsolutePath());
-			try { recorder.prepare();
-			} catch (IllegalStateException e1) { e1.printStackTrace();
-			} catch (IOException e1) { e1.printStackTrace(); }
+			try {
+				recorder.prepare();
+			} catch (IllegalStateException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			recorder.start();
 		} else if (recording) {
 			stopRecording();
@@ -127,10 +140,14 @@ public class VoiceNotes extends Activity implements OnClickListener{
 		media = true;
 	}
 
-	public File getVoiceRecording() { return voiceRecording; }
+	public File getVoiceRecording() {
+		return voiceRecording;
+	}
 
-	public void setVoiceRecording(File v) { voiceRecording = v; }
-	
+	public void setVoiceRecording(File v) {
+		voiceRecording = v;
+	}
+
 	@Override
 	protected void onStop() {
 		super.onStop();

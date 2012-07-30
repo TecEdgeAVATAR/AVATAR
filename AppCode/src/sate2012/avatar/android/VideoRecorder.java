@@ -18,8 +18,10 @@ import android.widget.ImageButton;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
 /**
- * Allows the user to record a video file, play it back, and then upload it to the Virtual Command Center
+ * Allows the user to record a video file, play it back, and then upload it to
+ * the Virtual Command Center
  */
 public class VideoRecorder extends Activity implements SurfaceHolder.Callback, OnClickListener {
 	private MediaRecorder recorder;
@@ -69,76 +71,97 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 		returnToSubmission = (ImageButton) findViewById(R.id.returnToForm);
 		returnToSubmission.setOnClickListener(this);
 	}
-	
+
 	public void onClick(View v) {
-		switch(v.getId()){
-			case(R.id.bgnBtn):
-				if (!recording && !playing) {
-					try {
-						beginRecording();
-						recording = true;
-						startBtn.setImageResource(R.drawable.stop_recording_video);
-						mVideoClockUI.setVisibility(View.VISIBLE);
-						mVideoClockUI.setText("00:00");
-						mHandler.postDelayed(mClockTask, 1000);
-					} catch (Exception e) { Log.e("ERROR", "Exception caught recording video.", e); }
-				} else if (recording) {
-					try {
-						stopRecording();
-						playing = false;
-						recording = false;
-						playRecordingBtn.setEnabled(true);
-						playRecordingBtn.setImageResource(R.drawable.start_play_button);
-						startBtn.setEnabled(false);
-						startBtn.setImageResource(R.drawable.stop_recording_video);
-						mHandler.removeCallbacks(mClockTask);
-						mVideoClockUI.setVisibility(View.INVISIBLE);
-					} catch (Exception e) { Log.e("ERROR", "Exception caught stopping recording.", e); }
+		switch (v.getId()) {
+		case (R.id.bgnBtn):
+			if (!recording && !playing) {
+				try {
+					beginRecording();
+					recording = true;
+					startBtn.setImageResource(R.drawable.stop_recording_video);
+					mVideoClockUI.setVisibility(View.VISIBLE);
+					mVideoClockUI.setText("00:00");
+					mHandler.postDelayed(mClockTask, 1000);
+				} catch (Exception e) {
+					Log.e("ERROR", "Exception caught recording video.", e);
 				}
-				break;
-			case(R.id.playRecordingBtn):
-				if (!playing && !recording) {
-					try {
-						playRecording();
-						playing = true;
-						playRecordingBtn.setEnabled(false);
-						playRecordingBtn.setImageResource(R.drawable.start_play_button);
-					} catch (Exception e) { Log.e("ERROR", "Exception caught playing video.", e); }
-				} else if (playing) {
-					try {
-						stopPlayingRecording();
-						playing = false;
-						recording = false;
-					} catch (Exception e) { Log.e("ERROR", "Exception caught stopping play.", e); }
+			} else if (recording) {
+				try {
+					stopRecording();
+					playing = false;
+					recording = false;
+					playRecordingBtn.setEnabled(true);
+					playRecordingBtn.setImageResource(R.drawable.start_play_button);
+					startBtn.setEnabled(false);
+					startBtn.setImageResource(R.drawable.stop_recording_video);
+					mHandler.removeCallbacks(mClockTask);
+					mVideoClockUI.setVisibility(View.INVISIBLE);
+				} catch (Exception e) {
+					Log.e("ERROR", "Exception caught stopping recording.", e);
 				}
-				break;
-			case(R.id.returnToForm):
-				Intent data = new Intent();
-				data.putExtra(VIDEO, getVideoRecording());
-				if (getVideoRecording() != null)
-					setResult(Activity.RESULT_OK, data);
-				else setResult(Activity.RESULT_CANCELED);
-				finish();
-				break;
+			}
+			break;
+		case (R.id.playRecordingBtn):
+			if (!playing && !recording) {
+				try {
+					playRecording();
+					playing = true;
+					playRecordingBtn.setEnabled(false);
+					playRecordingBtn.setImageResource(R.drawable.start_play_button);
+				} catch (Exception e) {
+					Log.e("ERROR", "Exception caught playing video.", e);
+				}
+			} else if (playing) {
+				try {
+					stopPlayingRecording();
+					playing = false;
+					recording = false;
+				} catch (Exception e) {
+					Log.e("ERROR", "Exception caught stopping play.", e);
+				}
+			}
+			break;
+		case (R.id.returnToForm):
+			Intent data = new Intent();
+			data.putExtra(VIDEO, getVideoRecording());
+			if (getVideoRecording() != null)
+				setResult(Activity.RESULT_OK, data);
+			else
+				setResult(Activity.RESULT_CANCELED);
+			finish();
+			break;
 		}
 	}
-	
-	public static String getPath() { return videoRecording.getAbsolutePath(); }
+
+	public static String getPath() {
+		return videoRecording.getAbsolutePath();
+	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		startBtn.setEnabled(true);
 		mCameraDevice = Camera.open();
-		try { mCameraDevice.setPreviewDisplay(holder);
-		} catch (Exception e) { Log.e("INFO", "Error in setPreviewDisplay:  ", e); }
-		try { mCameraDevice.startPreview(); 
-		} catch (Exception e) { Log.e("INFO", "Error in startPreview:  ", e); }
+		try {
+			mCameraDevice.setPreviewDisplay(holder);
+		} catch (Exception e) {
+			Log.e("INFO", "Error in setPreviewDisplay:  ", e);
+		}
+		try {
+			mCameraDevice.startPreview();
+		} catch (Exception e) {
+			Log.e("INFO", "Error in startPreview:  ", e);
+		}
 	}
 
-	public void surfaceDestroyed(SurfaceHolder holder) {}
+	public void surfaceDestroyed(SurfaceHolder holder) {
+	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-		try { Log.i("INFO", "Width x Height = " + width + "x" + height);
-		} catch (Exception e) { Log.e("INFO", "Error in surfaceChanged:  ", e); }
+		try {
+			Log.i("INFO", "Width x Height = " + width + "x" + height);
+		} catch (Exception e) {
+			Log.e("INFO", "Error in surfaceChanged:  ", e);
+		}
 	}
 
 	private void playRecording() {
@@ -148,7 +171,9 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 		videoView.start();
 	}
 
-	private void stopPlayingRecording() { videoView.stopPlayback(); }
+	private void stopPlayingRecording() {
+		videoView.stopPlayback();
+	}
 
 	private void stopRecording() throws Exception {
 		if (recorder != null) {
@@ -160,19 +185,21 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 
 	protected void onDestroy() {
 		super.onDestroy();
-		if (recorder != null) recorder.release();
+		if (recorder != null)
+			recorder.release();
 		mHandler.removeCallbacks(mClockTask);
 	}
 
 	private void beginRecording() throws Exception {
 		mCameraDevice.stopPreview();
 		mCameraDevice.unlock();
-		if(recorder != null){
+		if (recorder != null) {
 			recorder.stop();
 			recorder.release();
 		}
 		videoRecording = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY + OUTPUT_FILE);
-		if (videoRecording.exists()) videoRecording.delete();
+		if (videoRecording.exists())
+			videoRecording.delete();
 		try {
 			recorder = new MediaRecorder();
 			recorder.reset();
@@ -183,25 +210,34 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			recorder.setMaxDuration(20000);
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-			recorder.setAudioEncoder(3); // Eclipse does not recognize MediaRecorder.AudioEncoder.AAC, but using its value (3) does work.
+			recorder.setAudioEncoder(3); // Eclipse does not recognize
+											// MediaRecorder.AudioEncoder.AAC,
+											// but using its value (3) does
+											// work.
 			recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 			recorder.setOutputFile(videoRecording.getAbsolutePath());
 			recorder.setPreviewDisplay(mHolder.getSurface());
 			recorder.prepare();
 			recorder.start();
-		} catch (Exception e) { Log.e("ERROR", "Exception caught creating media recorder." + e.getStackTrace(), e); }
+		} catch (Exception e) {
+			Log.e("ERROR", "Exception caught creating media recorder." + e.getStackTrace(), e);
+		}
 	}
 
 	/**
 	 * @return the videoRecording
 	 */
-	public File getVideoRecording() { return videoRecording; }
+	public File getVideoRecording() {
+		return videoRecording;
+	}
 
 	/**
 	 * @param videoRecording
 	 *            the videoRecording to set
 	 */
-	public void setVideoRecording(File v) { videoRecording = v; }
+	public void setVideoRecording(File v) {
+		videoRecording = v;
+	}
 
 	@Override
 	protected void onStop() {

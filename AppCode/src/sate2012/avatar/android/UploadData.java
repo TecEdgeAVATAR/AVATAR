@@ -23,7 +23,9 @@ public class UploadData extends Activity {
 
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
 	public static void post(String url, List<NameValuePair> nameValuePairs) {
 		HttpClient httpClient = new DefaultHttpClient();
@@ -35,11 +37,14 @@ public class UploadData extends Activity {
 			for (int index = 0; index < nameValuePairs.size(); index++) {
 				if (nameValuePairs.get(index).getName().equalsIgnoreCase("image"))
 					entity.addPart(nameValuePairs.get(index).getName(), new FileBody(new File(nameValuePairs.get(index).getValue()), "image/jpeg"));
-				else entity.addPart(nameValuePairs.get(index).getName(), new StringBody(nameValuePairs.get(index).getValue()));
+				else
+					entity.addPart(nameValuePairs.get(index).getName(), new StringBody(nameValuePairs.get(index).getValue()));
 			}
 			httpPost.setEntity(entity);
 			HttpResponse response = httpClient.execute(httpPost, localContext);
 			Toast.makeText(UploadMedia.thisContext, "Response: '" + response + "'", Toast.LENGTH_LONG).show();
-		} catch (IOException e) { e.printStackTrace(); }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

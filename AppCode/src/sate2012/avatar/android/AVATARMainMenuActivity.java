@@ -10,11 +10,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 /**
- * The main menu of the AVATAR Application
- * This menu navigates users to different parts of the program.
+ * The main menu of the AVATAR Application This menu navigates users to
+ * different parts of the program.
  */
 public class AVATARMainMenuActivity extends Activity implements OnClickListener {
-	private Button uploadB; // Button that switches to a menu that lets the user upload different types of media
+	private Button uploadB; // Button that switches to a menu that lets the user
+							// upload different types of media
 
 	/*
 	 * private Button mapB; // Button that switches to map view private Button
@@ -49,30 +50,29 @@ public class AVATARMainMenuActivity extends Activity implements OnClickListener 
 	 */
 	public void onClick(View v) {
 		switch (v.getId()) {
-			// case (R.id.uploadB):
-			default:
-				Intent intent = new Intent(AVATARMainMenuActivity.this, UploadMedia.class);
-				startActivity(intent);
-				// break;
+		// case (R.id.uploadB):
+		default:
+			Intent intent = new Intent(AVATARMainMenuActivity.this, UploadMedia.class);
+			startActivity(intent);
+			// break;
 			/*
-			 * case (R.id.mapB):
-				 * Toast.makeText(getApplicationContext(), "These are not the maps you're looking for...", Toast.LENGTH_LONG).show();
-				 * // Create/call intent to map activity here
-				 * // Load the MapsForgeMapViewer
-				 * Toast.makeText(getApplicationContext(), "MapViewer is not yet available.", Toast.LENGTH_LONG) .show();
-				 * break;
-			 * case (R.id.naoB):
-				 * Toast.makeText(getApplicationContext(), "Ashu couldn't get this to work.", Toast.LENGTH_LONG) .show();
-				 * // Create/call intent to nao activity here
-				 * break;
-			 * case (R.id.arB):
-				 * Toast.makeText(getApplicationContext(), "Yeah, like WE are ever going to get this to work?", Toast.LENGTH_LONG).show();
-				 * // Create/call intent to augmented reality activity here
-				 * break;
-			 * case (R.id.settingB):
-			 * Toast.makeText( getApplicationContext(), "There are no settings. You WILL like it the way we made it.", Toast.LENGTH_LONG).show();
-			 * // Create/call intent to settings activity here 
-			 * break;
+			 * case (R.id.mapB): Toast.makeText(getApplicationContext(),
+			 * "These are not the maps you're looking for...",
+			 * Toast.LENGTH_LONG).show(); // Create/call intent to map activity
+			 * here // Load the MapsForgeMapViewer
+			 * Toast.makeText(getApplicationContext(),
+			 * "MapViewer is not yet available.", Toast.LENGTH_LONG) .show();
+			 * break; case (R.id.naoB): Toast.makeText(getApplicationContext(),
+			 * "Ashu couldn't get this to work.", Toast.LENGTH_LONG) .show(); //
+			 * Create/call intent to nao activity here break; case (R.id.arB):
+			 * Toast.makeText(getApplicationContext(),
+			 * "Yeah, like WE are ever going to get this to work?",
+			 * Toast.LENGTH_LONG).show(); // Create/call intent to augmented
+			 * reality activity here break; case (R.id.settingB):
+			 * Toast.makeText( getApplicationContext(),
+			 * "There are no settings. You WILL like it the way we made it.",
+			 * Toast.LENGTH_LONG).show(); // Create/call intent to settings
+			 * activity here break;
 			 */
 		}
 	}

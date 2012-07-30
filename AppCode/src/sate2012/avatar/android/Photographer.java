@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -36,16 +35,16 @@ public class Photographer extends Activity implements View.OnClickListener {
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case (R.id.ibTakePic):
-				Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(i, cameraData);
-				break;
-			case (R.id.upload_button):
-				Intent data = new Intent();
-				setResult(Activity.RESULT_OK, data);
-				UploadMedia.setImage_filepath(pic.getAbsolutePath());
-				finish();
-				break;
+		case (R.id.ibTakePic):
+			Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+			startActivityForResult(i, cameraData);
+			break;
+		case (R.id.upload_button):
+			Intent data = new Intent();
+			setResult(Activity.RESULT_OK, data);
+			UploadMedia.setImage_filepath(pic.getAbsolutePath());
+			finish();
+			break;
 		}
 	}
 
@@ -58,11 +57,16 @@ public class Photographer extends Activity implements View.OnClickListener {
 			iv.setImageBitmap(bmp);
 			pic = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY + System.currentTimeMillis() + OUTPUT_FILE);
 			FileOutputStream stream = null;
-			try { stream = new FileOutputStream(pic);
-			} catch (FileNotFoundException e) { e.printStackTrace(); }
+			try {
+				stream = new FileOutputStream(pic);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
 		}
 	}
 
-	public String getPath() { return pic.getAbsolutePath(); }
+	public String getPath() {
+		return pic.getAbsolutePath();
+	}
 }

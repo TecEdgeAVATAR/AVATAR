@@ -2,8 +2,6 @@ package sate2012.avatar.android;
 
 import gupta.ashutosh.avatar.R;
 import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 /**
  * The Upload Menu Allows the user to select different media types to upload to
@@ -36,9 +31,6 @@ public class UploadMedia extends Activity implements OnClickListener {
 	private String media_filename;
 	private String media_extension;
 	private static String image_filepath;
-	private String URL_photoUpload = "http://www.wbi-icc.com/students/SL/SmartPhone/infoinput.html";
-	private BasicNameValuePair uploadNVP = new BasicNameValuePair("image", "/mnt/sdcard/DCIM/Camera/20120705_111336.png");
-	private List<NameValuePair> uploadParams = new ArrayList<NameValuePair>(3);
 	public static Context thisContext;
 
 	/**
@@ -72,33 +64,33 @@ public class UploadMedia extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent i;
 		switch (v.getId()) {
-			case (R.id.cameraButton):
-				dataType = getResources().getString(R.string.type_picture);
-				i = new Intent(UploadMedia.this, Photographer.class);
-				startActivityForResult(i, Constants.CAMERA_REQUEST);
-				break;
-			case (R.id.videoButton):
-				dataType = getResources().getString(R.string.type_video);
-				i = new Intent(UploadMedia.this, VideoRecorder.class);
-				startActivityForResult(i, Constants.VIDEO_REQUEST);
-				break;
-			case (R.id.audioButton):
-				dataType = getResources().getString(R.string.type_audio);
-				i = new Intent(UploadMedia.this, VoiceNotes.class);
-				startActivityForResult(i, Constants.VOICE_REQUEST);
-				break;
-			case (R.id.commentButton):
-				dataType = getResources().getString(R.string.type_comment);
-				i = new Intent(getApplicationContext(), MailSenderActivity.class);
-				i.putExtra("Type", dataType);
-				startActivity(i);
-				break;
-			case (R.id.gpsButton):
-				dataType = getResources().getString(R.string.type_android);
-				i = new Intent(getApplicationContext(), MailSenderActivity.class);
-				i.putExtra("Type", dataType);
-				startActivity(i);
-				break;
+		case (R.id.cameraButton):
+			dataType = getResources().getString(R.string.type_picture);
+			i = new Intent(UploadMedia.this, Photographer.class);
+			startActivityForResult(i, Constants.CAMERA_REQUEST);
+			break;
+		case (R.id.videoButton):
+			dataType = getResources().getString(R.string.type_video);
+			i = new Intent(UploadMedia.this, VideoRecorder.class);
+			startActivityForResult(i, Constants.VIDEO_REQUEST);
+			break;
+		case (R.id.audioButton):
+			dataType = getResources().getString(R.string.type_audio);
+			i = new Intent(UploadMedia.this, VoiceNotes.class);
+			startActivityForResult(i, Constants.VOICE_REQUEST);
+			break;
+		case (R.id.commentButton):
+			dataType = getResources().getString(R.string.type_comment);
+			i = new Intent(getApplicationContext(), MailSenderActivity.class);
+			i.putExtra("Type", dataType);
+			startActivity(i);
+			break;
+		case (R.id.gpsButton):
+			dataType = getResources().getString(R.string.type_android);
+			i = new Intent(getApplicationContext(), MailSenderActivity.class);
+			i.putExtra("Type", dataType);
+			startActivity(i);
+			break;
 		}
 	}
 
@@ -109,39 +101,33 @@ public class UploadMedia extends Activity implements OnClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
-			if (requestCode == Constants.VIDEO_REQUEST){
-				System.out.println("Video French Fries");
-				//Toast.makeText(getApplicationContext(), "Video Data Stored", Toast.LENGTH_LONG).show();
+			if (requestCode == Constants.VIDEO_REQUEST) {
 				media_filepath = VideoRecorder.getPath();
 				media_extension = "_V.f4v";
 			}
-			if (requestCode == Constants.VOICE_REQUEST){
-				//Toast.makeText(getApplicationContext(), "Voice Data Stored", Toast.LENGTH_LONG).show();
+			if (requestCode == Constants.VOICE_REQUEST) {
 				media_filepath = VoiceNotes.getPath();
 				media_extension = "_A.mp4";
 			}
-			if (requestCode == Constants.CAMERA_REQUEST){
-				//Toast.makeText(getApplicationContext(), "Photo Data Stored", Toast.LENGTH_LONG).show();
+			if (requestCode == Constants.CAMERA_REQUEST) {
 				media_filepath = getImage_filepath();
 				media_extension = "_P.png";
 			}
 		}
-		//Toast.makeText(getApplicationContext(), "Uploading...", Toast.LENGTH_SHORT).show();
 		media_filename = UploadFTP.FTPUpload(media_filepath, media_extension, thisContext);
-		System.out.println("heeeere");
-		//Toast.makeText(UploadMedia.this, "Uploaded Data to VDC!", Toast.LENGTH_SHORT).show();
 		Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
-		System.out.println("i here");
 		MailIntent.putExtra("Type", dataType);
-		System.out.println("u here 2?");
 		MailIntent.putExtra("Filename", media_filename);
-		System.out.println("this is crazy");
 		startActivity(MailIntent);
 	}
 
-	public static void setImage_filepath(String fp) { image_filepath = fp; }
+	public static void setImage_filepath(String fp) {
+		image_filepath = fp;
+	}
 
-	public String getImage_filepath() { return image_filepath; }
+	public String getImage_filepath() {
+		return image_filepath;
+	}
 
 	@Override
 	public void onDestroy() {

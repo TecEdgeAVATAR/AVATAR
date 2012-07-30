@@ -21,7 +21,9 @@ public class GMailSender extends javax.mail.Authenticator {
 	private String password;
 	private Session session;
 
-	static { Security.addProvider(new com.provider.JSSEProvider()); }
+	static {
+		Security.addProvider(new com.provider.JSSEProvider());
+	}
 
 	public GMailSender(String u, String p) {
 		mailhost = "smtp.gmail.com";
@@ -55,7 +57,9 @@ public class GMailSender extends javax.mail.Authenticator {
 			else
 				message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
 			Transport.send(message);
-		} catch (Exception e) { e.printStackTrace(); }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private class ByteArrayDataSource implements DataSource {
