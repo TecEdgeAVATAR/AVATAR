@@ -57,6 +57,7 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 			}
 		};
 		mVideoClockUI = (TextView) findViewById(R.id.video_clock_ui);
+		videoView = (VideoView) this.findViewById(R.id.videoView);
 		mHolder = videoView.getHolder();
 		mHolder.addCallback(this);
 		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -65,7 +66,6 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 		playRecordingBtn = (ImageButton) findViewById(R.id.playRecordingBtn);
 		playRecordingBtn.setEnabled(false);
 		playRecordingBtn.setOnClickListener(this);
-		videoView = (VideoView) this.findViewById(R.id.videoView);
 		returnToSubmission = (ImageButton) findViewById(R.id.returnToForm);
 		returnToSubmission.setOnClickListener(this);
 	}
@@ -75,7 +75,7 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 			case(R.id.bgnBtn):
 				if (!recording && !playing) {
 					try {
-						beginRecording(mHolder);
+						beginRecording();
 						recording = true;
 						startBtn.setImageResource(R.drawable.stop_recording_video);
 						mVideoClockUI.setVisibility(View.VISIBLE);
@@ -164,24 +164,29 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 		mHandler.removeCallbacks(mClockTask);
 	}
 
-	private void beginRecording(SurfaceHolder holder) throws Exception {
+	private void beginRecording() throws Exception {
 		mCameraDevice.stopPreview();
 		mCameraDevice.unlock();
+		if(recorder != null){
+			recorder.stop();
+			recorder.release();
+		}
 		videoRecording = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY + OUTPUT_FILE);
 		if (videoRecording.exists()) videoRecording.delete();
 		try {
 			recorder = new MediaRecorder();
 			recorder.reset();
+			System.out.println("Reset");
 			recorder.setCamera(mCameraDevice);
-			recorder.setPreviewDisplay(holder.getSurface());
+			recorder.setPreviewDisplay(mHolder.getSurface());
 			recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			recorder.setMaxDuration(20000);
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 			recorder.setAudioEncoder(3); // Eclipse does not recognize MediaRecorder.AudioEncoder.AAC, but using its value (3) does work.
 			recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-			recorder.setVideoSize(720, 432);
 			recorder.setOutputFile(videoRecording.getAbsolutePath());
-			recorder.setPreviewDisplay(holder.getSurface());
+			recorder.setPreviewDisplay(mHolder.getSurface());
 			recorder.prepare();
 			recorder.start();
 		} catch (Exception e) { Log.e("ERROR", "Exception caught creating media recorder." + e.getStackTrace(), e); }

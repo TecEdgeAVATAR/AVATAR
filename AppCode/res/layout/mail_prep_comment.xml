@@ -11,8 +11,9 @@
         android:orientation="vertical" >
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:text="@string/nameOfLoc"
             android:textColor="@android:color/white"
@@ -20,8 +21,9 @@
 
         <EditText
             android:id="@+id/pointName"
-            android:layout_width="match_parent"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ems="10"
             android:hint="@string/name" >
 
@@ -29,17 +31,18 @@
         </EditText>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
             android:text="@string/description"
             android:textColor="@android:color/white"
             android:textSize="50dp" />
 
         <EditText
             android:id="@+id/pointDesc"
-            android:layout_width="match_parent"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:ems="10"
             android:hint="@string/textDescr" />

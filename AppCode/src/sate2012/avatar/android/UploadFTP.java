@@ -42,7 +42,8 @@ public class UploadFTP extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Toast.makeText(getApplicationContext(), "Created UploadFTP Activity", Toast.LENGTH_LONG).show();
+		// Toast.makeText(getApplicationContext(), "Created UploadFTP Activity",
+		// Toast.LENGTH_LONG).show();
 		// thisContext = getApplicationContext();
 
 	}
@@ -63,26 +64,33 @@ public class UploadFTP extends Activity {
 			if (ftpClient.getReplyString().contains("250")) {
 				Handler progressHandler = new Handler();
 				ftpClient.setFileType(org.apache.commons.net.ftp.FTP.BINARY_FILE_TYPE);
-				// Toast.makeText(thisContext, "set file type to binary",Toast.LENGTH_LONG).show();
+				// Toast.makeText(thisContext,
+				// "set file type to binary",Toast.LENGTH_LONG).show();
 				BufferedInputStream buffIn = null;
-				// Toast.makeText(thisContext, "buffIn = null",Toast.LENGTH_LONG).show();
+				// Toast.makeText(thisContext,
+				// "buffIn = null",Toast.LENGTH_LONG).show();
 				buffIn = new BufferedInputStream(new FileInputStream(filepath));
-				// Toast.makeText(thisContext, "buffIn = new",Toast.LENGTH_LONG).show();
+				// Toast.makeText(thisContext,
+				// "buffIn = new",Toast.LENGTH_LONG).show();
 				ftpClient.enterLocalPassiveMode();
-				// Toast.makeText(thisContext, filename, Toast.LENGTH_LONG).show();
+				// Toast.makeText(thisContext, filename,
+				// Toast.LENGTH_LONG).show();
 				ProgressInputStream progressInput = new ProgressInputStream(buffIn, progressHandler);
 				boolean result = ftpClient.storeFile(filename + extension, progressInput);
-				// Toast.makeText(thisContext, "uploaded! " + result, Toast.LENGTH_LONG).show();
+				// Toast.makeText(thisContext, "uploaded! " + result,
+				// Toast.LENGTH_LONG).show();
 				buffIn.close();
 				ftpClient.logout();
 				ftpClient.disconnect();
 			}
 
 			/*
-			 * } catch (SocketException e) { Log.e(SorensonApplication.TAG, e.getStackTrace().toString()); 
-			 * } catch (UnknownHostException e) { Log.e(SorensonApplication.TAG, e.getStackTrace().toString()); }
+			 * } catch (SocketException e) { Log.e(SorensonApplication.TAG,
+			 * e.getStackTrace().toString()); } catch (UnknownHostException e) {
+			 * Log.e(SorensonApplication.TAG, e.getStackTrace().toString()); }
 			 */
-		} catch (IOException e) { // Log.e(SorensonApplication.TAG, e.getStackTrace().toString());	
+		} catch (IOException e) { // Log.e(SorensonApplication.TAG,
+									// e.getStackTrace().toString());
 		}
 		return filename + extension;
 	}

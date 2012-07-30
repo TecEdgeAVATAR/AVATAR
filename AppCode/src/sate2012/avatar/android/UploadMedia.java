@@ -89,14 +89,12 @@ public class UploadMedia extends Activity implements OnClickListener {
 				break;
 			case (R.id.commentButton):
 				dataType = getResources().getString(R.string.type_comment);
-				Toast.makeText(getApplicationContext(), dataType, Toast.LENGTH_LONG).show();
 				i = new Intent(getApplicationContext(), MailSenderActivity.class);
 				i.putExtra("Type", dataType);
 				startActivity(i);
 				break;
 			case (R.id.gpsButton):
 				dataType = getResources().getString(R.string.type_android);
-				Toast.makeText(getApplicationContext(), dataType, Toast.LENGTH_LONG).show();
 				i = new Intent(getApplicationContext(), MailSenderActivity.class);
 				i.putExtra("Type", dataType);
 				startActivity(i);
@@ -112,27 +110,32 @@ public class UploadMedia extends Activity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == Constants.VIDEO_REQUEST){
-				Toast.makeText(UploadMedia.this, "Video Data Stored", Toast.LENGTH_SHORT).show();
+				System.out.println("Video French Fries");
+				//Toast.makeText(getApplicationContext(), "Video Data Stored", Toast.LENGTH_LONG).show();
 				media_filepath = VideoRecorder.getPath();
 				media_extension = "_V.f4v";
 			}
 			if (requestCode == Constants.VOICE_REQUEST){
-				Toast.makeText(UploadMedia.this, "Voice Data Stored", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "Voice Data Stored", Toast.LENGTH_LONG).show();
 				media_filepath = VoiceNotes.getPath();
 				media_extension = "_A.mp4";
 			}
 			if (requestCode == Constants.CAMERA_REQUEST){
-				Toast.makeText(UploadMedia.this, "Photo Data Stored", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "Photo Data Stored", Toast.LENGTH_LONG).show();
 				media_filepath = getImage_filepath();
 				media_extension = "_P.png";
 			}
 		}
-		Toast.makeText(UploadMedia.this, "Uploading...", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "Uploading...", Toast.LENGTH_SHORT).show();
 		media_filename = UploadFTP.FTPUpload(media_filepath, media_extension, thisContext);
-		Toast.makeText(UploadMedia.this, "Uploaded Data to VDC!", Toast.LENGTH_SHORT).show();
+		System.out.println("heeeere");
+		//Toast.makeText(UploadMedia.this, "Uploaded Data to VDC!", Toast.LENGTH_SHORT).show();
 		Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
+		System.out.println("i here");
 		MailIntent.putExtra("Type", dataType);
+		System.out.println("u here 2?");
 		MailIntent.putExtra("Filename", media_filename);
+		System.out.println("this is crazy");
 		startActivity(MailIntent);
 	}
 

@@ -30,7 +30,7 @@
     <string name="type_audio">Audio</string>
     <string name="type_comment">Comment</string>
     <string name="type_android">Android</string>
-    <string name="enterDeviceId">Enter Device Name/ID</string>
+    <string name="enterDeviceId">Enter Device Name</string>
 	<string name="name">Name</string>
 	<string name="sendEmail">  Send Email  </string>
 	<string name="nameOfLoc">Name of Location or Item of Interest</string>

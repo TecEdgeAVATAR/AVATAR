@@ -5,12 +5,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings.Secure;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.EditText;
@@ -30,7 +32,6 @@ public class MailSenderActivity extends Activity implements OnClickListener{
 	private String ptLat;
 	private String ptLng;
 	private String item_sep;
-	private String LatLong;
 	private Context c;
 	private Button send;
 	private Button button_return;
@@ -49,8 +50,8 @@ public class MailSenderActivity extends Activity implements OnClickListener{
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (long) 2000, (float) 1.0, mlocListener); // (provider, time (ms), distance (m), listener)
 		Intent thisIntent = getIntent();
 		ptType = thisIntent.getStringExtra("Type");
-		ptURL = "ftp://opensim:widdlyscuds@virtualdiscoverycenter.net/../../var/www/avatar/uploaded" + thisIntent.getStringExtra("Filename");
-		ptURL_noFTP = "virtualdiscoverycenter.net/../../var/www/avatar/uploaded" + thisIntent.getStringExtra("Filename");
+		ptURL = "ftp://opensim:widdlyscuds@virtualdiscoverycenter.net/../../var/www/avatar/Uploaded/" + thisIntent.getStringExtra("Filename");
+		ptURL_noFTP = "virtualdiscoverycenter.net/avatar/Uploaded/" + thisIntent.getStringExtra("Filename");
 		ptName = thisIntent.getStringExtra("Filename");
 		setContentView(R.layout.mail_prep_apv);
 		setLayout(ptType);
@@ -62,6 +63,8 @@ public class MailSenderActivity extends Activity implements OnClickListener{
 		switch(v.getId()){
 			case(R.id.Send):
 				try {
+					InputMethodManager inputManager = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+					inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 					from = "sate2012.avatar@gmail.com";
 					toList = "sate2012.avatar@gmail.com";
 					EditText etName = (EditText) findViewById(R.id.pointName);
@@ -76,29 +79,30 @@ public class MailSenderActivity extends Activity implements OnClickListener{
 					button_return = (Button) findViewById(R.id.Return);
 					button_return.setOnClickListener(this);
 				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(), "EXCEPTION: " + e, Toast.LENGTH_LONG).show();
+					System.out.println("EXCEPTION: " + e);
 					setContentView(R.layout.send_failed);
 				}
 				break;
 			case(R.id.Return):
+				System.out.println("Exiting");
 				finish();
 				break;
 		}
 	}
 	
-	public void setLayout(String Type) {
-		if (Type.equals(getResources().getString(R.string.type_comment)))
+	public void setLayout(String type) {
+		if (type.equals(getResources().getString(R.string.type_comment)))
 			setContentView(R.layout.mail_prep_comment);
-		else if (Type.equals(getResources().getString(R.string.type_android))) {
+		else if (type.equals(getResources().getString(R.string.type_android))) {
 			setContentView(R.layout.mail_prep_android);
-			TextView pointDesc = (TextView) findViewById(R.id.pointDesc);
+			EditText pointName = (EditText) findViewById(R.id.pointName);
 			TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-			pointDesc.setText(telephonyManager.getDeviceId());
-		} else if (Type.equals(getResources().getString(R.string.type_audio)) || Type.equals(getResources().getString(R.string.type_picture)) || Type.equals(getResources().getString(R.string.type_video))) {
+			pointName.setText(telephonyManager.getDeviceId());
+		} else if (type.equals(getResources().getString(R.string.type_audio)) || type.equals(getResources().getString(R.string.type_picture)) || type.equals(getResources().getString(R.string.type_video))) {
 			setContentView(R.layout.mail_prep_apv);
-			TextView pointDesc = (TextView) findViewById(R.id.pointDesc);
+			EditText pointDesc = (EditText) findViewById(R.id.pointDesc);
 			pointDesc.setText(ptURL_noFTP);
-			TextView pointName = (TextView) findViewById(R.id.pointName);
+			EditText pointName = (EditText) findViewById(R.id.pointName);
 			pointName.setText(ptName);
 		}
 	}
