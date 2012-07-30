@@ -10,32 +10,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/logo"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
-        android:textSize="50dp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text=" "
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="50dp" />
+        android:layout_marginTop="100dp"
+        android:background="@drawable/logo" />
 
     <Button
         android:id="@+id/uploadB"
         android:layout_width="wrap_content"
-        android:layout_height="90dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
+        android:layout_marginTop="100dp"
         android:background="@drawable/buttonbackground"
-        android:text="Start uploading information"
+        android:text="@string/start"
         android:textColor="@android:color/white"
-        android:textSize="32dp"/>
- 
-    <!-- <Button
+        android:textSize="40dp" />
+
+    <!-- These features have not been implemented yet
+    <Button
         android:id="@+id/mapB"
         android:layout_width="250dp"
         android:layout_height="45dp"
@@ -73,6 +63,7 @@
         android:background="@drawable/buttonbackground"
         android:text="Settings"
         android:textColor="@android:color/white"
-        android:visibility="gone"/> -->
+        android:visibility="gone"/>
+    -->
 
 </LinearLayout>

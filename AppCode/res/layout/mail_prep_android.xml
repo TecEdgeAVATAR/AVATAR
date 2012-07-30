@@ -4,10 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background" >
-
+
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
@@ -15,16 +15,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:text="Enter Device Name/ID"
+            android:text="@string/enterDeviceId"
             android:textColor="@android:color/white"
-            android:textSize="32dp" />
+            android:textSize="60dp" />
 
         <EditText
             android:id="@+id/pointName"
-            android:layout_width="match_parent"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ems="10"
-            android:hint="Name" >
+            android:hint="@string/name" >
 
             <requestFocus />
         </EditText>
@@ -32,13 +33,13 @@
         <Button
             android:id="@+id/Send"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/buttonbackground"
-            android:text="Send Email"
-        	android:layout_gravity="center"
+            android:text="@string/sendEmail"
             android:textColor="@android:color/white"
-            android:textSize="32dp" />
+            android:textSize="50dp" />
     </LinearLayout>
 
 </ScrollView>

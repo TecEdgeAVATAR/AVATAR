@@ -6,22 +6,23 @@
     android:orientation="vertical" >
 
     <TextView
-        android:paddingTop="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="200dp"
         android:text="@string/thank_submission"
         android:textColor="@android:color/white"
-        android:textSize="32dp" />
+        android:textSize="60dp" />
 
     <Button
         android:id="@+id/Return"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:background="@drawable/buttonbackground"
-        android:text="Return to Upload Menu"
-        android:textColor="@android:color/white" />
+        android:text="@string/back"
+        android:textColor="@android:color/white"
+        android:textSize="50dp" />
 
 </LinearLayout>

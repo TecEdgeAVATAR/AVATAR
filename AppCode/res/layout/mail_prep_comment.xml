@@ -14,16 +14,16 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Name of Location or Item of Interest"
+            android:text="@string/nameOfLoc"
             android:textColor="@android:color/white"
-            android:textSize="32dp" />
+            android:textSize="50dp" />
 
         <EditText
             android:id="@+id/pointName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Name" >
+            android:hint="@string/name" >
 
             <requestFocus />
         </EditText>
@@ -32,9 +32,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="Description"
+            android:text="@string/description"
             android:textColor="@android:color/white"
-            android:textSize="32dp" />
+            android:textSize="50dp" />
 
         <EditText
             android:id="@+id/pointDesc"
@@ -42,18 +42,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:ems="10"
-            android:hint="Text Description" />
+            android:hint="@string/textDescr" />
 
         <Button
             android:id="@+id/Send"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/buttonbackground"
-            android:text="Send Email"
+            android:text="@string/sendEmail"
             android:textColor="@android:color/white"
-            android:textSize="32dp" />
+            android:textSize="50dp" />
     </LinearLayout>
 
 </ScrollView>

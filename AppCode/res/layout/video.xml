@@ -36,10 +36,9 @@
             android:layout_height="78dp"
             android:layout_margin="5dp"
             android:background="@null"
+            android:contentDescription="@string/play_recording"
             android:scaleType="fitXY"
-            android:src="@drawable/green_play_button" />
-
-        <!-- android:contentDescription="@string/play_recording" -->
+            android:src="@drawable/start_play_button" />
 
         <ImageButton
             android:id="@+id/bgnBtn"
@@ -49,7 +48,7 @@
             android:background="@null"
             android:contentDescription="@string/start_recording"
             android:scaleType="fitXY"
-            android:src="@drawable/red_record_button" />
+            android:src="@drawable/start_record_button" />
 
         <ImageButton
             android:id="@+id/returnToForm"
@@ -59,7 +58,7 @@
             android:background="@null"
             android:contentDescription="@string/return_to_form"
             android:scaleType="fitXY"
-            android:src="@drawable/blue_up_arrow" />
+            android:src="@drawable/upload_arrow" />
     </LinearLayout>
 
 </RelativeLayout>
