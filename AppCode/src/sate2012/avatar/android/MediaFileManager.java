@@ -13,12 +13,12 @@ public class MediaFileManager {
 
 	public MediaFileManager() {
 		sd = Environment.getExternalStorageDirectory();
-		camFolder = new File(sd, BlueprintConstants.STORAGE_DIRECTORY);
+		camFolder = new File(sd, Constants.STORAGE_DIRECTORY);
 		if (sd.canWrite()) {
 			if (!camFolder.exists())
 				camFolder.mkdir();
-			mediaFolder = new File(sd, BlueprintConstants.STORAGE_DIRECTORY
-					+ BlueprintConstants.MEDIA_DIRECTORY);
+			mediaFolder = new File(sd, Constants.STORAGE_DIRECTORY
+					+ Constants.MEDIA_DIRECTORY);
 			if (!mediaFolder.exists())
 				mediaFolder.mkdir();
 		}

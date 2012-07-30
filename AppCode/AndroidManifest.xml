@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="sate2012.avatar.android.BlueprintActivity"
+            android:name="sate2012.avatar.android.UploadMedia"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -48,12 +48,12 @@
             android:label="Sending GPS coordinates" >
         </activity>
         <activity
-            android:name="sate2012.avatar.android.CameraAct"
+            android:name="sate2012.avatar.android.Photographer"
             android:label="Camera Application"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="sate2012.avatar.android.VideoCamActivity"
+            android:name="sate2012.avatar.android.VideoRecorder"
             android:label="Video Application"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
@@ -63,14 +63,13 @@
             android:label="Media Recorder" >
         </activity>
         <activity
-            android:name="sate2012.avatar.android.RecordSoundActivity"
+            android:name="sate2012.avatar.android.VoiceNotes"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name="sate2012.avatar.android.MailSenderActivity"
-            android:label="Upload Data Point"
-            android:theme="@android:style/Theme.Dialog" >
+            android:label="Upload Data Point" >
             <intent-filter>
                 <action android:name="android.intent.action.MAILSENDERACTIVITY" />
 
