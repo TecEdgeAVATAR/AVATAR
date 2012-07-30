@@ -2,6 +2,7 @@ package com.SATE2012.MapsForgeMapViewer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -39,6 +40,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
     private double locLat;
     private double locLon;
     private static final int TWO_MINUTES = 1000 * 60 * 2;
+    private static final int MEDIA_SELECTOR_REQUEST_CODE = 1845235;
     private double pointLocLat;
     private double pointLocLon;
     private Button findPosition;
@@ -91,8 +93,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 		    mySensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
 	    sensorrunning = true;
 	    // TODO: Remove Toast
-	    Toast.makeText(this, "Start Orientation Sensor", Toast.LENGTH_LONG)
-		    .show();
+
 	}
 
 	else
@@ -118,7 +119,6 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 		100, 0, mlocListener);
 	findPosition = (Button) findViewById(R.id.findPositionButton);
 	exit = (Button) findViewById(R.id.Exit);
-	UpdateCoordinates = (Button) findViewById(R.id.Update_CoordinatesButton);
 	ClearPointsButton = (Button) findViewById(R.id.Clear_Points_Button);
 
 	this.findPosition.setOnClickListener(new View.OnClickListener()
@@ -140,65 +140,6 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 	    }
 	});
 
-	this.UpdateCoordinates.setOnClickListener(new View.OnClickListener()
-	{
-
-	    @Override
-	    // to get the entire list of data, instead of putting all of the
-	    // points into one list, put both of their OVERLAYS into one array.
-	    // This would ensure that the array
-	    // always stayed at a low level, but could hold all of the data that
-	    // is needed
-	    public void onClick(View v)
-	    {
-		//this is SUPPOSED to start the intent that sends the position data via email.
-		Intent thisIntent = getIntent();
-		ptType = thisIntent.getStringExtra("Type");
-		ptURL = "ftp://opensim:widdlyscuds@virtualdiscoverycenter.net/../../var/www/avatar/uploaded"
-				+ thisIntent.getStringExtra("Filename");
-		ptURL_noFTP = "virtualdiscoverycenter.net/../../var/www/avatar/uploaded" 
-				+ thisIntent.getStringExtra("Filename");
-		ptName = thisIntent.getStringExtra("Filename");
-		
-		try
-		{
-		    from = "sate2012.avatar@gmail.com";
-		    toList = "sate2012.avatar@gmail.com";
-		    EditText etName = (EditText) findViewById(R.id.pointName);
-		    ptName = etName.getText().toString();
-		    EditText etDesc = (EditText) findViewById(R.id.pointDesc);
-		    ptDesc = etDesc.getText().toString();
-		    item_sep = getResources()
-			    .getString(R.string.item_separator);
-		    subj = "POINT: " + ptName + item_sep + ptLat + item_sep
-			    + ptLng + item_sep + ptType + item_sep + ptDesc;
-		    GMailSender sender = new GMailSender(
-			    "sate2012.avatar@gmail.com", "EmbraceChaos");
-		    // Toast.makeText(getApplicationContext(),
-		    // "Established Connection", Toast.LENGTH_LONG).show();
-		    sender.sendMail(subj, body, from, toList);
-		    setContentView(R.layout.sent);
-		    final Button button_return = (Button) findViewById(R.id.Return);
-		    button_return.setOnClickListener(new View.OnClickListener()
-		    {
-			public void onClick(View w)
-			{
-			    finish();
-			}
-		    });
-
-		}
-
-		catch (Exception e)
-		{
-		    Log.e("SendMail", e.getMessage(), e);
-		    Toast.makeText(getApplicationContext(), "EXCEPTION: " + e,
-			    Toast.LENGTH_LONG).show();
-		    setContentView(R.layout.send_failed);
-		}
-	    }
-	});
-
 	this.ClearPointsButton.setOnClickListener(new View.OnClickListener()
 	{
 	    @Override
@@ -215,9 +156,6 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 	mapView.setBuiltInZoomControls(true);
 	mapView.setScaleBar(true);
 	mapView.setClickable(true);
-	Toast.makeText(getApplicationContext(),
-		"onCreate: At the end of the onCreate method",
-		Toast.LENGTH_SHORT).show();
 	// Log.d("DEBUG", "onCreate: At the end of the onCreate method");
 	findPositionButton(myCurrentLocation);
 	mapView.getController().setZoom(14);
@@ -230,6 +168,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 	newPoint = getResources().getDrawable(R.drawable.ic_launcher);
 	this.pointer = new PointSetter(newPoint, this);
 	mapView.getOverlays().add(this.pointer);
+	MailSenderActivity MailSender = new MailSenderActivity();
 
 	userPointOverlay = new MVItemizedOverlay(newMarker);
 	itemizedOverlay = new MVItemizedOverlay(newMarker);
@@ -344,6 +283,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 	    {
 		myCurrentLocation = gp;
 	    }
+
 	    String LatLong = "Point1 --- "
 		    + loc.getLatitude()
 		    + " --- "
@@ -499,22 +439,73 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 	    // TODO every time that the onLongPress function is called, it will
 	    // use the MailSenderActivity to
 	    // send that new point to the server.
-
-	    DataObject data = new DataObject();
 	    if (point != null)
 	    {
 		pointLocLat = point.getLatitude();
 		pointLocLon = point.getLongitude();
+
+		String pointLocLatString = "" + pointLocLat;
+		String pointLocLonString = "" + pointLocLon;
+
+		String newPoint1 = pointLocLatString
+			+ getResources().getString(R.string.item_separator)
+			+ pointLocLonString;
+
+		DataObject data = new DataObject();
+
+		Intent senderIntent = new Intent(getApplicationContext(),
+			MailSenderActivity.class);
+		senderIntent.putExtra("lat", new Double(pointLocLat));
+		senderIntent.putExtra("lon", new Double(pointLocLon));
+		startActivity(senderIntent);
+
+		DataObjectItem newPointItem = new DataObjectItem(point, data);
+
+		// generate a random icon for testing
+		Random randomGenerator = new Random();
+		int randomInt = randomGenerator.nextInt(5);
+
+		Drawable newPoint;
+
+		switch (randomInt)
+		{
+		    case 0:
+			newPoint = getResources().getDrawable(
+				R.drawable.red_video_marker);
+			break;
+		    case 1:
+			newPoint = getResources().getDrawable(
+				R.drawable.blue_camera_marker);
+			break;
+		    case 2:
+			newPoint = getResources().getDrawable(
+				R.drawable.yellow_microphone_marker);
+			break;
+		    case 3:
+			newPoint = getResources().getDrawable(
+				R.drawable.green_document_marker);
+			break;
+		    case 4:
+			newPoint = getResources().getDrawable(
+				R.drawable.black_questionmark);
+			break;
+		    default:
+			newPoint = getResources().getDrawable(
+				R.drawable.black_questionmark);
+			break;
+		}
+		newPointItem.setMarker(MVItemizedOverlay
+			.boundCenterBottom(newPoint));
+		userPointOverlay.addOverlay(newPointItem);
+		data.setLat(pointLocLat);
+		data.setLon(pointLocLon);
+
+		// Open up the media selector Dialog
+		Intent intent = new Intent(getApplicationContext(),
+			MediaSelectorDialog.class);
+		startActivityForResult(intent, MEDIA_SELECTOR_REQUEST_CODE);
 	    }
 
-	    DataObjectItem newPointItem = new DataObjectItem(point, data);
-	    Drawable newPoint = getResources().getDrawable(
-		    R.drawable.ic_launcher);
-	    newPointItem.setMarker(MVItemizedOverlay
-		    .boundCenterBottom(newPoint));
-	    userPointOverlay.addOverlay(newPointItem);
-	    data.setLat(pointLocLat);
-	    data.setLon(pointLocLon);
 	    return true;
 	}
     }

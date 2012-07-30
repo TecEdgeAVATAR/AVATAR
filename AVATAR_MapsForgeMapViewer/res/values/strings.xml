@@ -7,19 +7,21 @@
     <string name="FindPosition">Find Position</string>
     <string name="find_position">Find Position</string>
     <string name="Exit">Exit</string>
-    <string name="Update_Coordinates">Update Coordinates</string>
     <string name="Clear_Points_Button">Clear Points</string>
     <string name="item_separator">_***_</string>
-	<string name="send_failed">Send failed. Please try again.</string>
-	<string name="play_recording">Play Recording</string>
-	<string name="start_recording">Start Recording</string>
-	<string name="thank_submission">Thank you for your submission.</string>
-	
-	<string name="type_picture">Photo</string>
+    <string name="send_failed">Send failed. Please try again.</string>
+    <string name="play_recording">Play Recording</string>
+    <string name="start_recording">Start Recording</string>
+    <string name="thank_submission">Thank you for your submission.</string>
+    <string name="type_picture">Photo</string>
     <string name="type_video">Video</string>
     <string name="type_audio">Audio</string>
     <string name="type_comment">Comment</string>
     <string name="type_android">Android</string>
-	
-	
+    <string name="video_button_description">Record a video to upload.</string>
+    <string name="camera_button_description">Take a picture to upload.</string>
+    <string name="microphone_button_description">Record audio to upload.</string>
+    <string name="comment_button_description">Write a comment to upload.</string>
+    <string name="cancel_button_description">Cancel the upload process.</string>
+
 </resources>

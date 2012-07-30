@@ -67,7 +67,7 @@ public class Compass extends View
 		{
 		    canvas.drawLine(cxCompass, cyCompass, (float) (cxCompass + radiusCompass * Math.sin((double)(-direction) * 3.14/180)), 
 			    (float)(cyCompass - radiusCompass * Math.cos((double)(-direction) * 3.14/180)), paint);
-		    canvas.drawText(String.valueOf(direction), cxCompass, cyCompass, paint);
+		    canvas.drawText(String.valueOf(Math.round(direction)), cxCompass - radiusCompass + 18, cyCompass + radiusCompass/2 + 6, paint);
 		}
     }
     

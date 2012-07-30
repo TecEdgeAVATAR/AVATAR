@@ -41,6 +41,8 @@
         <activity
             android:name="ClearPositionButton"
             android:label="@string/app_name" />
+        <activity
+            android:name=".MailSenderActivity" />
            
     </application>
 
