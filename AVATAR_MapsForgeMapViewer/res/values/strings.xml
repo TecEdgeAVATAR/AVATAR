@@ -23,5 +23,7 @@
     <string name="microphone_button_description">Record audio to upload.</string>
     <string name="comment_button_description">Write a comment to upload.</string>
     <string name="cancel_button_description">Cancel the upload process.</string>
+    
+    <string name="iconValueLocation">com.SATE2012.MapsForgeMapViewer.iconValue</string>
 
 </resources>

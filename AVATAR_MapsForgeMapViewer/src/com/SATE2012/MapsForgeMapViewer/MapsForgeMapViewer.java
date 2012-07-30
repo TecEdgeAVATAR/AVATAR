@@ -1,5 +1,7 @@
 package com.SATE2012.MapsForgeMapViewer;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +16,7 @@ import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.MapViewMode;
 import org.mapsforge.android.maps.Overlay;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -224,6 +227,61 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
     {
 	super.onResume();
     }
+    
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) 
+    {
+		if ((resultCode == Activity.RESULT_OK) && (requestCode == MEDIA_SELECTOR_REQUEST_CODE)) 
+		{
+			// Change the icon to that of the chosen media type
+			DataObjectItem pointToChange = dataList.get(dataList.size() - 1);
+			Drawable newPoint;
+			int iconValue = intent.getIntExtra(getString(R.string.iconValueLocation), 0);
+						
+			switch (iconValue)
+			{
+			    case 0:
+			    	newPoint = getResources().getDrawable(R.drawable.black_questionmark);
+			    	break;
+			    case 1:
+			    	newPoint = getResources().getDrawable(R.drawable.red_video_marker);
+			    	break;
+			    case 2:
+			    	newPoint = getResources().getDrawable(R.drawable.blue_camera_marker);
+			    	break;
+			    case 3:
+			    	newPoint = getResources().getDrawable(R.drawable.yellow_microphone_marker);
+			    	break;
+			    case 4:
+			    	newPoint = getResources().getDrawable(R.drawable.green_document_marker);
+			    	break;
+			    default:
+			    	newPoint = getResources().getDrawable(R.drawable.black_questionmark);
+					break;
+			}
+			pointToChange.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
+			
+			// If cancel was selected, then delete the point
+			if(iconValue == 0)
+			{
+				dataList.remove(dataList.size() - 1);
+				userPointOverlay.removeOverlay(userPointOverlay.size() - 1);
+			}
+			
+			// Update the gui
+			userPointOverlay.requestRedraw();
+		}
+		// The user backed out of the dialog without making a selection
+		else if (requestCode == MEDIA_SELECTOR_REQUEST_CODE)
+		{
+			// Delete the point
+			dataList.remove(dataList.size() - 1);
+			userPointOverlay.removeOverlay(userPointOverlay.size() - 1);
+			
+			// Update the gui
+			userPointOverlay.requestRedraw();
+		}
+	}
 
     /**
      * setCenterLocation is the method that sets the center of the screen to a
@@ -424,91 +482,60 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
     }
 
     private class PointSetter extends MVItemizedOverlay
-    {
-	Context context;
-
-	public PointSetter(Drawable marker, Context contextIn)
 	{
-	    super(marker, contextIn);
-	    this.context = contextIn;
-	}
-
-	@Override
-	public boolean onLongPress(GeoPoint point, MapView mapView)
-	{
-	    // TODO every time that the onLongPress function is called, it will
-	    // use the MailSenderActivity to
-	    // send that new point to the server.
-	    if (point != null)
-	    {
-		pointLocLat = point.getLatitude();
-		pointLocLon = point.getLongitude();
-
-		String pointLocLatString = "" + pointLocLat;
-		String pointLocLonString = "" + pointLocLon;
-
-		String newPoint1 = pointLocLatString
-			+ getResources().getString(R.string.item_separator)
-			+ pointLocLonString;
-
-		DataObject data = new DataObject();
-
-		Intent senderIntent = new Intent(getApplicationContext(),
-			MailSenderActivity.class);
-		senderIntent.putExtra("lat", new Double(pointLocLat));
-		senderIntent.putExtra("lon", new Double(pointLocLon));
-		startActivity(senderIntent);
-
-		DataObjectItem newPointItem = new DataObjectItem(point, data);
-
-		// generate a random icon for testing
-		Random randomGenerator = new Random();
-		int randomInt = randomGenerator.nextInt(5);
-
-		Drawable newPoint;
-
-		switch (randomInt)
+		Context context;
+	
+		public PointSetter(Drawable marker, Context contextIn)
 		{
-		    case 0:
-			newPoint = getResources().getDrawable(
-				R.drawable.red_video_marker);
-			break;
-		    case 1:
-			newPoint = getResources().getDrawable(
-				R.drawable.blue_camera_marker);
-			break;
-		    case 2:
-			newPoint = getResources().getDrawable(
-				R.drawable.yellow_microphone_marker);
-			break;
-		    case 3:
-			newPoint = getResources().getDrawable(
-				R.drawable.green_document_marker);
-			break;
-		    case 4:
-			newPoint = getResources().getDrawable(
-				R.drawable.black_questionmark);
-			break;
-		    default:
-			newPoint = getResources().getDrawable(
-				R.drawable.black_questionmark);
-			break;
+		    super(marker, contextIn);
+		    this.context = contextIn;
 		}
-		newPointItem.setMarker(MVItemizedOverlay
-			.boundCenterBottom(newPoint));
-		userPointOverlay.addOverlay(newPointItem);
-		data.setLat(pointLocLat);
-		data.setLon(pointLocLon);
-
-		// Open up the media selector Dialog
-		Intent intent = new Intent(getApplicationContext(),
-			MediaSelectorDialog.class);
-		startActivityForResult(intent, MEDIA_SELECTOR_REQUEST_CODE);
-	    }
-
-	    return true;
+	
+		@Override
+		public boolean onLongPress(GeoPoint point, MapView mapView)
+		{
+		    // TODO every time that the onLongPress function is called, it will
+		    // use the MailSenderActivity to
+		    // send that new point to the server.
+		    if (point != null)
+		    {
+				pointLocLat = point.getLatitude();
+				pointLocLon = point.getLongitude();
+		
+				String pointLocLatString = "" + pointLocLat;
+				String pointLocLonString = "" + pointLocLon;
+		
+				String newPoint1 = pointLocLatString
+					+ getResources().getString(R.string.item_separator)
+					+ pointLocLonString;
+		
+				DataObject data = new DataObject();
+		
+				//Intent senderIntent = new Intent(getApplicationContext(),
+					//MailSenderActivity.class);
+				//senderIntent.putExtra("lat", new Double(pointLocLat));
+				//senderIntent.putExtra("lon", new Double(pointLocLon));
+				//startActivity(senderIntent);
+		
+				DataObjectItem newPointItem = new DataObjectItem(point, data);
+		
+				Drawable newPoint = getResources().getDrawable(R.drawable.black_questionmark);
+		
+				newPointItem.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
+				userPointOverlay.addOverlay(newPointItem);
+				data.setLat(pointLocLat);
+				data.setLon(pointLocLon);
+				dataList.add(newPointItem);
+		
+				// Open up the media selector Dialog
+				Intent intent = new Intent(getApplicationContext(),
+					MediaSelectorDialog.class);
+				startActivityForResult(intent, MEDIA_SELECTOR_REQUEST_CODE);
+		    }
+	
+		    return true;
+		}
 	}
-    }
 
     public void latLongConverter(GeoPoint gp)
     {
