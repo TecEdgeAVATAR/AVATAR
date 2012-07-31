@@ -5,7 +5,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings.Secure;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.telephony.TelephonyManager;
 
 public class MailSenderActivity extends Activity implements OnClickListener {
@@ -43,8 +41,8 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 		c = super.getApplicationContext();
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		body = "Body.";
-		ptLat = "39.7";
-		ptLng = "-84.2";
+		ptLat = Constants.lat;
+		ptLng = Constants.lng;
 		final LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		final LocationListener mlocListener = new MyLocationListener();
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (long) 2000, (float) 1.0, mlocListener); // (provider,

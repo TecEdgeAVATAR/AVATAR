@@ -52,7 +52,7 @@ public class AVATARMainMenuActivity extends Activity implements OnClickListener 
 		switch (v.getId()) {
 		// case (R.id.uploadB):
 		default:
-			Intent intent = new Intent(AVATARMainMenuActivity.this, UploadMedia.class);
+			Intent intent = new Intent(getApplicationContext(), MapsForgeMapViewer.class);
 			startActivity(intent);
 			// break;
 			/*

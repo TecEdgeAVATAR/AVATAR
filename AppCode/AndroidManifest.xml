@@ -37,11 +37,6 @@
             android:name="sate2012.avatar.android.UploadMedia"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name="sate2012.avatar.android.GPSActivity"
@@ -104,6 +99,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-    </application>
+        
+        <activity
+            android:name="sate2012.avatar.android.MapsForgeMapViewer"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name" >
+        </activity>
+        <activity android:name="sate2012.avatar.android.Compass" >
+        </activity>
+		<!-- activity
+		    android:name="findPositionButton"
+		    android:label="@string/app_name" >
+		    <intent-filter>
+		        <action android:name="android.intent.action.findPositionButton" />
+
+		        <category android:name="android.intent.category.DEFAULT" />
+		    </intent-filter>
+		</activity>
+		<activity
+		    android:name="ClearPositionButton"
+		    android:label="@string/app_name" /-->
+		
+</application>
 
 </manifest>

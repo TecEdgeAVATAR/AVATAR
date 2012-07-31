@@ -3,14 +3,6 @@
 
     <string name="hello">AVATAR Main Menu</string>
     <string name="app_name">Blueprint_3</string>
-
-    <string-array name="spinnerTestArray">
-        <item>Choose Media Type</item>
-        <item>Comment</item>
-        <item>Picture</item>
-        <item>Video</item>
-    </string-array>
-
     <string name="play_recording">Play Recording</string>
     <string name="start_recording">Start Recording</string>
     <string name="return_to_form">Return to Form</string>
@@ -31,20 +23,30 @@
     <string name="type_comment">Comment</string>
     <string name="type_android">Android</string>
     <string name="enterDeviceId">Enter Device Name</string>
-	<string name="name">Name</string>
-	<string name="sendEmail">  Send Email  </string>
-	<string name="nameOfLoc">Name of Location or Item of Interest</string>
-	<string name="urlOf">The URL of uploaded media</string>
-	<string name="urlWillBeHere">The URL will be displayed here</string>
-	<string name="description">Description</string>
-	<string name="textDescr">Text Description</string>
-	<string name="start">  Press to upload information  </string>
-	<string name="pic">Take a Picture</string>
-	<string name="uploadPic">Upload Photo</string>
-	<string name="back">  Return to main screen  </string>
-	<string name="uploadMenu">Choose the media you wish to share</string>
-	<string name="gps">        Send GPS Location        </string>
-	<string name="play">Play</string>
-	<string name="record">Record</string>
-	<string name="upload">Upload</string>
+    <string name="name">Name</string>
+    <string name="sendEmail">  Send Email  </string>
+    <string name="nameOfLoc">Name of Location or Item of Interest</string>
+    <string name="urlOf">The URL of uploaded media</string>
+    <string name="urlWillBeHere">The URL will be displayed hsere</string>
+    <string name="description">Description</string>
+    <string name="textDescr">Text Description</string>
+    <string name="start">  Press to upload information  </string>
+    <string name="pic">Take a Picture</string>
+    <string name="uploadPic">Upload Photo</string>
+    <string name="back">  Return to main screen  </string>
+    <string name="uploadMenu">Choose the media you wish to share</string>
+    <string name="gps">        Send GPS Location        </string>
+    <string name="play">Play</string>
+    <string name="record">Record</string>
+    <string name="upload">Upload</string>
+    <string name="FindPosition">Find Position</string>
+    <string name="find_position">Find Position</string>
+    <string name="Exit">Exit</string>
+    <string name="Clear_Points_Button">Clear Points</string>
+    <string name="video_button_description">Record a video to upload.</string>
+    <string name="camera_button_description">Take a picture to upload.</string>
+    <string name="microphone_button_description">Record audio to upload.</string>
+    <string name="comment_button_description">Write a comment to upload.</string>
+    <string name="cancel_button_description">Cancel the upload process.</string>
+
 </resources>

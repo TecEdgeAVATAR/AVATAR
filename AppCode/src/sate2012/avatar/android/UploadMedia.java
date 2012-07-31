@@ -92,6 +92,7 @@ public class UploadMedia extends Activity implements OnClickListener {
 			i = new Intent(getApplicationContext(), MailSenderActivity.class);
 			i.putExtra("Type", dataType);
 			startActivity(i);
+			finish();
 			break;
 		}
 	}
@@ -121,6 +122,7 @@ public class UploadMedia extends Activity implements OnClickListener {
 		MailIntent.putExtra("Type", dataType);
 		MailIntent.putExtra("Filename", media_filename);
 		startActivity(MailIntent);
+		finish();
 	}
 
 	public static void setImage_filepath(String fp) {
