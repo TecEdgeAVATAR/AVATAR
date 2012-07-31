@@ -30,6 +30,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -83,6 +84,10 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
     {
 	Log.d("DEBUG", "Starting program");
 	super.onCreate(savedInstanceState);
+	
+	//Remove title bar
+    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    
 	this.setContentView(R.layout.map_view);
 	conn = super.getApplicationContext();
 	myCompassView = (Compass) findViewById(R.id.mycompassview);

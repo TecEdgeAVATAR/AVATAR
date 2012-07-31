@@ -2,10 +2,13 @@
 <resources>
 
     <string name="hello">Hello World, MapsForgeMapViewer!</string>
-    <string name="app_name">AVATAR_MapsForgeMapViewer</string>
+    <string name="app_name">Tec^Edge AVATAR</string>
     <string name="UpdatePosition">UpdatePosition</string>
     <string name="FindPosition">Find Position</string>
     <string name="find_position">Find Position</string>
+    <string name="update_coordinates">Update Coordinates</string>
+    <string name="clear_points">Clear Points</string>
+    <string name="exit">Exit</string>
     <string name="Exit">Exit</string>
     <string name="Clear_Points_Button">Clear Points</string>
     <string name="item_separator">_***_</string>
