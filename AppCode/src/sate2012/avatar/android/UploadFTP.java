@@ -23,7 +23,7 @@ public class UploadFTP extends Activity {
 		long time = (System.currentTimeMillis());
 		String filename = "T" + time;
 		try {
-			ftpClient.connect(InetAddress.getByName("virtualdiscoverycenter.net"));
+			ftpClient.connect(InetAddress.getByName("24.123.68.146"));
 			ftpClient.login("opensim", "widdlyscuds");
 			ftpClient.changeWorkingDirectory("../../var/www/avatar/Uploaded");
 			if (ftpClient.getReplyString().contains("250")) {
