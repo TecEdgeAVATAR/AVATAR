@@ -20,6 +20,38 @@
         android:layout_height="match_parent"
         android:layout_above="@id/findPositionButton"
         android:text="@string/hello" />
+    
+    <LinearLayout
+        android:id="@+id/logoBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" >"
+	    
+        <ImageView
+	        android:id="@+id/airForceWings"
+	        android:background="@drawable/usaf_logo"
+	        android:layout_width="50dp"
+	        android:layout_height="35dp" />
+        
+        <ImageView
+	        android:id="@+id/tecedgeLogoText"
+	        android:background="@drawable/tecedgetransparent"
+	        android:layout_width="150dp"
+	        android:layout_height="35dp" />
+        
+        <ImageView
+	        android:id="@+id/discoveryLabText"
+	        android:background="@drawable/discoverylablogotransparent"
+	        android:layout_width="100dp"
+	        android:layout_height="35dp" />
+        
+        <ImageView
+	        android:id="@+id/afrl_logo"
+	        android:background="@drawable/afrl_logo_transparent"
+	        android:layout_width="50dp"
+	        android:layout_height="35dp" />
+        
+    </LinearLayout>
 
     <Button
         android:id="@+id/Exit"
