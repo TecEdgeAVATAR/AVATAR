@@ -11,75 +11,55 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
 
-public class LocationDataReceiverAVATAR extends Activity {
+public class LocationDataReceiverAVATAR {
 
-	double latitude;
-	double longitude;
-
+	private double latitude;
+	private double longitude;
 	private GeoPoint customPoint;
-
-	int start;
-	int space;
-	String input;
-	int last;
-	String firstDataPointString;
-	double firstDataPointDouble;
-	String secondDataPointString;
-	double secondDataPointDouble;
-	String thirdDataPointString;
-	double thirdDataPointDouble;
-	String fourthDataPointString;
-	double fourthDataPointdouble;
-	String fifthDataPointString;
-	double fifthDataPointDouble;
+	private int start;
+	private int space;
+	private String input;
+	private int last;
+	private String firstDataPointString;
+	private double firstDataPointDouble;
+	private String secondDataPointString;
+	private double secondDataPointDouble;
+	private String thirdDataPointString;
+	private double thirdDataPointDouble;
+	private String fourthDataPointString;
+	private double fourthDataPointdouble;
+	private String fifthDataPointString;
+	private double fifthDataPointDouble;
 
 	// these second three are to find the latitude of the point.
-	int secondStart;
-	int secondSpace;
-	int secondLast;
+	private int secondStart;
+	private int secondSpace;
+	private int secondLast;
 	// these third three are to find the longitude of the point.
-	int thirdStart;
-	int thirdSpace;
-	int thirdLast;
+	private int thirdStart;
+	private int thirdSpace;
+	private int thirdLast;
 
 	// these fourth three are to find the of the point.
-	int fourthStart;
-	int fourthSpace;
-	int fourthLast;
+	private int fourthStart;
+	private int fourthSpace;
+	private int fourthLast;
 
 	// these fifth three are to find the of the point.
-	int fifthStart;
-	int fifthSpace;
-	int fifthLast;
+	private int fifthStart;
+	private int fifthSpace;
+	private int fifthLast;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.map_view);
-		Intent intent = getIntent();
-		String message = intent.getStringExtra(MapsForgeMapViewer.EXTRA_MESSAGE);
-		CoordinateDataTranslator();
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// getMenuInflater().inflate(R.upload_menu.activity_location_data_receiver_avatar,
-		// menu);
-		return true;
+	public LocationDataReceiverAVATAR() {
 	}
 
 	public void latLonConvertor(GeoPoint point) {
 		latitude = Double.parseDouble(secondDataPointString);
 		longitude = Double.parseDouble(thirdDataPointString);
 		DataObject data = new DataObject();
-		Drawable newPoint = getResources().getDrawable(R.drawable.ic_launcher);
+		//Drawable newPoint = getResources().getDrawable(R.drawable.ic_launcher);
 		DataObjectItem newPointItem = new DataObjectItem(point, data);
-
-		newPointItem.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
-		// data.setLat(pointLocLat);
-		// data.setLon(pointLocLon);
-		// itemizedOverlay.addOverLay(newPointItem);
+		//newPointItem.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
 	}
 
 	public void CoordinateDataTranslator() {
@@ -98,8 +78,6 @@ public class LocationDataReceiverAVATAR extends Activity {
 				// firstDataPointString is the point data for the name
 				firstDataPointString = input.substring(space, last);
 				System.out.println(input.substring(space, last));
-				Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-
 			}
 		}
 		// this is for the second part of the point. it finds the latitude of
@@ -111,8 +89,6 @@ public class LocationDataReceiverAVATAR extends Activity {
 			if (secondSpace >= 0) {
 				secondDataPointString = input.substring(secondSpace, secondLast);
 				System.out.println(input.substring(secondSpace, secondLast));
-				Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-
 			}
 		}
 
@@ -124,8 +100,6 @@ public class LocationDataReceiverAVATAR extends Activity {
 			if (thirdSpace >= 0) {
 				thirdDataPointString = input.substring(thirdSpace, thirdLast);
 				System.out.println(input.substring(thirdSpace, thirdLast));
-				Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-
 			}
 		}
 
@@ -136,8 +110,6 @@ public class LocationDataReceiverAVATAR extends Activity {
 			if (fourthSpace >= 0) {
 				fourthDataPointString = input.substring(fourthSpace, fourthLast);
 				System.out.println(input.substring(fourthSpace, fourthLast));
-				Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-
 			}
 		}
 		// this is the fifth part of the point. it finds the dependent on the
@@ -148,53 +120,64 @@ public class LocationDataReceiverAVATAR extends Activity {
 			if (fifthSpace >= 0) {
 				fifthDataPointString = input.substring(fifthSpace, fifthLast);
 				System.out.println(input.substring(fifthSpace, fifthLast));
-				Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-
 			}
 		}
-
 		latLonConvertor(customPoint);
-
 	}
-
-	// ***_39.7_
-	// ***_-84.2_
-	// ***_Photo_
-	// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342804869789_P.png
-	// @@@POINT: Jason's phone _
-	// ***_39.744198275730014_
-	// ***_-84.06325832940638_
-	// ***_Android_
-	// ***_358940040608809
-	// @@@POINT: fairwood and Andrea w_
-	// ***_39.74605109542608_
-	// ***_-84.06306638382375_
-	// ***_Audio_
-	// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342575995075_A.mp4
-	// @@@POINT: rich and willow creek_
-	// ***_39.74753949683275_
-	// ***_-84.06054045404257_
-	// ***_Photo_
-	// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342575610631_P.png
-	// @@@POINT: fairwood and rich_
-	// ***_39.74535351153463_
-	// ***_-84.06127944588661_
-	// ***_Video_
-	// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342575338419_V.f4v
-	// @@@POINT: fairwood and old north fairfield_
-	// ***_39.74523251876235_
-	// ***_-84.05700098723173_
-	// ***_Comment_
-	// ***_intersection
-	// @@@POINT: 3349 andrea_
-	// ***_39.745109556242824_
-	// ***_-84.05778947286308_
-	// ***_Photo_
-	// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342574804267_P.png
-	// @@@POINT: home_
-	// ***_39.74332961719483_
-	// ***_-84.06092271208763_
-	// ***_Photo_
-	// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342573881519_P.png
-	// @@@END OF MESSAGES
 }
+// ***_39.7_
+// ***_-84.2_
+// ***_Photo_
+// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342804869789_P.png
+// @@@POINT: Jason's phone _
+// ***_39.744198275730014_
+// ***_-84.06325832940638_
+// ***_Android_
+// ***_358940040608809
+// @@@POINT: fairwood and Andrea w_
+// ***_39.74605109542608_
+// ***_-84.06306638382375_
+// ***_Audio_
+// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342575995075_A.mp4
+// @@@POINT: rich and willow creek_
+// ***_39.74753949683275_
+// ***_-84.06054045404257_
+// ***_Photo_
+// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342575610631_P.png
+// @@@POINT: fairwood and rich_
+// ***_39.74535351153463_
+// ***_-84.06127944588661_
+// ***_Video_
+// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342575338419_V.f4v
+// @@@POINT: fairwood and old north fairfield_
+// ***_39.74523251876235_
+// ***_-84.05700098723173_
+// ***_Comment_
+// ***_intersection
+// @@@POINT: 3349 andrea_
+// ***_39.745109556242824_
+// ***_-84.05778947286308_
+// ***_Photo_
+// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342574804267_P.png
+// @@@POINT: home_
+// ***_39.74332961719483_
+// ***_-84.06092271208763_
+// ***_Photo_
+// ***_virtualdiscoverycenter.net/../../var/www/avatar/uploadedT1342573881519_P.png
+// @@@END OF MESSAGES
+
+/*
+ * //@Override public void onCreate(Bundle savedInstanceState) {
+ * super.onCreate(savedInstanceState); setContentView(R.layout.map_view); Intent
+ * intent = getIntent(); String message =
+ * intent.getStringExtra(MapsForgeMapViewer.EXTRA_MESSAGE);
+ * CoordinateDataTranslator();
+ * 
+ * }
+ * 
+ * 
+ * @Override public boolean onCreateOptionsMenu(Menu menu) { //
+ * getMenuInflater()
+ * .inflate(R.upload_menu.activity_location_data_receiver_avatar, // menu);
+ * return true; }
+ */
