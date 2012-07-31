@@ -7,7 +7,7 @@
     android:background="@drawable/background"
     android:paddingTop="3dp" >
 
-    <!-- <ImageButton
+    <ImageButton
         android:id="@+id/videoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,12 +33,12 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/comment_button_description"
         android:src="@drawable/green_document" />
-
+
     <ImageButton
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/cancel_button_description"
-        android:src="@drawable/white_x" /> -->
+        android:src="@drawable/white_x" />
 
 </LinearLayout>

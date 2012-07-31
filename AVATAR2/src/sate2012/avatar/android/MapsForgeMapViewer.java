@@ -14,6 +14,7 @@ import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.MapViewMode;
 import org.mapsforge.android.maps.Overlay;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -27,6 +28,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -80,6 +82,10 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
     {
 	Log.d("DEBUG", "Starting program");
 	super.onCreate(savedInstanceState);
+	
+	//Remove title bar
+    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+	
 	this.setContentView(R.layout.map_view);
 	conn = super.getApplicationContext();
 	myCompassView = (Compass) findViewById(R.id.mycompassview);
@@ -224,6 +230,61 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
     {
 	super.onResume();
     }
+    
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) 
+    {
+		if ((resultCode == Activity.RESULT_OK) && (requestCode == MEDIA_SELECTOR_REQUEST_CODE)) 
+		{
+			// Change the icon to that of the chosen media type
+			DataObjectItem pointToChange = dataList.get(dataList.size() - 1);
+			Drawable newPoint;
+			int iconValue = intent.getIntExtra(getString(R.string.iconValueLocation), 0);
+						
+			switch (iconValue)
+			{
+			    case 0:
+			    	newPoint = getResources().getDrawable(R.drawable.black_questionmark);
+			    	break;
+			    case 1:
+			    	newPoint = getResources().getDrawable(R.drawable.red_video_marker);
+			    	break;
+			    case 2:
+			    	newPoint = getResources().getDrawable(R.drawable.blue_camera_marker);
+			    	break;
+			    case 3:
+			    	newPoint = getResources().getDrawable(R.drawable.yellow_microphone_marker);
+			    	break;
+			    case 4:
+			    	newPoint = getResources().getDrawable(R.drawable.green_document_marker);
+			    	break;
+			    default:
+			    	newPoint = getResources().getDrawable(R.drawable.black_questionmark);
+					break;
+			}
+			pointToChange.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
+			
+			// If cancel was selected, then delete the point
+			if(iconValue == 0)
+			{
+				dataList.remove(dataList.size() - 1);
+				userPointOverlay.removeOverlay(userPointOverlay.size() - 1);
+			}
+			
+			// Update the gui
+			userPointOverlay.requestRedraw();
+		}
+		// The user backed out of the dialog without making a selection
+		else if (requestCode == MEDIA_SELECTOR_REQUEST_CODE)
+		{
+			// Delete the point
+			dataList.remove(dataList.size() - 1);
+			userPointOverlay.removeOverlay(userPointOverlay.size() - 1);
+			
+			// Update the gui
+			userPointOverlay.requestRedraw();
+		}
+	}
 
     /**
      * setCenterLocation is the method that sets the center of the screen to a
@@ -462,49 +523,17 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener
 
 		DataObjectItem newPointItem = new DataObjectItem(point, data);
 
-		// generate a random icon for testing
-//		Random randomGenerator = new Random();
-//		int randomInt = randomGenerator.nextInt(5);
-//
-//		Drawable newPoint;
-//
-//		switch (randomInt)
-//		{
-//		    case 0:
-//			newPoint = getResources().getDrawable(
-//				R.drawable.red_video_marker);
-//			break;
-//		    case 1:
-//			newPoint = getResources().getDrawable(
-//				R.drawable.blue_camera_marker);
-//			break;
-//		    case 2:
-//			newPoint = getResources().getDrawable(
-//				R.drawable.yellow_microphone_marker);
-//			break;
-//		    case 3:
-//			newPoint = getResources().getDrawable(
-//				R.drawable.green_document_marker);
-//			break;
-//		    case 4:
-//			newPoint = getResources().getDrawable(
-//				R.drawable.black_questionmark);
-//			break;
-//		    default:
-//			newPoint = getResources().getDrawable(
-//				R.drawable.black_questionmark);
-//			break;
-//		}
-		newPointItem.setMarker(MVItemizedOverlay
-			.boundCenterBottom(newPoint));
+		Drawable newPoint = getResources().getDrawable(R.drawable.black_questionmark);
+		
+		newPointItem.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
 		userPointOverlay.addOverlay(newPointItem);
 		data.setLat(pointLocLat);
 		data.setLon(pointLocLon);
+		dataList.add(newPointItem);
 
 		// Open up the media selector Dialog
-//		Intent intent = new Intent(getApplicationContext(),
-//			MediaSelectorDialog.class);
-//		startActivityForResult(intent, MEDIA_SELECTOR_REQUEST_CODE);
+		//Intent intent = new Intent(getApplicationContext(), MediaSelectorDialog.class);
+		//startActivityForResult(intent, MEDIA_SELECTOR_REQUEST_CODE);
 	    }
 
 	    return true;

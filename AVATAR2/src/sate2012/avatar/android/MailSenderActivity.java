@@ -1,6 +1,5 @@
 package sate2012.avatar.android;
 
-import gupta.ashutosh.avatar.R;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;

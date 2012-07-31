@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="gupta.ashutosh.avatar"
+    package="sate2012.avatar.android"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -104,6 +104,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="MediaSelectorDialog"
+			android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Dialog"
+			android:excludeFromRecents="true"/> 
     </application>
 
 </manifest>

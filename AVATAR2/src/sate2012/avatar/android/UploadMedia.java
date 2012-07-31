@@ -1,6 +1,5 @@
 package sate2012.avatar.android;
 
-import gupta.ashutosh.avatar.R;
 import java.io.File;
 import android.app.Activity;
 import android.content.Context;

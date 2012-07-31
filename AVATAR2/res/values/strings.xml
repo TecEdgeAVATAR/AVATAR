@@ -49,6 +49,9 @@
     <string name="upload">Upload</string>
     <string name="FindPosition">Find Position</string>
     <string name="find_position">Find Position</string>
+    <string name="update_coordinates">Update Coordinates</string>
+    <string name="clear_points">Clear Points</string>
+    <string name="exit">Exit</string>
     <string name="Exit">Exit</string>
     <string name="Clear_Points_Button">Clear Points</string>
     <string name="video_button_description">Record a video to upload.</string>
@@ -56,5 +59,6 @@
     <string name="microphone_button_description">Record audio to upload.</string>
     <string name="comment_button_description">Write a comment to upload.</string>
     <string name="cancel_button_description">Cancel the upload process.</string>
-
+	<string name="iconValueLocation">sate2012.avatar.android</string>
+    
 </resources>
