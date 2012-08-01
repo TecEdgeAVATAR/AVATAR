@@ -2,8 +2,6 @@ package sate2012.avatar.android;
 
 import gupta.ashutosh.avatar.R;
 import java.io.File;
-import java.net.InetAddress;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -86,6 +84,7 @@ public class UploadMedia extends Activity implements OnClickListener {
 			i = new Intent(getApplicationContext(), MailSenderActivity.class);
 			i.putExtra("Type", dataType);
 			startActivity(i);
+			finish();
 			break;
 		case (R.id.gpsButton):
 			dataType = getResources().getString(R.string.type_android);

@@ -1,7 +1,6 @@
 package sate2012.avatar.android;
 
 import gupta.ashutosh.avatar.R;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.mapsforge.android.maps.GeoPoint;
@@ -60,7 +59,6 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		this.setContentView(R.layout.map_view);
 		myCompassView = (Compass) findViewById(R.id.mycompassview);
 		mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		plotter = new LocationDataReceiverAVATAR();
 		getPts = (Button) findViewById(R.id.Get_Points_Button);
 		getPts.setOnClickListener(this);
 		List<Sensor> mySensors = mySensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
@@ -122,8 +120,10 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			userPointOverlay.clear();
 			break;
 		case (R.id.Get_Points_Button):
+			plotter = new LocationDataReceiverAVATAR();
+			System.out.println("Created plotter");
 			plotter.CoordinateDataTranslator();
-			// Toast to say all the points have been plotted
+			System.out.println("Translated data");
 			break;
 		}
 	}
@@ -189,6 +189,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			GeoPoint gp = new GeoPoint(loc.getLatitude(), loc.getLongitude());
 			if (gp != null)
 				myCurrentLocation = gp;
+			itemizedOverlay.clear();
 			String LatLong = "Point1 --- " + loc.getLatitude() + " --- " + loc.getLongitude() + ";~~Point2 --- 40.12345 --- -85.12345;~~Point3 --- 41.54321 --- -83.54321";
 			DataObject data = new DataObject();
 			Drawable newMarker = getResources().getDrawable(R.drawable.ic_launcher);
@@ -282,7 +283,6 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			if (point != null) {
 				pointLocLat = point.getLatitude();
 				pointLocLon = point.getLongitude();
-				Intent senderIntent = new Intent(getApplicationContext(), UploadMedia.class);
 				Constants.lat = "" + pointLocLat;
 				Constants.lng = "" + pointLocLon;
 				DataObjectItem newPointItem = new DataObjectItem(point, data);
@@ -290,24 +290,18 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 				userPointOverlay.addOverlay(newPointItem);
 				data.setLat(pointLocLat);
 				data.setLon(pointLocLon);
+				Intent senderIntent = new Intent(getApplicationContext(), UploadMedia.class);
 				startActivity(senderIntent);
 			}
-
 			return true;
 		}
 	}
 
-	public void onLocationChanged(Location arg0) {
-		Log.d("DEBUG", "onLocationChanged: @beginning of Method onLocationChanged");
-	}
+	public void onLocationChanged(Location arg0) {}
 
-	public void onProviderDisabled(String provider) {
-	}
+	public void onProviderDisabled(String provider) {}
 
-	public void onProviderEnabled(String provider) {
-	}
+	public void onProviderEnabled(String provider) {}
 
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		Log.d("DEBUG", "onStatusChanged: @ beginning of method onStatusChanged");
-	}
+	public void onStatusChanged(String provider, int status, Bundle extras) {}
 }

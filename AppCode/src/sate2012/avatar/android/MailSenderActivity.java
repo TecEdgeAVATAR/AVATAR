@@ -65,6 +65,7 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.Send):
+			Toast.makeText(getApplicationContext(), "Sending, it may take a little while", Toast.LENGTH_LONG).show();
 			try {
 				InputMethodManager inputManager = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
 				inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);

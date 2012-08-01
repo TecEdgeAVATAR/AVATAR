@@ -1,14 +1,15 @@
 package sate2012.avatar.android;
 
-import gupta.ashutosh.avatar.R;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.mapsforge.android.maps.GeoPoint;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.Menu;
+import android.content.Context;
 import android.widget.Toast;
 
 public class LocationDataReceiverAVATAR {
@@ -51,14 +52,34 @@ public class LocationDataReceiverAVATAR {
 	private int fifthLast;
 
 	public LocationDataReceiverAVATAR() {
+		try {
+			System.out.println("Yo");
+			URL url = new URL("http://virtualdiscoverycenter.net/avatar/php_files/email_rec_VW.php");
+
+			System.out.println("broski");
+			URLConnection connection = url.openConnection();
+
+			System.out.println("starbucks");
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+			System.out.println("Bridget is a monkey");
+			input = in.readLine();
+
+			System.out.println("wassup foo");
+			in.close();
+
+			System.out.println("I is done");
+		} catch (MalformedURLException e) {	e.printStackTrace();
+		} catch (IOException e){ e.printStackTrace();
+		}
 	}
 
-	public void latLonConvertor(GeoPoint point) {
+	public void latLonConvertor() {
 		latitude = Double.parseDouble(secondDataPointString);
 		longitude = Double.parseDouble(thirdDataPointString);
 		DataObject data = new DataObject();
 		//Drawable newPoint = getResources().getDrawable(R.drawable.ic_launcher);
-		DataObjectItem newPointItem = new DataObjectItem(point, data);
+		DataObjectItem newPointItem = new DataObjectItem(customPoint, data);
 		//newPointItem.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
 	}
 
@@ -78,6 +99,7 @@ public class LocationDataReceiverAVATAR {
 				// firstDataPointString is the point data for the name
 				firstDataPointString = input.substring(space, last);
 				System.out.println(input.substring(space, last));
+				
 			}
 		}
 		// this is for the second part of the point. it finds the latitude of
@@ -122,7 +144,7 @@ public class LocationDataReceiverAVATAR {
 				System.out.println(input.substring(fifthSpace, fifthLast));
 			}
 		}
-		latLonConvertor(customPoint);
+		latLonConvertor();
 	}
 }
 // ***_39.7_
