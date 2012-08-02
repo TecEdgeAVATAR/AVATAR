@@ -1,31 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-	android:background="@drawable/background">
-
-    <Button
-        android:id="@+id/findPositionButton"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/buttonbackground"
-        android:onClick="findPositionButton"
-        android:text="@string/find_position"
-        android:textColor="@android:color/white" />
-
+    android:layout_height="match_parent" 
+   	android:background="@drawable/background">
+    
     <org.mapsforge.android.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/findPositionButton"
+        android:layout_above="@+id/buttonBar"
         android:text="@string/hello" />
+    
+    <LinearLayout
+        android:id="@+id/buttonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+        
+	    <Button
+	        android:id="@+id/findPositionButton"        
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="100dp"
+	        android:layout_height="50dp"
+	        android:layout_weight="1.0"
+	        android:onClick="findPositionButton"
+	        android:text="@string/find_position"
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/buttonbackground" />
+	
+	    <Button 
+	        android:id="@+id/Update_CoordinatesButton"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="100dp"
+	        android:layout_height="50dp"
+	        android:layout_weight="1.0"
+	        android:text="@string/update_coordinates" 
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/buttonbackground"/>
+	        
+	    <Button 
+	        android:id="@+id/Clear_Points_Button"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="100dp"
+	        android:layout_height="50dp"
+	        android:layout_weight="1.0"
+	        android:text="@string/clear_points"
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/buttonbackground" />
+	    
+	    <Button
+	        android:id="@+id/Exit"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="100dp"
+	        android:layout_height="50dp"
+	        android:layout_weight="1.0"
+	        android:text="@string/exit" 
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/buttonbackground"/>
+    
+    </LinearLayout>
     
     <LinearLayout
         android:id="@+id/logoBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" >"
+        android:layout_alignParentRight="true" >
 	    
         <ImageView
 	        android:id="@+id/airForceWings"
@@ -52,44 +92,11 @@
 	        android:layout_height="35dp" />
         
     </LinearLayout>
-
-    <Button
-        android:id="@+id/Exit"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/findPositionButton"
-        android:background="@drawable/buttonbackground"
-        android:text="Exit"
-        android:textColor="@android:color/white" />
-
-    <Button
-        android:id="@+id/Clear_Points_Button"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/Exit"
-        android:background="@drawable/buttonbackground"
-        android:text="Clear Points"
-        android:textColor="@android:color/white" />
-
-    <Button
-        android:id="@+id/Get_Points_Button"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/Clear_Points_Button"
-        android:background="@drawable/buttonbackground"
-        android:text="Download Points"
-        android:textColor="@android:color/white" />
-
+    
     <view
+        class="sate2012.avatar.android.Compass"
         android:id="@+id/mycompassview"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        class="sate2012.avatar.android.Compass" />
+        android:layout_height="100dp"/>
 
 </RelativeLayout>

@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="sate2012.avatar.android.AVATARMainMenuActivity"
+            android:name="sate2012.avatar.android.MainMenu"
             android:label="AVATAR"
             android:screenOrientation="landscape" >
             <intent-filter>

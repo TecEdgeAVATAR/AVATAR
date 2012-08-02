@@ -101,7 +101,7 @@ public class VoiceNotes extends Activity implements OnClickListener {
 	}
 
 	protected void startRecording() {
-		voiceRecording = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY + OUTPUT_FILE);
+		voiceRecording = new File(Environment.getExternalStorageDirectory(), Globals.STORAGE_DIRECTORY + Globals.MEDIA_DIRECTORY + OUTPUT_FILE);
 		if (!recording && !playing) {
 			recording = true;
 			startRecording.setImageResource(R.drawable.stop_recording_video);

@@ -41,8 +41,8 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 		c = super.getApplicationContext();
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		body = "Body.";
-		ptLat = Constants.lat;
-		ptLng = Constants.lng;
+		ptLat = Globals.lat;
+		ptLng = Globals.lng;
 		final LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		final LocationListener mlocListener = new MyLocationListener();
 		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, (long) 2000, (float) 1.0, mlocListener); // (provider,
@@ -54,6 +54,7 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 		Intent thisIntent = getIntent();
 		ptType = thisIntent.getStringExtra("Type");
 		ptURL = "ftp://opensim:widdlyscuds@virtualdiscoverycenter.net/../../var/www/avatar/Uploaded/" + thisIntent.getStringExtra("Filename");
+		
 		ptURL_noFTP = "virtualdiscoverycenter.net/avatar/Uploaded/" + thisIntent.getStringExtra("Filename");
 		ptName = thisIntent.getStringExtra("Filename");
 		setContentView(R.layout.mail_prep_apv);
@@ -65,8 +66,8 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.Send):
-			Toast.makeText(getApplicationContext(), "Sending, it may take a little while", Toast.LENGTH_LONG).show();
 			try {
+				Toast.makeText(getApplicationContext(), "Uploading, please wait...", 10000).show();
 				InputMethodManager inputManager = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
 				inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 				from = "sate2012.avatar@gmail.com";

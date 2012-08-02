@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 /**
  * The Upload Menu Allows the user to select different media types to upload to
@@ -67,17 +68,17 @@ public class UploadMedia extends Activity implements OnClickListener {
 		case (R.id.cameraButton):
 			dataType = getResources().getString(R.string.type_picture);
 			i = new Intent(UploadMedia.this, Photographer.class);
-			startActivityForResult(i, Constants.CAMERA_REQUEST);
+			startActivityForResult(i, Globals.CAMERA_REQUEST);
 			break;
 		case (R.id.videoButton):
 			dataType = getResources().getString(R.string.type_video);
 			i = new Intent(UploadMedia.this, VideoRecorder.class);
-			startActivityForResult(i, Constants.VIDEO_REQUEST);
+			startActivityForResult(i, Globals.VIDEO_REQUEST);
 			break;
 		case (R.id.audioButton):
 			dataType = getResources().getString(R.string.type_audio);
 			i = new Intent(UploadMedia.this, VoiceNotes.class);
-			startActivityForResult(i, Constants.VOICE_REQUEST);
+			startActivityForResult(i, Globals.VOICE_REQUEST);
 			break;
 		case (R.id.commentButton):
 			dataType = getResources().getString(R.string.type_comment);
@@ -103,15 +104,15 @@ public class UploadMedia extends Activity implements OnClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
-			if (requestCode == Constants.VIDEO_REQUEST) {
+			if (requestCode == Globals.VIDEO_REQUEST) {
 				media_filepath = VideoRecorder.getPath();
 				media_extension = "_V.f4v";
 			}
-			if (requestCode == Constants.VOICE_REQUEST) {
+			if (requestCode == Globals.VOICE_REQUEST) {
 				media_filepath = VoiceNotes.getPath();
 				media_extension = "_A.mp4";
 			}
-			if (requestCode == Constants.CAMERA_REQUEST) {
+			if (requestCode == Globals.CAMERA_REQUEST) {
 				media_filepath = getImage_filepath();
 				media_extension = "_P.png";
 			}
@@ -120,6 +121,7 @@ public class UploadMedia extends Activity implements OnClickListener {
 		Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
 		MailIntent.putExtra("Type", dataType);
 		MailIntent.putExtra("Filename", media_filename);
+		Toast.makeText(getApplicationContext(), "Taking you to Upload Menu...", 10000).show();
 		startActivity(MailIntent);
 		finish();
 	}
@@ -140,11 +142,11 @@ public class UploadMedia extends Activity implements OnClickListener {
 
 	public void createStorageDirectory() {
 		sd = Environment.getExternalStorageDirectory();
-		storageFolder = new File(sd, Constants.STORAGE_DIRECTORY);
+		storageFolder = new File(sd, Globals.STORAGE_DIRECTORY);
 		if (sd.canWrite()) {
 			if (!storageFolder.exists())
 				storageFolder.mkdir();
-			mediaFolder = new File(sd, Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY);
+			mediaFolder = new File(sd, Globals.STORAGE_DIRECTORY + Globals.MEDIA_DIRECTORY);
 			if (!mediaFolder.exists())
 				mediaFolder.mkdir();
 		}

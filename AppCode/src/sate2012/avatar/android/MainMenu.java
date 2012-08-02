@@ -13,7 +13,7 @@ import android.widget.Button;
  * The main menu of the AVATAR Application This menu navigates users to
  * different parts of the program.
  */
-public class AVATARMainMenuActivity extends Activity implements OnClickListener {
+public class MainMenu extends Activity implements OnClickListener {
 	private Button uploadB; // Button that switches to a menu that lets the user
 							// upload different types of media
 
@@ -54,6 +54,7 @@ public class AVATARMainMenuActivity extends Activity implements OnClickListener 
 		default:
 			Intent intent = new Intent(getApplicationContext(), MapsForgeMapViewer.class);
 			startActivity(intent);
+			finish();
 			// break;
 			/*
 			 * case (R.id.mapB): Toast.makeText(getApplicationContext(),

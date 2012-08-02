@@ -64,7 +64,7 @@ public class MVItemizedOverlay extends ItemizedOverlay<DataObjectItem>
     @Override
     public boolean onTap(int i)
     {
-		DataObjectItem item = mOverlays.get(i);
+    	DataObjectItem item = mOverlays.get(i);
 		final DataObject data = item.getData();
 		return true;
     }

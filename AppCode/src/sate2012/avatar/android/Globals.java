@@ -1,6 +1,6 @@
 package sate2012.avatar.android;
 
-public class Constants {
+public class Globals {
 	public static final String STORAGE_DIRECTORY = "/Blueprint_Storage/";
 	public static final String MEDIA_DIRECTORY = "media/";
 	public static final int CAMERA_REQUEST = 3;

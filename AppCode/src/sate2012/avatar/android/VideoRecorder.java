@@ -197,7 +197,7 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 			recorder.stop();
 			recorder.release();
 		}
-		videoRecording = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY + OUTPUT_FILE);
+		videoRecording = new File(Environment.getExternalStorageDirectory(), Globals.STORAGE_DIRECTORY + Globals.MEDIA_DIRECTORY + OUTPUT_FILE);
 		if (videoRecording.exists())
 			videoRecording.delete();
 		try {

@@ -48,5 +48,7 @@
     <string name="microphone_button_description">Record audio to upload.</string>
     <string name="comment_button_description">Write a comment to upload.</string>
     <string name="cancel_button_description">Cancel the upload process.</string>
-
+	<string name="update_coordinates">Update Coordinates</string>
+	<string name="clear_points">Clear points</string>
+	<string name="exit">Exit</string>
 </resources>

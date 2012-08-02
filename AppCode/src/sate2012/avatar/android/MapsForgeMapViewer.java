@@ -1,7 +1,7 @@
 package sate2012.avatar.android;
 
 import gupta.ashutosh.avatar.R;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.MapActivity;
@@ -26,9 +26,7 @@ import android.widget.Toast;
 
 public class MapsForgeMapViewer extends MapActivity implements LocationListener, OnClickListener {
 	private MapView mapView;
-	private Location mostRecentLocation;
 	private GeoPoint myCurrentLocation;
-	private Location loc;
 	private double locLat;
 	private double locLon;
 	private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -48,18 +46,23 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	public static String EXTRA_MESSAGE;
 	private boolean sensorrunning;
 	private Compass myCompassView;
-	private SensorEventListener mySensorEventListener;
-	private Button getPts;
-	private LocationDataReceiverAVATAR plotter;
+	private SensorEventListener mySensorEventListener = new SensorEventListener() {
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		}
 
-	public ArrayList<DataObjectItem> dataList = new ArrayList<DataObjectItem>();
+		public void onSensorChanged(SensorEvent event) {
+			myCompassView.updateDirection((float) event.values[0]);
+		}
+	};
+	private Button getPts;
+	private CoordinateUpdater plotter;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.map_view);
 		myCompassView = (Compass) findViewById(R.id.mycompassview);
 		mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		getPts = (Button) findViewById(R.id.Get_Points_Button);
+		getPts = (Button) findViewById(R.id.Update_CoordinatesButton);
 		getPts.setOnClickListener(this);
 		List<Sensor> mySensors = mySensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
 		if (mySensors.size() > 0) {
@@ -98,19 +101,11 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		itemizedOverlay = new MVItemizedOverlay(newMarker);
 		mapView.getOverlays().add(userPointOverlay);
 		mapView.getOverlays().add(itemizedOverlay);
-		mySensorEventListener = new SensorEventListener() {
-			public void onAccuracyChanged(Sensor sensor, int accuracy) {
-			}
-
-			public void onSensorChanged(SensorEvent event) {
-				myCompassView.updateDirection((float) event.values[0]);
-			}
-		};
 	}
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case (R.id.findPositionButton):
+		case (R.id.findPositionButton): 
 			findPositionButton(myCurrentLocation);
 			break;
 		case (R.id.Exit):
@@ -119,11 +114,12 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		case (R.id.Clear_Points_Button):
 			userPointOverlay.clear();
 			break;
-		case (R.id.Get_Points_Button):
-			plotter = new LocationDataReceiverAVATAR();
-			System.out.println("Created plotter");
+		case (R.id.Update_CoordinatesButton):
+			Toast.makeText(getApplicationContext(), "Downloading Coordinates, please wait", Toast.LENGTH_LONG).show();
+			plotter = new CoordinateUpdater();
 			plotter.CoordinateDataTranslator();
-			System.out.println("Translated data");
+			pointer.plotUpdatedCoords(plotter.getDataList());
+			//TODO:	-Create ability (dialog box?) to open URL of specific point to view it's info (pic, vid, comment, voice note)
 			break;
 		}
 	}
@@ -181,7 +177,6 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	 * sends the location listener the files for the map, it runs through the
 	 * methods within the class body.
 	 * 
-	 * @author William
 	 * 
 	 */
 	public class MyLocationListener implements LocationListener {
@@ -190,7 +185,6 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			if (gp != null)
 				myCurrentLocation = gp;
 			itemizedOverlay.clear();
-			String LatLong = "Point1 --- " + loc.getLatitude() + " --- " + loc.getLongitude() + ";~~Point2 --- 40.12345 --- -85.12345;~~Point3 --- 41.54321 --- -83.54321";
 			DataObject data = new DataObject();
 			Drawable newMarker = getResources().getDrawable(R.drawable.ic_launcher);
 			Drawable locationMarker = getResources().getDrawable(R.drawable.ic_launcher);
@@ -201,6 +195,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			itemizedOverlay.addOverlay(overlayItem);
 		}
 
+		
 		/**
 		 * activates when the current provider is disabled, or not available
 		 * anymore.
@@ -270,11 +265,27 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	}
 
 	private class PointSetter extends MVItemizedOverlay {
-		Context context;
-
 		public PointSetter(Drawable marker, Context contextIn) {
 			super(marker, contextIn);
-			this.context = contextIn;
+		}
+		
+		public void plotUpdatedCoords( LinkedList<DataObjectItem> dataList){
+			userPointOverlay.clear();
+			for(DataObjectItem p: dataList){
+				if(p.getData().getType().compareTo("Video") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.red_video_marker)));
+				else if(p.getData().getType().compareTo("Audio") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.yellow_microphone_marker)));
+				else if(p.getData().getType().compareTo("Comment") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.green_document_marker)));
+				else if(p.getData().getType().compareTo("Photo") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.blue_camera_marker)));
+				else if(p.getData().getType().compareTo("Android") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.magenta_android_marker)));
+				else if(p.getData().getType().compareTo("Nao") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.cyan_nao_marker)));
+				userPointOverlay.addOverlay(p);
+			}
 		}
 
 		@Override
@@ -283,8 +294,8 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			if (point != null) {
 				pointLocLat = point.getLatitude();
 				pointLocLon = point.getLongitude();
-				Constants.lat = "" + pointLocLat;
-				Constants.lng = "" + pointLocLon;
+				Globals.lat = "" + pointLocLat;
+				Globals.lng = "" + pointLocLon;
 				DataObjectItem newPointItem = new DataObjectItem(point, data);
 				newPointItem.setMarker(MVItemizedOverlay.boundCenterBottom(newPoint));
 				userPointOverlay.addOverlay(newPointItem);
@@ -297,11 +308,15 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		}
 	}
 
-	public void onLocationChanged(Location arg0) {}
+	public void onLocationChanged(Location arg0) {
+	}
 
-	public void onProviderDisabled(String provider) {}
+	public void onProviderDisabled(String provider) {
+	}
 
-	public void onProviderEnabled(String provider) {}
+	public void onProviderEnabled(String provider) {
+	}
 
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
 }

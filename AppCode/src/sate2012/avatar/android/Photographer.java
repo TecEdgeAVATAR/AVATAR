@@ -56,7 +56,7 @@ public class Photographer extends Activity implements View.OnClickListener {
 			Bundle extras = data.getExtras();
 			bmp = (Bitmap) extras.get("data");
 			iv.setImageBitmap(bmp);
-			pic = new File(Environment.getExternalStorageDirectory(), Constants.STORAGE_DIRECTORY + Constants.MEDIA_DIRECTORY + System.currentTimeMillis() + OUTPUT_FILE);
+			pic = new File(Environment.getExternalStorageDirectory(), Globals.STORAGE_DIRECTORY + Globals.MEDIA_DIRECTORY + System.currentTimeMillis() + OUTPUT_FILE);
 			FileOutputStream stream = null;
 			try {
 				stream = new FileOutputStream(pic);
