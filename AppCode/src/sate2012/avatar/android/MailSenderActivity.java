@@ -4,6 +4,7 @@ import gupta.ashutosh.avatar.R;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -33,7 +34,7 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 	private Context c;
 	private Button send;
 	private Button button_return;
-
+	private MailSenderActivity self = this;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,30 +67,23 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.Send):
-			try {
-				Toast.makeText(getApplicationContext(), "Uploading, please wait...", 10000).show();
-				InputMethodManager inputManager = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
-				inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-				from = "sate2012.avatar@gmail.com";
-				toList = "sate2012.avatar@gmail.com";
-				EditText etName = (EditText) findViewById(R.id.pointName);
-				ptName = etName.getText().toString();
-				EditText etDesc = (EditText) findViewById(R.id.pointDesc);
-				ptDesc = etDesc.getText().toString();
-				item_sep = getResources().getString(R.string.item_separator);
-				subj = "POINT: " + ptName + item_sep + ptLat + item_sep + ptLng + item_sep + ptType + item_sep + ptDesc;
-				GMailSender sender = new GMailSender("sate2012.avatar@gmail.com", "EmbraceChaos");
-				sender.sendMail(subj, body, from, toList);
-				setContentView(R.layout.sent);
-				button_return = (Button) findViewById(R.id.Return);
-				button_return.setOnClickListener(this);
-			} catch (Exception e) {
-				System.out.println("EXCEPTION: " + e);
-				setContentView(R.layout.send_failed);
-			}
+			InputMethodManager inputManager = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+			inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+			from = "sate2012.avatar@gmail.com";
+			toList = "sate2012.avatar@gmail.com";
+			EditText etName = (EditText) findViewById(R.id.pointName);
+			ptName = etName.getText().toString();
+			EditText etDesc = (EditText) findViewById(R.id.pointDesc);
+			ptDesc = etDesc.getText().toString();
+			item_sep = getResources().getString(R.string.item_separator);
+			subj = "POINT: " + ptName + item_sep + ptLat + item_sep + ptLng + item_sep + ptType + item_sep + ptDesc;
+			new MyAsyncTask(this).execute();
+			setContentView(R.layout.sent);
+			button_return = (Button) findViewById(R.id.Return);
+			button_return.setOnClickListener(self);
 			break;
 		case (R.id.Return):
-			System.out.println("Exiting");
+			send.setClickable(true);
 			finish();
 			break;
 		}
@@ -130,4 +124,31 @@ public class MailSenderActivity extends Activity implements OnClickListener {
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 	}
+	
+	public void onBackPressed(){
+		setResult(Activity.RESULT_CANCELED, null);
+		finish();
+	}
+	
+	private class MyAsyncTask extends AsyncTask<Integer, String, Boolean> {
+        private Context context;
+        public MyAsyncTask(Context context) {
+            this.context = context;
+        }
+        
+        protected Boolean doInBackground(Integer...params) {
+        	try {
+				GMailSender sender = new GMailSender("sate2012.avatar@gmail.com", "EmbraceChaos");
+				sender.sendMail(subj, body, from, toList);
+			} catch (Exception e) {
+				System.out.println("EXCEPTION: " + e);
+				setContentView(R.layout.send_failed);
+			}
+			return true;
+		}
+        
+        protected void onPostExecute(Boolean result) {
+        	 Toast.makeText(context, "Latest media was uploaded to Virtual Command Center.", Toast.LENGTH_LONG).show();
+        }
+    }
 }

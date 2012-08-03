@@ -97,12 +97,16 @@ public class UploadMedia extends Activity implements OnClickListener {
 		}
 	}
 
+	public void onBackPressed(){
+		finish();
+	}
+	
 	/**
 	 * Called when the individual activities (picture, video, audio) finish.
 	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+		//super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == Globals.VIDEO_REQUEST) {
 				media_filepath = VideoRecorder.getPath();
@@ -116,14 +120,13 @@ public class UploadMedia extends Activity implements OnClickListener {
 				media_filepath = getImage_filepath();
 				media_extension = "_P.png";
 			}
+			media_filename = UploadFTP.FTPUpload(media_filepath, media_extension, thisContext);
+			Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
+			MailIntent.putExtra("Type", dataType);
+			MailIntent.putExtra("Filename", media_filename);
+			startActivity(MailIntent);
+			finish();
 		}
-		media_filename = UploadFTP.FTPUpload(media_filepath, media_extension, thisContext);
-		Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
-		MailIntent.putExtra("Type", dataType);
-		MailIntent.putExtra("Filename", media_filename);
-		Toast.makeText(getApplicationContext(), "Taking you to Upload Menu...", 10000).show();
-		startActivity(MailIntent);
-		finish();
 	}
 
 	public static void setImage_filepath(String fp) {

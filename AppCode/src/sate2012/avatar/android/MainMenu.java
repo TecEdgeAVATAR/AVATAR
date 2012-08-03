@@ -41,6 +41,10 @@ public class MainMenu extends Activity implements OnClickListener {
 		 */
 	}
 
+	public void onBackPressed(){
+		finish();
+	}
+	
 	/**
 	 * Called when a button is clicked by the user. Navigates to the appropriate
 	 * Activity

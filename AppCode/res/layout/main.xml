@@ -9,23 +9,21 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="100dp"
         android:background="@drawable/logo" />
 
     <Button
         android:id="@+id/uploadB"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
         android:background="@drawable/buttonbackground"
         android:text="@string/start"
         android:textColor="@android:color/white"
         android:textSize="40dp" />
 
     <!-- These features have not been implemented yet
-    <Button
+    <Button    
         android:id="@+id/mapB"
         android:layout_width="250dp"
         android:layout_height="45dp"

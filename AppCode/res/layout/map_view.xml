@@ -26,8 +26,8 @@
 	        android:layout_weight="1.0"
 	        android:onClick="findPositionButton"
 	        android:text="@string/find_position"
-	        android:textColor="@android:color/white"
-	        android:background="@drawable/buttonbackground" />
+	        android:textColor="@android:color/black"
+	        />
 	
 	    <Button 
 	        android:id="@+id/Update_CoordinatesButton"
@@ -36,8 +36,7 @@
 	        android:layout_height="50dp"
 	        android:layout_weight="1.0"
 	        android:text="@string/update_coordinates" 
-	        android:textColor="@android:color/white"
-	        android:background="@drawable/buttonbackground"/>
+	        android:textColor="@android:color/black"/>
 	        
 	    <Button 
 	        android:id="@+id/Clear_Points_Button"
@@ -46,8 +45,7 @@
 	        android:layout_height="50dp"
 	        android:layout_weight="1.0"
 	        android:text="@string/clear_points"
-	        android:textColor="@android:color/white"
-	        android:background="@drawable/buttonbackground" />
+	        android:textColor="@android:color/black"/>
 	    
 	    <Button
 	        android:id="@+id/Exit"
@@ -56,8 +54,7 @@
 	        android:layout_height="50dp"
 	        android:layout_weight="1.0"
 	        android:text="@string/exit" 
-	        android:textColor="@android:color/white"
-	        android:background="@drawable/buttonbackground"/>
+	        android:textColor="@android:color/black"/>
     
     </LinearLayout>
     

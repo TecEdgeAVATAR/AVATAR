@@ -17,6 +17,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -94,7 +95,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		pointer = new PointSetter(locationMarker, this);
 		newMarker = getResources().getDrawable(R.drawable.ic_launcher);
 		pointer = new PointSetter(newMarker, this);
-		newPoint = getResources().getDrawable(R.drawable.ic_launcher);
+		newPoint = getResources().getDrawable(R.drawable.new_pt_marker);
 		pointer = new PointSetter(newPoint, this);
 		mapView.getOverlays().add(pointer);
 		userPointOverlay = new MVItemizedOverlay(newMarker);
@@ -103,9 +104,13 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		mapView.getOverlays().add(itemizedOverlay);
 	}
 
+	public void onBackPressed(){
+		finish();
+	}
+	
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case (R.id.findPositionButton): 
+		case (R.id.findPositionButton):
 			findPositionButton(myCurrentLocation);
 			break;
 		case (R.id.Exit):
@@ -115,10 +120,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			userPointOverlay.clear();
 			break;
 		case (R.id.Update_CoordinatesButton):
-			Toast.makeText(getApplicationContext(), "Downloading Coordinates, please wait", Toast.LENGTH_LONG).show();
-			plotter = new CoordinateUpdater();
-			plotter.CoordinateDataTranslator();
-			pointer.plotUpdatedCoords(plotter.getDataList());
+			new MyAsyncTask(this).execute();
 			//TODO:	-Create ability (dialog box?) to open URL of specific point to view it's info (pic, vid, comment, voice note)
 			break;
 		}
@@ -319,4 +321,27 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
+	
+    private class MyAsyncTask extends AsyncTask<Integer, String, Boolean> {
+        private Context context;
+        public MyAsyncTask(Context context) {
+            this.context = context;
+        }
+        
+        protected void onPreExecute() {
+            Toast.makeText(context, "Retrieving coordinates. This may take a few seconds.", Toast.LENGTH_LONG).show();
+        }
+        
+        protected Boolean doInBackground(Integer...params) {
+        	plotter = new CoordinateUpdater();
+			plotter.CoordinateDataTranslator();
+			plotter.getDataList();
+			pointer.plotUpdatedCoords(plotter.getDataList());
+			return true;
+		}
+        
+        protected void onPostExecute(Boolean result) {
+       	 Toast.makeText(context, "All coordinates are up to date.", Toast.LENGTH_LONG).show();
+       }
+    }
 }

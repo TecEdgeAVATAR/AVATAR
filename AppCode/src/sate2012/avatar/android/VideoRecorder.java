@@ -72,6 +72,11 @@ public class VideoRecorder extends Activity implements SurfaceHolder.Callback, O
 		returnToSubmission.setOnClickListener(this);
 	}
 
+	public void onBackPressed(){
+		setResult(Activity.RESULT_CANCELED, null);
+		finish();
+	}
+	
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case (R.id.bgnBtn):

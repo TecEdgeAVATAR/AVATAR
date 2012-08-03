@@ -30,12 +30,12 @@
     <string name="urlWillBeHere">The URL will be displayed hsere</string>
     <string name="description">Description</string>
     <string name="textDescr">Text Description</string>
-    <string name="start">  Press to upload information  </string>
+    <string name="start">--Press to enter application--</string>
     <string name="pic">Take a Picture</string>
     <string name="uploadPic">Upload Photo</string>
     <string name="back">  Return to main screen  </string>
     <string name="uploadMenu">Choose the media you wish to share</string>
-    <string name="gps">        Send GPS Location        </string>
+    <string name="gps">---Send GPS Location---</string>
     <string name="play">Play</string>
     <string name="record">Record</string>
     <string name="upload">Upload</string>
