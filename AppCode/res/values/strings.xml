@@ -51,4 +51,7 @@
 	<string name="update_coordinates">Update Coordinates</string>
 	<string name="clear_points">Clear points</string>
 	<string name="exit">Exit</string>
+	<string name="play_pause">Play or pause this media.</string>
+	<string name="media_progress_bar">The progress bar of this media.</string>
+	<string name="media_volume_bar">The volume of this media.</string>
 </resources>

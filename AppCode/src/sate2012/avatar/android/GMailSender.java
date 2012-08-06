@@ -15,17 +15,20 @@ import java.io.OutputStream;
 import java.security.Security;
 import java.util.Properties;
 
-public class GMailSender extends javax.mail.Authenticator {
+public class GMailSender extends javax.mail.Authenticator
+{
 	private String mailhost;
 	private String user;
 	private String password;
 	private Session session;
-
-	static {
+	
+	static
+	{
 		Security.addProvider(new com.provider.JSSEProvider());
 	}
-
-	public GMailSender(String u, String p) {
+	
+	public GMailSender(String u, String p)
+	{
 		mailhost = "smtp.gmail.com";
 		user = u;
 		password = p;
@@ -40,13 +43,16 @@ public class GMailSender extends javax.mail.Authenticator {
 		props.setProperty("mail.smtp.quitwait", "false");
 		session = Session.getDefaultInstance(props, this);
 	}
-
-	protected PasswordAuthentication getPasswordAuthentication() {
+	
+	protected PasswordAuthentication getPasswordAuthentication()
+	{
 		return new PasswordAuthentication(user, password);
 	}
-
-	public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
-		try {
+	
+	public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception
+	{
+		try
+		{
 			MimeMessage message = new MimeMessage(session);
 			DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
 			message.setSender(new InternetAddress(sender));
@@ -57,48 +63,58 @@ public class GMailSender extends javax.mail.Authenticator {
 			else
 				message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
 			Transport.send(message);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
-
-	private class ByteArrayDataSource implements DataSource {
+	
+	private class ByteArrayDataSource implements DataSource
+	{
 		private byte[] data;
 		private String type;
-
-		public ByteArrayDataSource(byte[] data, String type) {
+		
+		public ByteArrayDataSource(byte[] data, String type)
+		{
 			super();
 			this.data = data;
 			this.type = type;
 		}
-
+		
 		@SuppressWarnings("unused")
-		public ByteArrayDataSource(byte[] data) {
+		public ByteArrayDataSource(byte[] data)
+		{
 			super();
 			this.data = data;
 		}
-
+		
 		@SuppressWarnings("unused")
-		public void setType(String type) {
+		public void setType(String type)
+		{
 			this.type = type;
 		}
-
-		public String getContentType() {
+		
+		public String getContentType()
+		{
 			if (type == null)
 				return "application/octet-stream";
 			else
 				return type;
 		}
-
-		public InputStream getInputStream() throws IOException {
+		
+		public InputStream getInputStream() throws IOException
+		{
 			return new ByteArrayInputStream(data);
 		}
-
-		public String getName() {
+		
+		public String getName()
+		{
 			return "ByteArrayDataSource";
 		}
-
-		public OutputStream getOutputStream() throws IOException {
+		
+		public OutputStream getOutputStream() throws IOException
+		{
 			throw new IOException("Not Supported");
 		}
 	}

@@ -13,7 +13,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class Photographer extends Activity implements View.OnClickListener {
+public class Photographer extends Activity implements View.OnClickListener
+{
 	private File pic;
 	private ImageView iv;
 	private ImageButton ib;
@@ -21,9 +22,10 @@ public class Photographer extends Activity implements View.OnClickListener {
 	public final static int cameraData = 0;
 	private Bitmap bmp;
 	private String OUTPUT_FILE = "_P.png";
-
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photo);
 		iv = (ImageView) findViewById(R.id.ivReturnedPicture);
@@ -32,46 +34,56 @@ public class Photographer extends Activity implements View.OnClickListener {
 		uploadB = (ImageButton) findViewById(R.id.upload_button);
 		uploadB.setOnClickListener(this);
 	}
-
-	public void onBackPressed(){
+	
+	public void onBackPressed()
+	{
 		setResult(Activity.RESULT_CANCELED, null);
 		finish();
 	}
 	
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case (R.id.ibTakePic):
-			Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			startActivityForResult(i, cameraData);
-			break;
-		case (R.id.upload_button):
-			Intent data = new Intent();
-			setResult(Activity.RESULT_OK, data);
-			UploadMedia.setImage_filepath(pic.getAbsolutePath());
-			finish();
-			break;
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case (R.id.ibTakePic):
+				Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(i, cameraData);
+				break;
+			case (R.id.upload_button):
+				Intent data = new Intent();
+				setResult(Activity.RESULT_OK, data);
+				UploadMedia.setImage_filepath(pic.getAbsolutePath());
+				finish();
+				break;
 		}
 	}
-
+	
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == cameraData) {
+		if (requestCode == cameraData)
+		{
 			Bundle extras = data.getExtras();
 			bmp = (Bitmap) extras.get("data");
 			iv.setImageBitmap(bmp);
-			pic = new File(Environment.getExternalStorageDirectory(), Globals.STORAGE_DIRECTORY + Globals.MEDIA_DIRECTORY + System.currentTimeMillis() + OUTPUT_FILE);
+			pic = new File(Environment.getExternalStorageDirectory(), Globals.STORAGE_DIRECTORY
+					+ Globals.MEDIA_DIRECTORY + System.currentTimeMillis() + OUTPUT_FILE);
 			FileOutputStream stream = null;
-			try {
+			try
+			{
 				stream = new FileOutputStream(pic);
-			} catch (FileNotFoundException e) {
+			}
+			catch (FileNotFoundException e)
+			{
 				e.printStackTrace();
 			}
 			bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
 		}
 	}
-
-	public String getPath() {
+	
+	public String getPath()
+	{
 		return pic.getAbsolutePath();
 	}
 }

@@ -6,63 +6,72 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-public class ProgressInputStream extends InputStream {
+public class ProgressInputStream extends InputStream
+{
 	/* Key to retrieve progress value from message bundle passed to handler */
 	public static final String PROGRESS_UPDATE = "progress_update";
 	private static final int TEN_KILOBYTES = 1024 * 10;
-
+	
 	private InputStream inputStream;
 	private Handler handler;
-
+	
 	private long progress;
 	private long lastUpdate;
-
+	
 	private boolean closed;
-
-	public ProgressInputStream(InputStream i, Handler h) {
+	
+	public ProgressInputStream(InputStream i, Handler h)
+	{
 		inputStream = i;
 		handler = h;
 		progress = 0;
 		lastUpdate = 0;
 		closed = false;
 	}
-
+	
 	@Override
-	public int read() throws IOException {
+	public int read() throws IOException
+	{
 		int count = inputStream.read();
 		return incrementCounterAndUpdateDisplay(count);
 	}
-
+	
 	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
+	public int read(byte[] b, int off, int len) throws IOException
+	{
 		int count = inputStream.read(b, off, len);
 		return incrementCounterAndUpdateDisplay(count);
 	}
-
+	
 	@Override
-	public void close() throws IOException {
+	public void close() throws IOException
+	{
 		super.close();
 		if (closed)
 			throw new IOException("already closed");
 		closed = true;
 	}
-
-	private int incrementCounterAndUpdateDisplay(int count) {
+	
+	private int incrementCounterAndUpdateDisplay(int count)
+	{
 		if (count > 0)
 			progress += count;
 		lastUpdate = maybeUpdateDisplay(progress, lastUpdate);
 		return count;
 	}
-
-	private long maybeUpdateDisplay(long progress, long lastUpdate) {
-		if (progress - lastUpdate > TEN_KILOBYTES) {
+	
+	private long maybeUpdateDisplay(long progress, long lastUpdate)
+	{
+		if (progress - lastUpdate > TEN_KILOBYTES)
+		{
 			lastUpdate = progress;
 			sendLong(PROGRESS_UPDATE, progress);
 		}
 		return lastUpdate;
 	}
-
-	public void sendLong(String key, long value) {
+	
+	public void sendLong(String key, long value)
+	{
 		Bundle data = new Bundle();
 		data.putLong(key, value);
 		Message message = Message.obtain();

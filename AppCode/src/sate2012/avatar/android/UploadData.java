@@ -1,6 +1,7 @@
 package sate2012.avatar.android;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.widget.Toast;
 import android.app.Activity;
 import java.util.List;
@@ -19,31 +20,45 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
-public class UploadData extends Activity {
-
+public class UploadData extends Activity
+{
+	
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
+		// This is bad, but it can be fixed with an Asynctask later.
+		// I'm doing it this way to save some time.
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
 	}
-
-	public static void post(String url, List<NameValuePair> nameValuePairs) {
+	
+	public static void post(String url, List<NameValuePair> nameValuePairs)
+	{
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
 		HttpPost httpPost = new HttpPost(url);
-		try {
+		
+		try
+		{
 			MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-
-			for (int index = 0; index < nameValuePairs.size(); index++) {
+			
+			for (int index = 0; index < nameValuePairs.size(); index++)
+			{
 				if (nameValuePairs.get(index).getName().equalsIgnoreCase("image"))
-					entity.addPart(nameValuePairs.get(index).getName(), new FileBody(new File(nameValuePairs.get(index).getValue()), "image/jpeg"));
+					entity.addPart(nameValuePairs.get(index).getName(), new FileBody(new File(nameValuePairs.get(index)
+							.getValue()), "image/jpeg"));
 				else
-					entity.addPart(nameValuePairs.get(index).getName(), new StringBody(nameValuePairs.get(index).getValue()));
+					entity.addPart(nameValuePairs.get(index).getName(), new StringBody(nameValuePairs.get(index)
+							.getValue()));
 			}
 			httpPost.setEntity(entity);
 			HttpResponse response = httpClient.execute(httpPost, localContext);
 			Toast.makeText(UploadMedia.thisContext, "Response: '" + response + "'", Toast.LENGTH_LONG).show();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}

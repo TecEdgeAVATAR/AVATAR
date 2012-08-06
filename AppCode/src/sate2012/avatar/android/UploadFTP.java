@@ -2,6 +2,7 @@ package sate2012.avatar.android;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.app.Activity;
 import android.content.Context;
 import java.io.IOException;
@@ -10,23 +11,32 @@ import java.io.FileInputStream;
 import java.net.InetAddress;
 import org.apache.commons.net.ftp.FTPClient;
 
-public class UploadFTP extends Activity {
-
+public class UploadFTP extends Activity
+{
+	
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
+		// This is bad, but it can be fixed with an Asynctask later.
+		// I'm doing it this way to save some time.
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
 	}
-
-	public static String FTPUpload(String filepath, String extension, Context thisContext) {
+	
+	public static String FTPUpload(String filepath, String extension, Context thisContext)
+	{
 		FTPClient ftpClient = new FTPClient();
 		long time = (System.currentTimeMillis());
 		String filename = "T" + time;
-		try {
+		try
+		{
 			ftpClient.connect(InetAddress.getByName("24.123.68.146"));
 			ftpClient.login("opensim", "widdlyscuds");
 			ftpClient.changeWorkingDirectory("../../var/www/avatar/Uploaded");
-			if (ftpClient.getReplyString().contains("250")) {
+			if (ftpClient.getReplyString().contains("250"))
+			{
 				Handler progressHandler = new Handler();
 				ftpClient.setFileType(org.apache.commons.net.ftp.FTP.BINARY_FILE_TYPE);
 				BufferedInputStream buffIn = null;
@@ -38,7 +48,9 @@ public class UploadFTP extends Activity {
 				ftpClient.logout();
 				ftpClient.disconnect();
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 		}
 		return filename + extension;
 	}

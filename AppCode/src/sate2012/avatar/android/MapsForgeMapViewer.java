@@ -25,9 +25,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MapsForgeMapViewer extends MapActivity implements LocationListener, OnClickListener {
+public class MapsForgeMapViewer extends MapActivity implements LocationListener, OnClickListener
+{
 	private MapView mapView;
 	private GeoPoint myCurrentLocation;
+	private MapActivity thisActivity;
 	private double locLat;
 	private double locLon;
 	private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -47,18 +49,22 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	public static String EXTRA_MESSAGE;
 	private boolean sensorrunning;
 	private Compass myCompassView;
-	private SensorEventListener mySensorEventListener = new SensorEventListener() {
-		public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	private SensorEventListener mySensorEventListener = new SensorEventListener()
+	{
+		public void onAccuracyChanged(Sensor sensor, int accuracy)
+		{
 		}
-
-		public void onSensorChanged(SensorEvent event) {
+		
+		public void onSensorChanged(SensorEvent event)
+		{
 			myCompassView.updateDirection((float) event.values[0]);
 		}
 	};
 	private Button getPts;
 	private CoordinateUpdater plotter;
-
-	protected void onCreate(Bundle savedInstanceState) {
+	
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.map_view);
 		myCompassView = (Compass) findViewById(R.id.mycompassview);
@@ -66,13 +72,18 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		getPts = (Button) findViewById(R.id.Update_CoordinatesButton);
 		getPts.setOnClickListener(this);
 		List<Sensor> mySensors = mySensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
-		if (mySensors.size() > 0) {
-			mySensorManager.registerListener(mySensorEventListener, mySensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
+		if (mySensors.size() > 0)
+		{
+			mySensorManager
+					.registerListener(mySensorEventListener, mySensors.get(0), SensorManager.SENSOR_DELAY_NORMAL);
 			sensorrunning = true;
-		} else {
+		}
+		else
+		{
 			sensorrunning = false;
 			finish();
 		}
+		thisActivity = this;
 		LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener mlocListener = new MyLocationListener();
 		mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 0, mlocListener);
@@ -98,82 +109,91 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		newPoint = getResources().getDrawable(R.drawable.new_pt_marker);
 		pointer = new PointSetter(newPoint, this);
 		mapView.getOverlays().add(pointer);
-		userPointOverlay = new MVItemizedOverlay(newMarker);
-		itemizedOverlay = new MVItemizedOverlay(newMarker);
+		userPointOverlay = new MVItemizedOverlay(newMarker, this);
+		itemizedOverlay = new MVItemizedOverlay(newMarker, this);
 		mapView.getOverlays().add(userPointOverlay);
 		mapView.getOverlays().add(itemizedOverlay);
 	}
-
-	public void onBackPressed(){
+	
+	public void onBackPressed()
+	{
 		finish();
 	}
 	
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case (R.id.findPositionButton):
-			findPositionButton(myCurrentLocation);
-			break;
-		case (R.id.Exit):
-			finish();
-			break;
-		case (R.id.Clear_Points_Button):
-			userPointOverlay.clear();
-			break;
-		case (R.id.Update_CoordinatesButton):
-			new MyAsyncTask(this).execute();
-			//TODO:	-Create ability (dialog box?) to open URL of specific point to view it's info (pic, vid, comment, voice note)
-			break;
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case (R.id.findPositionButton):
+				findPositionButton(myCurrentLocation);
+				break;
+			case (R.id.Exit):
+				finish();
+				break;
+			case (R.id.Clear_Points_Button):
+				userPointOverlay.clear();
+				break;
+			case (R.id.Update_CoordinatesButton):
+				new MyAsyncTask(this).execute();
+				// TODO: -Create ability (dialog box?) to open URL of specific
+				// point to view it's info (pic, vid, comment, voice note)
+				break;
 		}
 	}
-
+	
 	@Override
 	/**
 	 * onDestroy stops or "destroys" the program when this actions is called.
 	 */
-	protected void onDestroy() {
+	protected void onDestroy()
+	{
 		super.onDestroy();
 		if (sensorrunning)
 			mySensorManager.unregisterListener(mySensorEventListener);
 	}
-
+	
 	@Override
 	/**
 	 * onPause pauses the application and saves the data in the savedInstances Bundle. 
 	 */
-	protected void onPause() {
+	protected void onPause()
+	{
 		super.onPause();
 	}
-
+	
 	@Override
 	/**
 	 * onResume sets the actions that the application runs through when starting the application from pause.
 	 */
-	protected void onResume() {
+	protected void onResume()
+	{
 		super.onResume();
 	}
-
+	
 	/**
 	 * setCenterLocation is the method that sets the center of the screen to a
 	 * already specified point on the map.
 	 */
-
-	protected void setCenterlocation() {
+	
+	protected void setCenterlocation()
+	{
 		if (myCurrentLocation == null)
 			mapView.getController().setCenter(new GeoPoint(39.00, -100.00));
 		else
 			mapView.getController().setCenter(myCurrentLocation);
 	}
-
+	
 	/**
 	 * findPositionButton takes GeoPoint p as its argument and sets the center
 	 * of the screen to that point.
 	 * 
 	 * @param p
 	 */
-	public void findPositionButton(GeoPoint p) {
+	public void findPositionButton(GeoPoint p)
+	{
 		mapView.getController().setCenter(p);
 	}
-
+	
 	/**
 	 * This class listens for the location manager. When the location manager
 	 * sends the location listener the files for the map, it runs through the
@@ -181,8 +201,10 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	 * 
 	 * 
 	 */
-	public class MyLocationListener implements LocationListener {
-		public void onLocationChanged(Location loc) {
+	public class MyLocationListener implements LocationListener
+	{
+		public void onLocationChanged(Location loc)
+		{
 			GeoPoint gp = new GeoPoint(loc.getLatitude(), loc.getLongitude());
 			if (gp != null)
 				myCurrentLocation = gp;
@@ -196,28 +218,30 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			myLocationMarker.setMarker(MVItemizedOverlay.boundCenterBottom(locationMarker));
 			itemizedOverlay.addOverlay(overlayItem);
 		}
-
 		
 		/**
 		 * activates when the current provider is disabled, or not available
 		 * anymore.
 		 */
-		public void onProviderDisabled(String provider) {
+		public void onProviderDisabled(String provider)
+		{
 			Toast.makeText(getApplicationContext(), "GPS Disabled", Toast.LENGTH_LONG).show();
 		}
-
+		
 		/**
 		 * activates when a provider is found.
 		 */
-		public void onProviderEnabled(String provider) {
+		public void onProviderEnabled(String provider)
+		{
 			Toast.makeText(getApplicationContext(), "GPS Enabled", Toast.LENGTH_LONG).show();
 		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-
+		
+		public void onStatusChanged(String provider, int status, Bundle extras)
+		{
+			
 		}
 	}
-
+	
 	/**
 	 * Determines whether one Location reading is better than the current
 	 * Location fix
@@ -228,7 +252,8 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	 *            The current Location fix, to which you want to compare the new
 	 *            one
 	 */
-	protected boolean isBetterLocation(Location location, Location myCurrentLocation) {
+	protected boolean isBetterLocation(Location location, Location myCurrentLocation)
+	{
 		if (myCurrentLocation == null)
 			return true;
 		long timeDelta = location.getTime() - myCurrentLocation.getTime();
@@ -244,56 +269,74 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 		boolean isMoreAccurate = accuracyDelta < 0;
 		boolean isSignificantlyLessAccurate = accuracyDelta > 200;
 		boolean isFromSameProvider = isSameProvider(location.getProvider(), myCurrentLocation.getProvider());
-		if (isMoreAccurate) {
+		if (isMoreAccurate)
+		{
 			return true;
-		} else if (isNewer && !isLessAccurate) {
+		}
+		else if (isNewer && !isLessAccurate)
+		{
 			return true;
-		} else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider)
+		}
+		else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider)
 			return true;
 		return false;
 	}
-
+	
 	/** Checks whether two providers are the same */
-	private boolean isSameProvider(String provider1, String provider2) {
+	private boolean isSameProvider(String provider1, String provider2)
+	{
 		if (provider1 == null)
 			return provider2 == null;
 		return provider1.equals(provider2);
 	}
-
-	public void sendGeoPointToMainClass(Location loc) {
+	
+	public void sendGeoPointToMainClass(Location loc)
+	{
 		locLat = loc.getLatitude();
 		locLon = loc.getLongitude();
 		myCurrentLocation = new GeoPoint((int) (locLat * 1E6), (int) (locLon * 1E6));
 	}
-
-	private class PointSetter extends MVItemizedOverlay {
-		public PointSetter(Drawable marker, Context contextIn) {
-			super(marker, contextIn);
+	
+	private class PointSetter extends MVItemizedOverlay
+	{
+		public PointSetter(Drawable marker, Context contextIn)
+		{
+			super(marker, thisActivity);
 		}
 		
-		public void plotUpdatedCoords( LinkedList<DataObjectItem> dataList){
+		public void plotUpdatedCoords(LinkedList<DataObjectItem> dataList)
+		{
 			userPointOverlay.clear();
-			for(DataObjectItem p: dataList){
-				if(p.getData().getType().compareTo("Video") == 0)
-					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.red_video_marker)));
-				else if(p.getData().getType().compareTo("Audio") == 0)
-					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.yellow_microphone_marker)));
-				else if(p.getData().getType().compareTo("Comment") == 0)
-					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.green_document_marker)));
-				else if(p.getData().getType().compareTo("Photo") == 0)
-					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.blue_camera_marker)));
-				else if(p.getData().getType().compareTo("Android") == 0)
-					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.magenta_android_marker)));
-				else if(p.getData().getType().compareTo("Nao") == 0)
-					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(R.drawable.cyan_nao_marker)));
+			for (DataObjectItem p : dataList)
+			{
+				if (p.getData().getType().compareTo("Video") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(
+							R.drawable.red_video_marker)));
+				else if (p.getData().getType().compareTo("Audio") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(
+							R.drawable.yellow_microphone_marker)));
+				else if (p.getData().getType().compareTo("Comment") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(
+							R.drawable.green_document_marker)));
+				else if (p.getData().getType().compareTo("Photo") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(
+							R.drawable.blue_camera_marker)));
+				else if (p.getData().getType().compareTo("Android") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(
+							R.drawable.magenta_android_marker)));
+				else if (p.getData().getType().compareTo("Nao") == 0)
+					p.setMarker(MVItemizedOverlay.boundCenterBottom(getResources().getDrawable(
+							R.drawable.cyan_nao_marker)));
 				userPointOverlay.addOverlay(p);
 			}
 		}
-
+		
 		@Override
-		public boolean onLongPress(GeoPoint point, MapView mapView) {
+		public boolean onLongPress(GeoPoint point, MapView mapView)
+		{
 			DataObject data = new DataObject();
-			if (point != null) {
+			if (point != null)
+			{
 				pointLocLat = point.getLatitude();
 				pointLocLon = point.getLongitude();
 				Globals.lat = "" + pointLocLat;
@@ -309,39 +352,49 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 			return true;
 		}
 	}
-
-	public void onLocationChanged(Location arg0) {
-	}
-
-	public void onProviderDisabled(String provider) {
-	}
-
-	public void onProviderEnabled(String provider) {
-	}
-
-	public void onStatusChanged(String provider, int status, Bundle extras) {
+	
+	public void onLocationChanged(Location arg0)
+	{
 	}
 	
-    private class MyAsyncTask extends AsyncTask<Integer, String, Boolean> {
-        private Context context;
-        public MyAsyncTask(Context context) {
-            this.context = context;
-        }
-        
-        protected void onPreExecute() {
-            Toast.makeText(context, "Retrieving coordinates. This may take a few seconds.", Toast.LENGTH_LONG).show();
-        }
-        
-        protected Boolean doInBackground(Integer...params) {
-        	plotter = new CoordinateUpdater();
+	public void onProviderDisabled(String provider)
+	{
+	}
+	
+	public void onProviderEnabled(String provider)
+	{
+	}
+	
+	public void onStatusChanged(String provider, int status, Bundle extras)
+	{
+	}
+	
+	private class MyAsyncTask extends AsyncTask<Integer, String, Boolean>
+	{
+		private Context context;
+		
+		public MyAsyncTask(Context context)
+		{
+			this.context = context;
+		}
+		
+		protected void onPreExecute()
+		{
+			Toast.makeText(context, "Retrieving coordinates. This may take a few seconds.", Toast.LENGTH_LONG).show();
+		}
+		
+		protected Boolean doInBackground(Integer... params)
+		{
+			plotter = new CoordinateUpdater();
 			plotter.CoordinateDataTranslator();
 			plotter.getDataList();
 			pointer.plotUpdatedCoords(plotter.getDataList());
 			return true;
 		}
-        
-        protected void onPostExecute(Boolean result) {
-       	 Toast.makeText(context, "All coordinates are up to date.", Toast.LENGTH_LONG).show();
-       }
-    }
+		
+		protected void onPostExecute(Boolean result)
+		{
+			Toast.makeText(context, "All coordinates are up to date.", Toast.LENGTH_LONG).show();
+		}
+	}
 }
