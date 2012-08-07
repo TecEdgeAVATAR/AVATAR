@@ -110,6 +110,21 @@
 			android:configChanges="keyboardHidden|orientation"
 			android:theme="@android:style/Theme.Dialog"
 			android:excludeFromRecents="true"/> 
+		<activity
+            android:name="sate2012.avatar.android.AudioViewer"
+			android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Dialog"
+			android:excludeFromRecents="true"/> 
+		<activity
+            android:name="sate2012.avatar.android.ImageViewer"
+			android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Dialog"
+			android:excludeFromRecents="true"/> 
+		<activity
+            android:name="sate2012.avatar.android.TextViewer"
+			android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Dialog"
+			android:excludeFromRecents="true"/> 
     </application>
 
 </manifest>

@@ -31,10 +31,10 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-// Documentation and formatting for this file is lacking due to time constraints
-public class VideoViewer extends Activity
+//Documentation and formatting for this file is lacking due to time constraints
+public class AudioViewer extends Activity
 {
-	private static final String TAG = "VideoViewer";
+	private static final String TAG = "AudioViewer";
 	
 	private Handler handler = new Handler();
 	private ProgressDialog progressDialog;
@@ -56,7 +56,7 @@ public class VideoViewer extends Activity
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		setContentView(R.layout.video_viewer);
+		setContentView(R.layout.audio_viewer);
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null)
@@ -196,7 +196,7 @@ public class VideoViewer extends Activity
 			Log.v(TAG, "path: " + url);
 			if (url == null || url.length() == 0)
 			{
-				Toast.makeText(VideoViewer.this, "Error: File URL/path is empty.", Toast.LENGTH_LONG).show();
+				Toast.makeText(AudioViewer.this, "Error: File URL/path is empty.", Toast.LENGTH_LONG).show();
 			}
 			else
 			{

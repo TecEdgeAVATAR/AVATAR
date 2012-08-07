@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
@@ -66,6 +67,10 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		// Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		this.setContentView(R.layout.map_view);
 		myCompassView = (Compass) findViewById(R.id.mycompassview);
 		mySensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);

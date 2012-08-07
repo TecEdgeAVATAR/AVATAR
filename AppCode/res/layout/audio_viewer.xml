@@ -3,7 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
+    android:background="@color/black" >
+    
+    <VideoView
+        android:id="@+id/surface_view"
+        android:layout_width="1dp"
+        android:layout_height="1dp" >
+    </VideoView>
 
     <LinearLayout
         android:id="@+id/control_bar"
@@ -76,7 +82,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/media_volume_bar"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:progress="12"
+                    android:max="15" />
             </LinearLayout>
         </RelativeLayout>
 
