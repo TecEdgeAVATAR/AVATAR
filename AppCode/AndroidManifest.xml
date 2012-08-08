@@ -34,7 +34,10 @@
         <activity
             android:name="sate2012.avatar.android.UploadMedia"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Dialog"
+			android:excludeFromRecents="true" >
         </activity>
         <activity
             android:name="sate2012.avatar.android.GPSActivity"
@@ -43,13 +46,17 @@
         <activity
             android:name="sate2012.avatar.android.Photographer"
             android:label="Camera Application"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation"
+			android:excludeFromRecents="true" >
         </activity>
         <activity
             android:name="sate2012.avatar.android.VideoRecorder"
             android:label="Video Application"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="keyboardHidden|orientation"
+			android:excludeFromRecents="true" >
         </activity>
         <activity
             android:name="android.media.MediaRecorder"
@@ -58,11 +65,15 @@
         <activity
             android:name="sate2012.avatar.android.VoiceNotes"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation"
+			android:excludeFromRecents="true" >
         </activity>
         <activity
             android:name="sate2012.avatar.android.MailSenderActivity"
-            android:label="Upload Data Point" >
+            android:label="Upload Data Point"
+            android:configChanges="keyboardHidden|orientation"
+			android:excludeFromRecents="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAILSENDERACTIVITY" />
 
@@ -122,6 +133,11 @@
 			android:excludeFromRecents="true"/> 
 		<activity
             android:name="sate2012.avatar.android.TextViewer"
+			android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Dialog"
+			android:excludeFromRecents="true"/> 
+		<activity
+            android:name="sate2012.avatar.android.GPSViewer"
 			android:configChanges="keyboardHidden|orientation"
 			android:theme="@android:style/Theme.Dialog"
 			android:excludeFromRecents="true"/> 

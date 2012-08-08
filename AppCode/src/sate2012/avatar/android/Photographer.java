@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -27,6 +28,10 @@ public class Photographer extends Activity implements View.OnClickListener
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		// Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		setContentView(R.layout.photo);
 		iv = (ImageView) findViewById(R.id.ivReturnedPicture);
 		ib = (ImageButton) findViewById(R.id.ibTakePic);

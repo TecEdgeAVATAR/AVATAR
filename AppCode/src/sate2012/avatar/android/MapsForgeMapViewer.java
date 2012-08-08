@@ -1,12 +1,16 @@
 package sate2012.avatar.android;
 
 import gupta.ashutosh.avatar.R;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.MapViewMode;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -50,6 +54,7 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	public static String EXTRA_MESSAGE;
 	private boolean sensorrunning;
 	private Compass myCompassView;
+	public ArrayList<DataObjectItem> dataList = new ArrayList<DataObjectItem>();
 	private SensorEventListener mySensorEventListener = new SensorEventListener()
 	{
 		public void onAccuracyChanged(Sensor sensor, int accuracy)
@@ -173,6 +178,20 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 	protected void onResume()
 	{
 		super.onResume();
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent)
+	{
+		if ((resultCode == Activity.RESULT_CANCELED) && (requestCode == MEDIA_SELECTOR_REQUEST_CODE))
+		{
+			// If cancel was selected, or the user backed out, then delete the point
+			dataList.remove(dataList.size() - 1);
+			userPointOverlay.removeOverlay(userPointOverlay.size() - 1);
+			
+			// Update the gui
+			userPointOverlay.requestRedraw();
+		}
 	}
 	
 	/**
@@ -351,8 +370,9 @@ public class MapsForgeMapViewer extends MapActivity implements LocationListener,
 				userPointOverlay.addOverlay(newPointItem);
 				data.setLat(pointLocLat);
 				data.setLon(pointLocLon);
+				dataList.add(newPointItem);
 				Intent senderIntent = new Intent(getApplicationContext(), UploadMedia.class);
-				startActivity(senderIntent);
+				startActivityForResult(senderIntent, MEDIA_SELECTOR_REQUEST_CODE);
 			}
 			return true;
 		}

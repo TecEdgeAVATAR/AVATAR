@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,7 +30,8 @@ public class UploadMedia extends Activity implements OnClickListener
 	private ImageButton videoB;
 	private ImageButton audioB;
 	private ImageButton commentB;
-	private Button gpsB;
+	private ImageButton gpsB;
+	private ImageButton exitB;
 	private String dataType;
 	private String media_filepath;
 	private String media_filename;
@@ -43,6 +46,13 @@ public class UploadMedia extends Activity implements OnClickListener
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		// Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// Remove notification bar
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		thisContext = getApplicationContext();
 		setContentView(R.layout.upload_menu);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -51,12 +61,14 @@ public class UploadMedia extends Activity implements OnClickListener
 		pictureB.setOnClickListener(this);
 		videoB = (ImageButton) findViewById(R.id.videoButton);
 		videoB.setOnClickListener(this);
-		audioB = (ImageButton) findViewById(R.id.audioButton);
+		audioB = (ImageButton) findViewById(R.id.microphoneButton);
 		audioB.setOnClickListener(this);
 		commentB = (ImageButton) findViewById(R.id.commentButton);
 		commentB.setOnClickListener(this);
-		gpsB = (Button) findViewById(R.id.gpsButton);
+		gpsB = (ImageButton) findViewById(R.id.gpsButton);
 		gpsB.setOnClickListener(this);
+		exitB = (ImageButton) findViewById(R.id.cancelButton);
+		exitB.setOnClickListener(this);
 		// This is bad, but it can be fixed with an Asynctask later.
 		// I'm doing it this way to save some time.
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -84,7 +96,7 @@ public class UploadMedia extends Activity implements OnClickListener
 				i = new Intent(UploadMedia.this, VideoRecorder.class);
 				startActivityForResult(i, Globals.VIDEO_REQUEST);
 				break;
-			case (R.id.audioButton):
+			case (R.id.microphoneButton):
 				dataType = getResources().getString(R.string.type_audio);
 				i = new Intent(UploadMedia.this, VoiceNotes.class);
 				startActivityForResult(i, Globals.VOICE_REQUEST);
@@ -94,20 +106,26 @@ public class UploadMedia extends Activity implements OnClickListener
 				i = new Intent(getApplicationContext(), MailSenderActivity.class);
 				i.putExtra("Type", dataType);
 				startActivity(i);
-				finish();
 				break;
 			case (R.id.gpsButton):
 				dataType = getResources().getString(R.string.type_android);
 				i = new Intent(getApplicationContext(), MailSenderActivity.class);
 				i.putExtra("Type", dataType);
 				startActivity(i);
-				finish();
+				break;
+			case (R.id.cancelButton):
+				Intent intent = new Intent();
+            	setResult(RESULT_CANCELED, intent);
+            	// exit the dialog
+            	finish();
 				break;
 		}
 	}
 	
 	public void onBackPressed()
 	{
+		Intent intent = new Intent();
+    	setResult(RESULT_CANCELED, intent);
 		finish();
 	}
 	

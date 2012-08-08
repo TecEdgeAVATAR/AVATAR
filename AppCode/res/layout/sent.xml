@@ -23,6 +23,8 @@
         android:background="@drawable/buttonbackground"
         android:text="@string/back"
         android:textColor="@android:color/white"
-        android:textSize="50dp" />
+        android:textSize="50dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
 
 </LinearLayout>

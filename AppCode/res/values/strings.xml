@@ -27,13 +27,13 @@
     <string name="sendEmail">  Send Email  </string>
     <string name="nameOfLoc">Name of Location or Item of Interest</string>
     <string name="urlOf">The URL of uploaded media</string>
-    <string name="urlWillBeHere">The URL will be displayed hsere</string>
+    <string name="urlWillBeHere">The URL will be displayed here</string>
     <string name="description">Description</string>
     <string name="textDescr">Text Description</string>
     <string name="start">--Press to enter application--</string>
     <string name="pic">Take a Picture</string>
     <string name="uploadPic">Upload Photo</string>
-    <string name="back">  Return to main screen  </string>
+    <string name="back">  Return to the Main Screen  </string>
     <string name="uploadMenu">Choose the media you wish to share</string>
     <string name="gps">---Send GPS Location---</string>
     <string name="play">Play</string>
@@ -48,10 +48,12 @@
     <string name="microphone_button_description">Record audio to upload.</string>
     <string name="comment_button_description">Write a comment to upload.</string>
     <string name="cancel_button_description">Cancel the upload process.</string>
+    <string name="gps_button_description">Upload GPS coordinates.</string>
 	<string name="update_coordinates">Update Coordinates</string>
 	<string name="clear_points">Clear points</string>
 	<string name="exit">Exit</string>
 	<string name="play_pause">Play or pause this media.</string>
 	<string name="media_progress_bar">The progress bar of this media.</string>
 	<string name="media_volume_bar">The volume of this media.</string>
+	<string name="iconValueLocation">sate2012.avatar.android.iconValue</string>
 </resources>

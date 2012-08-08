@@ -17,6 +17,7 @@ public class MVItemizedOverlay extends ItemizedOverlay<DataObjectItem>
 	private static final int AUDIO_VIEWER_REQUEST_CODE = 752684;
 	private static final int IMAGE_VIEWER_REQUEST_CODE = 789543;
 	private static final int TEXT_VIEWER_REQUEST_CODE = 148325;
+	private static final int GPS_VIEWER_REQUEST_CODE = 148325;
 	private MapActivity activity;
 	
 	public ArrayList<DataObjectItem> mOverlays;
@@ -106,6 +107,13 @@ public class MVItemizedOverlay extends ItemizedOverlay<DataObjectItem>
 					intent.putExtra("sate2012.avatar.android.LNG", String.valueOf(data.getLon()));
 					activity.startActivityForResult(intent, TEXT_VIEWER_REQUEST_CODE);
 				}
+			}
+			else
+			{
+				Intent intent = new Intent(activity, GPSViewer.class);
+				intent.putExtra("sate2012.avatar.android.LAT", String.valueOf(data.getLat()));
+				intent.putExtra("sate2012.avatar.android.LNG", String.valueOf(data.getLon()));
+				activity.startActivityForResult(intent, GPS_VIEWER_REQUEST_CODE);
 			}
 		}
 		catch (Exception e)

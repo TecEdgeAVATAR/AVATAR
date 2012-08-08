@@ -22,7 +22,8 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class VoiceNotes extends Activity implements OnClickListener {
+public class VoiceNotes extends Activity implements OnClickListener
+{
 	private MediaRecorder recorder;
 	private MediaPlayer player;
 	private ImageButton startRecording;
@@ -34,9 +35,14 @@ public class VoiceNotes extends Activity implements OnClickListener {
 	private boolean media;
 	private boolean playing;
 	private boolean recording;
-
-	public void onCreate(Bundle savedInstanceState) {
+	
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
+		
+		// Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.voice);
 		media = false;
@@ -50,49 +56,60 @@ public class VoiceNotes extends Activity implements OnClickListener {
 		playRecording.setOnClickListener(this);
 		returnToSubmission.setOnClickListener(this);
 	}
-
-	public void onBackPressed(){
+	
+	public void onBackPressed()
+	{
 		setResult(Activity.RESULT_CANCELED, null);
 		finish();
 	}
 	
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case (R.id.bgnBtn):
-			startRecording();
-			break;
-		case (R.id.playRecordingBtn):
-			if (media) {
-				player = new MediaPlayer();
-				playRecording.setImageResource(R.drawable.start_play_button);
-				try {
-					player.setDataSource(voiceRecording.getAbsolutePath());
-					player.prepare();
-					player.start();
-				} catch (IOException e) {
-					Log.e("ERROR", "error playing recording", e);
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case (R.id.bgnBtn):
+				startRecording();
+				break;
+			case (R.id.playRecordingBtn):
+				if (media)
+				{
+					player = new MediaPlayer();
+					playRecording.setImageResource(R.drawable.start_play_button);
+					try
+					{
+						player.setDataSource(voiceRecording.getAbsolutePath());
+						player.prepare();
+						player.start();
+					}
+					catch (IOException e)
+					{
+						Log.e("ERROR", "error playing recording", e);
+					}
+					Toast.makeText(VoiceNotes.this, "Playing back.  Press Upload when done.", Toast.LENGTH_LONG).show();
 				}
-				Toast.makeText(VoiceNotes.this, "Playing back.  Press Upload when done.", Toast.LENGTH_LONG).show();
-			} else
-				Toast.makeText(VoiceNotes.this, "You haven't recorded any audio to play yet.", Toast.LENGTH_LONG).show();
-			break;
-		case (R.id.returnToForm):
-			Intent data = new Intent();
-			data.putExtra(VOICE, getVoiceRecording());
-			if (getVoiceRecording() != null)
-				setResult(Activity.RESULT_OK, data);
-			else
-				setResult(Activity.RESULT_CANCELED);
-			finish();
-			break;
+				else
+					Toast.makeText(VoiceNotes.this, "You haven't recorded any audio to play yet.", Toast.LENGTH_LONG)
+							.show();
+				break;
+			case (R.id.returnToForm):
+				Intent data = new Intent();
+				data.putExtra(VOICE, getVoiceRecording());
+				if (getVoiceRecording() != null)
+					setResult(Activity.RESULT_OK, data);
+				else
+					setResult(Activity.RESULT_CANCELED);
+				finish();
+				break;
 		}
 	}
-
-	public static String getPath() {
+	
+	public static String getPath()
+	{
 		return voiceRecording.getAbsolutePath();
 	}
-
-	protected void addToDB() {
+	
+	protected void addToDB()
+	{
 		ContentValues values = new ContentValues(3);
 		long current = System.currentTimeMillis();
 		values.put(MediaColumns.TITLE, "observation_audio");
@@ -104,10 +121,13 @@ public class VoiceNotes extends Activity implements OnClickListener {
 		Uri newUri = contentResolver.insert(base, values);
 		sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, newUri));
 	}
-
-	protected void startRecording() {
-		voiceRecording = new File(Environment.getExternalStorageDirectory(), Globals.STORAGE_DIRECTORY + Globals.MEDIA_DIRECTORY + OUTPUT_FILE);
-		if (!recording && !playing) {
+	
+	protected void startRecording()
+	{
+		voiceRecording = new File(Environment.getExternalStorageDirectory(), Globals.STORAGE_DIRECTORY
+				+ Globals.MEDIA_DIRECTORY + OUTPUT_FILE);
+		if (!recording && !playing)
+		{
 			recording = true;
 			startRecording.setImageResource(R.drawable.stop_recording_video);
 			recorder = new MediaRecorder();
@@ -118,23 +138,31 @@ public class VoiceNotes extends Activity implements OnClickListener {
 											// but using its value (3) does
 											// work.
 			recorder.setOutputFile(voiceRecording.getAbsolutePath());
-			try {
+			try
+			{
 				recorder.prepare();
-			} catch (IllegalStateException e1) {
+			}
+			catch (IllegalStateException e1)
+			{
 				e1.printStackTrace();
-			} catch (IOException e1) {
+			}
+			catch (IOException e1)
+			{
 				e1.printStackTrace();
 			}
 			recorder.start();
-		} else if (recording) {
+		}
+		else if (recording)
+		{
 			stopRecording();
 			playing = false;
 			recording = false;
 			addToDB();
 		}
 	}
-
-	protected void stopRecording() {
+	
+	protected void stopRecording()
+	{
 		recorder.stop();
 		recorder.release();
 		setVoiceRecording(voiceRecording);
@@ -144,17 +172,20 @@ public class VoiceNotes extends Activity implements OnClickListener {
 		startRecording.setImageResource(R.drawable.disabled_record_button);
 		media = true;
 	}
-
-	public File getVoiceRecording() {
+	
+	public File getVoiceRecording()
+	{
 		return voiceRecording;
 	}
-
-	public void setVoiceRecording(File v) {
+	
+	public void setVoiceRecording(File v)
+	{
 		voiceRecording = v;
 	}
-
+	
 	@Override
-	protected void onStop() {
+	protected void onStop()
+	{
 		super.onStop();
 		finish();
 	}

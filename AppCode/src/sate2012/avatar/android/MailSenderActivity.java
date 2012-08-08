@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -42,6 +43,10 @@ public class MailSenderActivity extends Activity implements OnClickListener
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		// Remove title bar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		c = super.getApplicationContext();
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		body = "Body.";
