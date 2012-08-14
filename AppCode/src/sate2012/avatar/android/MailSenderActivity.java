@@ -93,6 +93,7 @@ public class MailSenderActivity extends Activity implements OnClickListener
 				setContentView(R.layout.sent);
 				button_return = (Button) findViewById(R.id.Return);
 				button_return.setOnClickListener(self);
+				setResult(Activity.RESULT_OK, null);
 				break;
 			case (R.id.Return):
 				send.setClickable(true);
@@ -150,7 +151,6 @@ public class MailSenderActivity extends Activity implements OnClickListener
 	
 	public void onBackPressed()
 	{
-		setResult(Activity.RESULT_CANCELED, null);
 		finish();
 	}
 	

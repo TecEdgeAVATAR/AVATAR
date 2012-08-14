@@ -105,19 +105,19 @@ public class UploadMedia extends Activity implements OnClickListener
 				dataType = getResources().getString(R.string.type_comment);
 				i = new Intent(getApplicationContext(), MailSenderActivity.class);
 				i.putExtra("Type", dataType);
-				startActivity(i);
+				startActivityForResult(i, Globals.COMMENT_REQUEST);
 				break;
 			case (R.id.gpsButton):
 				dataType = getResources().getString(R.string.type_android);
 				i = new Intent(getApplicationContext(), MailSenderActivity.class);
 				i.putExtra("Type", dataType);
-				startActivity(i);
+				startActivityForResult(i, Globals.GPS_REQUEST);
 				break;
 			case (R.id.cancelButton):
 				Intent intent = new Intent();
-            	setResult(RESULT_CANCELED, intent);
-            	// exit the dialog
-            	finish();
+				setResult(RESULT_CANCELED, intent);
+				// exit the dialog
+				finish();
 				break;
 		}
 	}
@@ -125,7 +125,7 @@ public class UploadMedia extends Activity implements OnClickListener
 	public void onBackPressed()
 	{
 		Intent intent = new Intent();
-    	setResult(RESULT_CANCELED, intent);
+		setResult(RESULT_CANCELED, intent);
 		finish();
 	}
 	
@@ -153,11 +153,14 @@ public class UploadMedia extends Activity implements OnClickListener
 				media_filepath = getImage_filepath();
 				media_extension = "_P.png";
 			}
-			media_filename = UploadFTP.FTPUpload(media_filepath, media_extension, thisContext);
-			Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
-			MailIntent.putExtra("Type", dataType);
-			MailIntent.putExtra("Filename", media_filename);
-			startActivity(MailIntent);
+			if (requestCode != Globals.COMMENT_REQUEST && requestCode != Globals.GPS_REQUEST)
+			{
+				media_filename = UploadFTP.FTPUpload(media_filepath, media_extension, thisContext);
+				Intent MailIntent = new Intent(getApplicationContext(), MailSenderActivity.class);
+				MailIntent.putExtra("Type", dataType);
+				MailIntent.putExtra("Filename", media_filename);
+				startActivity(MailIntent);
+			}
 			finish();
 		}
 	}
